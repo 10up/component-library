@@ -1,0 +1,23 @@
+{
+	"plugins": [
+		"plugins/markdown"
+	],
+	"markdown": {
+		"idInHeadings": "true" 
+	},
+	"source": {
+		"include": [
+			"node_modules/@10up/component-accordion",
+			"node_modules/@10up/component-tooltip"
+		],
+		"exclude": [
+			"node_modules/@10up/component-accordion/node_modules",
+			"node_modules/@10up/component-tooltip/node_modules"
+		]
+	},
+	"opts": {
+		"destination": "./docs/",
+		"template": "jsdoc-theme/10up"
+		//"tutorials": "node_modules/@10up/component-accordion/demo"
+	}
+}

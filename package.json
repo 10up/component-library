@@ -1,0 +1,25 @@
+{
+  "name": "@10up/component-library",
+  "version": "1.0.0",
+  "author": "10up",
+  "description": "A library of reusable components from 10up.",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10up/component-library.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/10up/component-library/issues"
+  },
+  "homepage": "https://github.com/10up/component-library#readme",
+  "scripts": {
+	"docs": "jsdoc -c jsdoc.json -r -R README.md --verbose"
+  },
+  "dependencies": {
+    "@10up/component-accordion": "git+https://github.com/10up/component-accordion.git",
+    "@10up/component-tooltip": "git+https://github.com/10up/component-tooltip.git"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.5.5"
+  }
+}
