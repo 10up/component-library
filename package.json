@@ -12,14 +12,9 @@
     "url": "https://github.com/10up/component-library/issues"
   },
   "homepage": "https://github.com/10up/component-library#readme",
-  "scripts": {
-    "docs": "jsdoc -c jsdoc.json -r -R README.md --verbose"
-  },
   "dependencies": {
     "@10up/component-accordion": "^1.0.0",
     "@10up/component-tabs": "^1.0.0"
   },
-  "devDependencies": {
-    "jsdoc": "^3.5.5"
-  }
+  "devDependencies": {}
 }
