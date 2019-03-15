@@ -1,12 +1,12 @@
 # 10up Component Library
 
-This package houses all of 10up's components, which includes the following:
+This package houses all of 10up's components, which currently includes the following:
 
 * [Accordion](https://github.com/10up/component-accordion)
+* [Navigation](https://github.com/10up/component-navigation)
 * [Tabs](https://github.com/10up/component-tabs)
+* [Tooltip](https://github.com/10up/component-tooltip)
 
 ## Installation
 
-Right now, clone the repo in to your project. Reference the component's above for documentation.
-
-In the future, we'll be publishing this as an npm package.
+`npm install @10up/component-library`
