@@ -13,8 +13,10 @@
   },
   "homepage": "https://github.com/10up/component-library#readme",
   "dependencies": {
-    "@10up/component-accordion": "^1.0.0",
-    "@10up/component-tabs": "^1.0.0"
+    "@10up/component-accordion": "*",
+    "@10up/component-navigation": "*",
+    "@10up/component-tabs": "*",
+    "@10up/component-tooltip": "*"
   },
   "devDependencies": {}
 }
