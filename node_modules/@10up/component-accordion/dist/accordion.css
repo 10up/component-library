@@ -1,0 +1,28 @@
+.accordion-header {
+  border-bottom: 1px solid #303030;
+  cursor: pointer;
+  font-size: 2em;
+  padding: 10px 0 10px 30px;
+  position: relative;
+  text-align: left;
+  width: 100%
+}
+.accordion-header:before {
+    content: "+";
+    left: 5px;
+    position: absolute;
+    top: 5px;
+  }
+.accordion-header.is-active:before {
+    content: "-";
+  }
+.js .accordion-content {
+    display: none
+}
+.js .accordion-content.is-active {
+      border-bottom: 1px solid #303030;
+      display: block;
+    }
+
+
+/*# sourceMappingURL=accordion.css.map*/
