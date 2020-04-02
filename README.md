@@ -4,10 +4,11 @@
 
 [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
 
-* [Accordion](https://github.com/10up/component-accordion)
-* [Navigation](https://github.com/10up/component-navigation)
-* [Tabs](https://github.com/10up/component-tabs)
-* [Tooltip](https://github.com/10up/component-tooltip)
+* [Accordion](https://baseline.10up.com/component/accordion/)
+* [Animate](https://baseline.10up.com/component/animate/)
+* [Navigation](https://baseline.10up.com/component/responsive-navigation/)
+* [Tabs](https://baseline.10up.com/component/tabs/)
+* [Tooltip](https://baseline.10up.com/component/tooltips/)
 
 ## Installation
 

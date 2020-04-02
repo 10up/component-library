@@ -1,6 +1,6 @@
 {
   "name": "@10up/component-library",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": "10up",
   "description": "A library of reusable components from 10up.",
   "repository": {
@@ -13,10 +13,11 @@
   },
   "homepage": "https://github.com/10up/component-library#readme",
   "dependencies": {
-    "@10up/component-accordion": "*",
-    "@10up/component-navigation": "*",
-    "@10up/component-tabs": "*",
-    "@10up/component-tooltip": "*"
+    "@10up/animate": "^1.0.0",
+    "@10up/component-accordion": "^1.0.6",
+    "@10up/component-navigation": "^2.0.3",
+    "@10up/component-tabs": "^1.0.3",
+    "@10up/component-tooltip": "^1.0.1"
   },
   "devDependencies": {}
 }
