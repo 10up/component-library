@@ -12,7 +12,7 @@
 
 ## Installation
 
-`npm install @10up/component-library`
+`npm install @10up/component-library --save`
 
 ## Support Level
 
@@ -20,4 +20,4 @@
 
 ## Like what you see?
 
-<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850"></a>
+<a href="http://10up.com/contact/"><img src="https://10updotcom-wpengine.s3.amazonaws.com/uploads/2016/10/10up-Github-Banner.png" width="850" alt="10up"></a>
