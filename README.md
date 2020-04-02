@@ -2,7 +2,7 @@
 
 > This package houses all of 10up's components, which currently includes the following:
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level)
+[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 * [Accordion](https://baseline.10up.com/component/accordion/)
 * [Animate](https://baseline.10up.com/component/animate/)
