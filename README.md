@@ -6,6 +6,7 @@
 
 * [Accordion](https://baseline.10up.com/component/accordion/)
 * [Animate](https://baseline.10up.com/component/animate/)
+* [Countdown Timer](https://baseline.10up.com/component/countdown-timer/)
 * [Navigation](https://baseline.10up.com/component/responsive-navigation/)
 * [Tabs](https://baseline.10up.com/component/tabs/)
 * [Tooltip](https://baseline.10up.com/component/tooltips/)
