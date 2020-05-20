@@ -1,6 +1,6 @@
 {
   "name": "@10up/component-library",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "10up",
   "description": "A library of reusable components from 10up.",
   "repository": {
@@ -17,7 +17,8 @@
     "@10up/component-accordion": "^1.0.6",
     "@10up/component-navigation": "^2.0.3",
     "@10up/component-tabs": "^1.0.3",
-    "@10up/component-tooltip": "^1.0.1"
+    "@10up/component-tooltip": "^1.0.1",
+    "@10up/countdown-timer": "^0.2.0"
   },
   "devDependencies": {}
 }
