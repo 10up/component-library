@@ -1,6 +1,6 @@
 {
   "name": "@10up/component-library",
-  "version": "1.3.1",
+  "private": true,
   "author": "10up",
   "description": "A library of reusable components from 10up.",
   "repository": {
@@ -12,6 +12,13 @@
     "url": "https://github.com/10up/component-library/issues"
   },
   "homepage": "https://github.com/10up/component-library#readme",
+  "scripts": {
+    "test": "lerna run test:ci --stream",
+    "test:ci": "jest --clearCache && lerna run test:ci --stream",
+    "codecov": "curl -s https://codecov.io/bash | bash -s",
+    "prepare": "lerna bootstrap --hoist",
+    "reinstall": "lerna clean --yes && npm run prepare"
+  },
   "dependencies": {
     "@10up/animate": "^1.0.0",
     "@10up/component-accordion": "^1.1.0",
@@ -21,5 +28,25 @@
     "@10up/countdown-timer": "^0.2.0",
     "@10up/reading-position": "^0.1.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@10up/babel-preset-default": "^1.1.0",
+    "@10up/eslint-config": "^2.3.0-rc.3",
+    "husky": "^4.3.8",
+    "lerna": "^3.22.1",
+    "lint-staged": "^10.5.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.(js|tsx|ts)": [
+      "eslint"
+    ]
+  },
+  "engines": {
+    "node": ">= 12",
+    "npm": ">= 7.0.0"
+  }
 }
