@@ -1,0 +1,27 @@
+{
+  "name": "@10up/component-accordion",
+  "version": "2.0.0",
+  "author": "10up",
+  "description": "Accessible accordion component.",
+  "main": "./src/accordion.js",
+  "style": "./dist/accordion.css",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10up/component-accordion.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/10up/component-accordion/issues"
+  },
+  "homepage": "https://github.com/10up/component-accordion#readme",
+  "devDependencies": {
+    "@10up/babel-preset-default": "^1.1.0",
+    "@testing-library/dom": "^7.29.4",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/user-event": "^12.6.3"
+  },
+  "dependencies": {}
+}
