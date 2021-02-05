@@ -1,17 +1,17 @@
-// import { screen } from '@testing-library/dom';
-// import userEvent from '@testing-library/user-event';
+import { screen } from '@testing-library/dom';
+import userEvent from '@testing-library/user-event';
 import Accordion from '../accordion';
 
-test('it renders properly', () => {
+test('accordion functions trigger', () => {
 	document.body.innerHTML = `
 	<div class="accordion accordion--parent">
-			<button class="accordion-header" type="button">Accordion Header</button>
+			<button class="accordion-header" type="button">Accordion Header 1</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
 			</div> <!-- //.accordion-content -->
 
-			<button class="accordion-header" type="button">Accordion Header</button>
+			<button class="accordion-header" type="button">Accordion Header 2</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Parent Accordion Heading</h2>
 				<p>here the content of 2nd tab <a href="#">link</a></p>
@@ -73,18 +73,38 @@ test('it renders properly', () => {
 		</div> <!-- //.accordion -->
 	`;
 
+	const onCreate = jest.fn();
+	const onOpen = jest.fn();
+	const onClose = jest.fn();
+	const onToggle = jest.fn();
+
 	new Accordion('.accordion', {
-		onCreate() {
-			console.log('onCreated');
-		},
-		onOpen() {
-			console.log('onOpen');
-		},
-		onClose() {
-			console.log('onClose');
-		},
-		onToggle() {
-			console.log('onToggle');
-		},
+		onCreate,
+		onOpen,
+		onToggle,
+		onClose,
 	});
+
+	expect(onCreate).toHaveBeenCalledTimes(1);
+	expect(onOpen).not.toHaveBeenCalled();
+	expect(onToggle).not.toHaveBeenCalled();
+	expect(onClose).not.toHaveBeenCalled();
+
+	const header1 = screen.getByText('Accordion Header 1');
+	const header2 = screen.getByText('Accordion Header 2');
+	userEvent.click(header1);
+	expect(onOpen).toHaveBeenCalledTimes(1);
+
+	userEvent.click(header2);
+	expect(onOpen).toHaveBeenCalledTimes(2);
+
+	// close header 2
+	userEvent.click(header2);
+	expect(onClose).toHaveBeenCalledTimes(1);
+	expect(onOpen).toHaveBeenCalledTimes(2);
+	// open again
+	userEvent.click(header2);
+	expect(onOpen).toHaveBeenCalledTimes(3);
+
+	expect(onToggle).toHaveBeenCalledTimes(4);
 });
