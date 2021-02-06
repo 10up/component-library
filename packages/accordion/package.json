@@ -3,8 +3,8 @@
   "version": "2.0.0",
   "author": "10up",
   "description": "Accessible accordion component.",
-  "main": "./dist/es6.js",
-  "style": "./dist/style.css",
+  "main": "./dist/js/index.js",
+  "style": "./dist/css/style.css",
   "scripts": {
     "test": "jest",
     "build": "10up-scripts build"
