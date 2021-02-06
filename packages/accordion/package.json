@@ -3,10 +3,11 @@
   "version": "2.0.0",
   "author": "10up",
   "description": "Accessible accordion component.",
-  "main": "./src/accordion.js",
-  "style": "./dist/accordion.css",
+  "main": "./dist/es6.js",
+  "style": "./dist/style.css",
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "10up-scripts build"
   },
   "repository": {
     "type": "git",
@@ -22,6 +23,17 @@
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/user-event": "^12.6.3",
-    "jest-axe": "^4.1.0"
+    "jest-axe": "^4.1.0",
+    "@10up/scripts": "^1.0.13"
+  },
+  "@10up/scripts": {
+    "entry": {
+      "index": "./src/accordion.js",
+      "global": "./src/index.js",
+      "style": "./src/style.css"
+    },
+    "paths": {
+      "cssLoaderPaths": ["./src"]
+    }
   }
 }

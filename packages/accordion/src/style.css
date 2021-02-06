@@ -1,4 +1,4 @@
-@import 'assets/core.css';
+@import url('assets/core.css');
 
 .accordion-header {
   border-bottom: 1px solid #303030;
