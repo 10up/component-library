@@ -1,11 +1,12 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { axe } from 'jest-axe';
 import Accordion from '../accordion';
 
-test('accordion functions trigger', () => {
+beforeEach(() => {
 	document.body.innerHTML = `
-	<div class="accordion accordion--parent">
-			<button class="accordion-header" type="button">Accordion Header 1</button>
+	<div class="accordion accordion--parent" role="region" aria-labelledby="header1">
+			<button id="header1" class="accordion-header" type="button">Accordion Header 1</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -19,9 +20,8 @@ test('accordion functions trigger', () => {
 
 			<button class="accordion-header" type="button">Accordion Header with Nested Accordion</button>
 			<div class="accordion-content">
-				<div class="accordion">
-
-					<button class="accordion-header" type="button">Nested Accordion Header</button>
+				<div class="accordion" role="region" aria-labelledby="header2">
+					<button id="header2" class="accordion-header" type="button">Nested Accordion Header</button>
 					<div class="accordion-content">
 						<h2 class="accordion-label">Nested Accordion Heading</h2>
 						<p>here the content of 1st tab <a href="#">link</a></p>
@@ -32,7 +32,6 @@ test('accordion functions trigger', () => {
 						<h2 class="accordion-label">Nested Accordion Heading</h2>
 						<p>here the content of 2nd tab <a href="#">link</a></p>
 					</div> <!-- //.accordion-content -->
-
 				</div> <!-- //.accordion -->
 			</div> <!-- //.accordion-content -->
 
@@ -44,9 +43,8 @@ test('accordion functions trigger', () => {
 
 		</div> <!-- //.accordion -->
 
-		<div class="accordion">
-
-			<button class="accordion-header" type="button">Accordion Header</button>
+		<div class="accordion" role="region" aria-labelledby="header3">
+			<button id="header3" class="accordion-header" type="button">Accordion Header</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -72,7 +70,9 @@ test('accordion functions trigger', () => {
 
 		</div> <!-- //.accordion -->
 	`;
+});
 
+test('accordion functions trigger', () => {
 	const onCreate = jest.fn();
 	const onOpen = jest.fn();
 	const onClose = jest.fn();
@@ -107,4 +107,8 @@ test('accordion functions trigger', () => {
 	expect(onOpen).toHaveBeenCalledTimes(3);
 
 	expect(onToggle).toHaveBeenCalledTimes(4);
+});
+
+test('markup is accessible', async () => {
+	expect(await axe(document.body.innerHTML)).toHaveNoViolations();
 });

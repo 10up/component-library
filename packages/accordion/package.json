@@ -21,7 +21,7 @@
     "@10up/babel-preset-default": "^1.1.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
-    "@testing-library/user-event": "^12.6.3"
-  },
-  "dependencies": {}
+    "@testing-library/user-event": "^12.6.3",
+    "jest-axe": "^4.1.0"
+  }
 }
