@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import Accordion from '../accordion';
+import { Accordion } from '..';
 
 beforeEach(() => {
 	document.body.innerHTML = `

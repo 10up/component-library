@@ -4,9 +4,11 @@
   "author": "10up",
   "description": "Accessible accordion component.",
   "main": "./dist/js/index.js",
+  "source": "src/index.js",
   "style": "./dist/css/style.css",
   "scripts": {
     "test": "jest",
+    "start": "10up-scripts watch",
     "build": "10up-scripts build"
   },
   "repository": {
@@ -28,8 +30,7 @@
   },
   "@10up/scripts": {
     "entry": {
-      "index": "./src/accordion.js",
-      "global": "./src/index.js",
+      "index": "./src/index.js",
       "style": "./src/style.css"
     },
     "paths": {

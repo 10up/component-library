@@ -1,0 +1,12 @@
+---
+layout: layout
+title: Component Library Playground
+components:
+  - Accordion
+---
+	<h3>Component List</h3>
+  <ul>
+  {% for component in components %}
+   <li><a href="components/{{component | downcase }}">{{ component }}</a></li>
+  {% endfor %}
+
