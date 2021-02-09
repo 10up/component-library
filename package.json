@@ -19,7 +19,9 @@
     "prepare": "lerna bootstrap --hoist",
     "reinstall": "lerna clean --yes && npm run prepare"
   },
-  "dependencies": {},
+  "dependencies": {
+    "core-js": "^3.8.3"
+  },
   "devDependencies": {
     "@10up/babel-preset-default": "^1.1.0",
     "@10up/eslint-config": "^2.3.0",

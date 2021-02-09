@@ -3,13 +3,16 @@
   "version": "2.0.0",
   "author": "10up",
   "description": "Accessible accordion component.",
-  "main": "./dist/js/index.js",
+  "main": "dist/index.js",
+  "umd:main": "dist/index.umd.js",
+  "module": "dist/index.module.js",
   "source": "src/index.js",
-  "style": "./dist/css/style.css",
+  "style": "./dist/index.css",
   "scripts": {
     "test": "jest",
-    "start": "10up-scripts watch",
-    "build": "10up-scripts build"
+    "test:watch": "jest --watch",
+    "watch": "microbundle watch",
+    "build": "microbundle build"
   },
   "repository": {
     "type": "git",
@@ -21,12 +24,13 @@
   },
   "homepage": "https://github.com/10up/component-accordion#readme",
   "devDependencies": {
-    "@10up/babel-preset-default": "^1.1.0",
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/user-event": "^12.6.3",
     "jest-axe": "^4.1.0",
-    "@10up/scripts": "^1.0.13"
+    "microbundle": "^0.13.0",
+    "postcss-import": "^14.0.0",
+    "postcss-preset-env": "^6.7.0"
   },
   "@10up/scripts": {
     "entry": {
@@ -34,7 +38,9 @@
       "style": "./src/style.css"
     },
     "paths": {
-      "cssLoaderPaths": ["./src"]
+      "cssLoaderPaths": [
+        "./src"
+      ]
     }
   }
 }

@@ -1,8 +1,10 @@
-import { Accordion } from '@10up/component-accordion';
+import './style.css';
+
+import { Accordion } from '../../../packages/accordion';
 
 new Accordion('.accordion', {
 	onCreate() {
-		console.log('onCreated');
+		console.log('onCreated 3');
 	},
 	onOpen() {
 		console.log('onOpen');

@@ -76,9 +76,9 @@
 
 		</div> <!-- //.accordion -->
 
-		<script src="../dist/js/index.js"></script>
+		<script src="../dist/index.umd.js"></script>
 		<script type="text/javascript">
-			let myAccordion = new TenUp.Accordion( '.accordion', {
+			let myAccordion = new window.componentAccordion.Accordion( '.accordion', {
 				onCreate: function() {
 					console.log( 'onCreated' )
 				},

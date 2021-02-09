@@ -7,8 +7,9 @@
   "scripts": {
     "start": "npm run build && concurrently \"npm:watch:assets\" \"npm:serve\"",
     "serve": "eleventy --serve",
-    "watch:assets": "10up-scripts watch",
-    "build": "10up-scripts build && eleventy",
+    "watch:assets": "npm run build:assets -- --watch",
+    "build:assets": "microbundle -i src/assets/index.js  -o dist/index.js --no-pkg-main",
+    "build": "npm run build:assets && eleventy",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -17,7 +18,9 @@
   "devDependencies": {
     "@11ty/eleventy": "^0.11.1",
     "concurrently": "^5.3.0",
-    "@10up/scripts": "^1.0.13"
+    "microbundle": "^0.13.0",
+    "postcss-import": "^14.0.0",
+    "postcss-preset-env": "^6.7.0"
   },
   "dependencies": {
     "@10up/component-accordion": "^2.0.0"
@@ -28,7 +31,9 @@
       "style": "./src/assets/style.css"
     },
     "paths": {
-      "cssLoaderPaths": ["./src/assets"]
+      "cssLoaderPaths": [
+        "./src/assets"
+      ]
     }
   }
 }
