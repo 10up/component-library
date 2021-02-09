@@ -9,7 +9,7 @@
     "start:ci": "npm run build && npm run serve",
     "serve": "eleventy --serve",
     "watch:assets": "npm run build:assets -- --watch",
-    "build:assets": "microbundle -i src/assets/index.js  -o dist/index.js --no-pkg-main",
+    "build:assets": "microbundle -i src/assets/index.js  -o dist/index.js --no-pkg-main --external none",
     "build": "npm run build:assets && eleventy",
     "test": "start-server-and-test start:ci '8080' \"cypress run\"",
     "cypress:open": "cypress open"

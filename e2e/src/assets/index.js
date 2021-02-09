@@ -1,6 +1,6 @@
 import './style.css';
 
-import { Accordion } from '../../../packages/accordion';
+import { Accordion } from '@10up/component-accordion';
 
 new Accordion('.accordion', {
 	onCreate() {
