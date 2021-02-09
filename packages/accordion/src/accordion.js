@@ -25,6 +25,17 @@ export default class Accordion {
 			onToggle: null,
 		};
 
+		// forEach Polyfill
+		if (window.NodeList && !NodeList.prototype.forEach) {
+			NodeList.prototype.forEach = function (callback, thisArg) {
+				// eslint-disable-next-line
+				thisArg = thisArg || window;
+				for (let i = 0; i < this.length; i++) {
+					callback.call(thisArg, this[i], i, this);
+				}
+			};
+		}
+
 		if (!element || typeof element !== 'string') {
 			console.error( '10up Accordion: No target supplied. A valid target (accordion area) must be used.' ); // eslint-disable-line
 			return;

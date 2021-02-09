@@ -4,6 +4,7 @@
   "author": "10up",
   "description": "Accessible accordion component.",
   "main": "dist/index.js",
+  "exports": "./dist/index.modern.js",
   "umd:main": "dist/index.umd.js",
   "module": "dist/index.module.js",
   "source": "src/index.js",
@@ -11,9 +12,15 @@
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
-    "watch": "microbundle watch",
-    "build": "microbundle build"
+    "watch": "npm run build -- --watch",
+    "build": "microbundle build --name TenUp"
   },
+  "browserslist": [
+    "> 1%",
+    "ie >= 11",
+    "last 2 versions",
+    "Firefox ESR"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/10up/component-accordion.git"
