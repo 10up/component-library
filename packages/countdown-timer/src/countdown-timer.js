@@ -1,3 +1,6 @@
+import 'core-js/es/number/is-nan';
+import 'core-js/es/array/find';
+
 /**
  * @module @10up/CountdownTimer
  *
