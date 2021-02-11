@@ -7,8 +7,6 @@
   "source": "src/index.js",
   "style": "./dist/index.css",
   "scripts": {
-    "test": "jest",
-    "test:watch": "jest --watch",
     "watch": "npm run build -- --watch",
     "build": "microbundle build -f modern"
   },
