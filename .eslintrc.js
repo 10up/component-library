@@ -4,6 +4,9 @@ module.exports = {
 	globals: {
 		'cypress/globals': true,
 	},
+	rules: {
+		'no-new': 0,
+	},
 	overrides: [
 		{
 			files: ['e2e/cypress/**/*.js'],
