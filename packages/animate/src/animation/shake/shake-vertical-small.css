@@ -1,0 +1,23 @@
+@keyframes shakeVerticalSmall {
+
+	from,
+	to {
+		transform: translate3d(0, 0, 0);
+	}
+
+	15%,
+	45%,
+	75% {
+		transform: translate3d(0, -5px, 0);
+	}
+
+	30%,
+	60%,
+	90% {
+		transform: translate3d(0, 5px, 0);
+	}
+}
+
+.shake-vertical-small {
+	animation-name: shakeVerticalSmall;
+}

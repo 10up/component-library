@@ -1,0 +1,4 @@
+.duration-1000 {
+	animation-duration: 1000ms;
+	animation-fill-mode: both;
+}

@@ -1,0 +1,11 @@
+@keyframes rotate90 {
+
+	100% {
+		transform: rotate(90deg);
+		transform: rotate(90deg);
+	}
+}
+
+.rotate-90 {
+	animation-name: rotate90;
+}

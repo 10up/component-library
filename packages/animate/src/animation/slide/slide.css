@@ -1,0 +1,22 @@
+@import "slide-in-down.css";
+@import "slide-in-left.css";
+@import "slide-in-right.css";
+@import "slide-in-up.css";
+@import "slide-out-down.css";
+@import "slide-out-left.css";
+@import "slide-out-right.css";
+@import "slide-out-up.css";
+
+@media (prefers-reduced-motion: reduce) {
+
+	.slide-in-down,
+	.slide-in-left,
+	.slide-in-right,
+	.slide-in-up,
+	.slide-out-down,
+	.slide-out-left,
+	.slide-out-right,
+	.slide-out-up {
+		animation-duration: 1ms !important;
+	}
+}

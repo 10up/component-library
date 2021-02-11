@@ -1,0 +1,53 @@
+/* Animations */
+@import "animation/fade/fade.css";
+@import "animation/rotate/rotate.css";
+@import "animation/scale/scale.css";
+@import "animation/shake/shake.css";
+@import "animation/slide/slide.css";
+
+/* Delays */
+@import "delay/delay-150.css";
+@import "delay/delay-200.css";
+@import "delay/delay-250.css";
+@import "delay/delay-300.css";
+@import "delay/delay-350.css";
+@import "delay/delay-400.css";
+@import "delay/delay-450.css";
+@import "delay/delay-500.css";
+@import "delay/delay-550.css";
+@import "delay/delay-600.css";
+@import "delay/delay-650.css";
+@import "delay/delay-700.css";
+@import "delay/delay-750.css";
+@import "delay/delay-800.css";
+@import "delay/delay-850.css";
+@import "delay/delay-900.css";
+@import "delay/delay-950.css";
+@import "delay/delay-1000.css";
+
+/* Durations */
+@import "duration/duration-150.css";
+@import "duration/duration-200.css";
+@import "duration/duration-250.css";
+@import "duration/duration-300.css";
+@import "duration/duration-350.css";
+@import "duration/duration-400.css";
+@import "duration/duration-450.css";
+@import "duration/duration-500.css";
+@import "duration/duration-550.css";
+@import "duration/duration-600.css";
+@import "duration/duration-650.css";
+@import "duration/duration-700.css";
+@import "duration/duration-750.css";
+@import "duration/duration-800.css";
+@import "duration/duration-850.css";
+@import "duration/duration-900.css";
+@import "duration/duration-950.css";
+@import "duration/duration-1000.css";
+
+/* Timing */
+@import "timing/timing-ease-in-out.css";
+@import "timing/timing-ease-in.css";
+@import "timing/timing-ease-out.css";
+@import "timing/timing-ease.css";
+@import "timing/timing-linear.css";

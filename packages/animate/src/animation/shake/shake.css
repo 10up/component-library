@@ -1,0 +1,18 @@
+@import "shake-horizontal.css";
+@import "shake-horizontal-large.css";
+@import "shake-horizontal-small.css";
+@import "shake-vertical.css";
+@import "shake-vertical-large.css";
+@import "shake-vertical-small.css";
+
+@media (prefers-reduced-motion: reduce) {
+
+	.shake-horizontal-large,
+	.shake-horizontal-small,
+	.shake-horizontal,
+	.shake-vertical-large,
+	.shake-vertical-small,
+	.shake-vertical {
+		animation-duration: 1ms !important;
+	}
+}

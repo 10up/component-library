@@ -1,0 +1,11 @@
+@keyframes rotate180 {
+
+	100% {
+		transform: rotate(180deg);
+		transform: rotate(180deg);
+	}
+}
+
+.rotate-180 {
+	animation-name: rotate180;
+}
