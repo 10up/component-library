@@ -47,13 +47,6 @@ beforeEach(() => {
 
 	</div><!-- //.tabs -->
 	`;
-
-	// inject css in the dom
-	/* const cssFile = fs.readFileSync(path.resolve(__dirname, '../../dist/index.css'), 'utf8');
-	const style = document.createElement('style');
-	style.type = 'text/css';
-	style.innerHTML = cssFile;
-	document.body.append(style); */
 });
 
 test('horizontal tabs works', () => {
