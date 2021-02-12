@@ -6,6 +6,7 @@ module.exports = {
 	},
 	rules: {
 		'no-new': 0,
+		'jsdoc/require-param-type': 0,
 	},
 	overrides: [
 		{

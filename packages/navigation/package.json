@@ -9,7 +9,8 @@
   "module": "dist/index.module.js",
   "source": "src/index.js",
   "style": "./dist/index.css",
-  "scripts": {
+  "types": "./index.d.ts",
+    "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",
     "watch": "concurrently \"npm run build:modern -- --watch\" \"npm run build:umd -- --watch\"",

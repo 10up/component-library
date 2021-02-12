@@ -9,6 +9,7 @@
   "module": "dist/index.module.js",
   "source": "src/index.js",
   "style": "./dist/index.css",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "jest",
     "test:watch": "jest --watch",

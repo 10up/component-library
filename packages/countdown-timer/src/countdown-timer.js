@@ -2,9 +2,6 @@ import 'core-js/es/number/is-nan';
 import 'core-js/es/array/find';
 
 /**
- * @module @10up/CountdownTimer
- *
- * @description
  *
  * A countdown timer component that displays the amount of time remaining until (or elapsed since) the time specified in the component's `datetime` attribute.
  *
@@ -14,8 +11,8 @@ export default class CountdownTimer {
 	/**
 	 * Countdown Timer main constructor function
 	 *
-	 * @param {string} element Selector for target elements to receive a countdown timer.
-	 * @param {object} options (Optional) Object containing options. See `defaults` option for possible properties/values.
+	 * @param element Selector for target elements to receive a countdown timer.
+	 * @param options (Optional) Object containing options. See `defaults` option for possible properties/values.
 	 */
 	constructor(element, options = {}) {
 		const defaults = {

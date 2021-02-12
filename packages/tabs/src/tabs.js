@@ -1,10 +1,6 @@
 import 'core-js/web/dom-collections';
 
 /**
- * @module @10up/Tabs
- *
- * @description
- *
  * An accessible tabs UI component.
  *
  * [Demo]{@link https://10up.github.io/wp-component-library/component/tabs/index.html}
@@ -13,16 +9,6 @@ import 'core-js/web/dom-collections';
  * @param {object} options Object of optional callbacks.
  */
 export default class Tabs {
-	/**
-	 * Constructor function
-	 *
-	 * @param Object element
-	 * @param Object options
-	 * @param element
-	 * @param options
-	 * @param element
-	 * @param options
-	 */
 	constructor(element, options = {}) {
 		// KeyCodes
 		this.keys = {
@@ -86,8 +72,7 @@ export default class Tabs {
 	 * Initialize a given tab area
 	 * Configure tab properties and set ARIA attributes.
 	 *
-	 * @param   {element} $tabArea The tabArea to scope changes
-	 * @param tabArea
+	 * @param   {element} tabArea The tabArea to scope changes
 	 * @returns {void}
 	 */
 	setupTabs(tabArea) {
@@ -180,19 +165,11 @@ export default class Tabs {
 	/**
 	 * Finds the next tab when using keyboard arrows, home or end keys
 	 *
-	 * @param   {object}  $event      The tab click event object
-	 * @param   {element} $tabArea    The tabArea to scope changes.
-	 * @param   {element} $tabLinks   The tab items
-	 * @param event
-	 * @param tabArea
-	 * @param tabLinks
-	 * @param event
-	 * @param tabArea
-	 * @param tabLinks
-	 * @param event
-	 * @param tabArea
-	 * @param tabLinks
-	 * @returns {Integer}
+	 * @param   {object}  event      The tab click event object
+	 * @param   {element} tabArea    The tabArea to scope changes.
+	 * @param   {element} tabLinks   The tab items
+	 *
+	 * @returns {number}
 	 */
 	determineNextTab(event, tabArea, tabLinks) {
 		const key = event.keyCode;
@@ -216,19 +193,11 @@ export default class Tabs {
 	/**
 	 * Changes the active tab when clicked.
 	 * Adds CSS classes and toggle ARIA attributes.
-
-	 * @param   {object | Integer}  $tab      The tab click event object, or the desired tab index
-	 * @param   {element}         $tabArea  The tabArea to scope changes.
-	 * @param   {bool}            $setFocus If we need to set focus to the tab or not
-	 * @param tab
-	 * @param tabArea
-	 * @param setFocus
-	 * @param tab
-	 * @param tabArea
-	 * @param setFocus
-	 * @param tab
-	 * @param tabArea
-	 * @param setFocus
+	 *
+	 * @param   {object | number}  tab      The tab click event object, or the desired tab index
+	 * @param   {element}          tabArea  The tabArea to scope changes.
+	 * @param   {boolean}          setFocus If we need to set focus to the tab or not
+	 *
 	 * @returns {void}
 	 */
 	goToTab(tab, tabArea, setFocus = false) {

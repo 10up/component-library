@@ -1,19 +1,9 @@
-/**
- * @module @10up/Accordion
- *
- * @description
- *
- * Create an accordion UI.
- *
- * @param {string} element Element selector for accordion container.
- * @param {object} options Object of optional callbacks.
- */
 export default class Accordion {
 	/**
 	 * constructor function
 	 *
-	 * @param element Ojbect
-	 * @param options Ojbect
+	 * @param element The accordion target elemnet.
+	 * @param options The acccordion options.
 	 */
 	constructor(element, options = {}) {
 		// Defaults
