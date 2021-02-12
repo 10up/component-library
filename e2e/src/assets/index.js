@@ -1,6 +1,8 @@
 import './style.css';
 
+// eslint-disable-next-line
 import { Accordion } from '@10up/component-accordion';
+// eslint-disable-next-line
 import { CountdownTimer } from '@10up/countdown-timer';
 
 document.addEventListener('DOMContentLoaded', () => {
