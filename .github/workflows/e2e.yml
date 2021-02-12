@@ -17,7 +17,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies (root)
-        run: npm install
+        run: npm install && npm run build
         env:
           CI: true
 
