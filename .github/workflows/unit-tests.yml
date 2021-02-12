@@ -27,7 +27,7 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install -g npm@latest && npm install
+        run: npm install npm@latest && npm install
         env:
           CI: true
 

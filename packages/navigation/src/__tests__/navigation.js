@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
-import { render } from 'test-utils/dom';
+import { render, injectCSS } from 'test-utils/dom';
 
 import { Navigation } from '..';
 
@@ -22,6 +22,7 @@ beforeAll(() => {
 });
 
 let globalContainer;
+let style;
 
 beforeEach(() => {
 	const { container } = render(`
@@ -78,10 +79,12 @@ beforeEach(() => {
 	`);
 
 	globalContainer = container;
+	style = injectCSS(`${__dirname}/../../dist/index.css`);
 });
 
 afterEach(() => {
 	document.body.removeChild(globalContainer);
+	document.body.removeChild(style);
 });
 
 test('callbacks are triggered properly', () => {
