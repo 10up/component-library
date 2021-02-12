@@ -16,7 +16,7 @@ declare module '@10up/component-tabs' {
 		orientation?: 'vertical' | 'horizontal',
 	}
 
-	export declare class Tabs {
+	export class Tabs {
 		constructor(element: string, options: TabsOptions);
 	}
 }

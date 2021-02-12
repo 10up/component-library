@@ -18,7 +18,7 @@ declare module '@10up/component-accordion' {
 		onToggle?: () => void,
 	};
 
-	export declare class Accordion {
+	export class Accordion {
 		constructor(element: string, options: AccordionOptions);
 	}
 }

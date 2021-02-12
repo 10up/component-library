@@ -16,7 +16,7 @@ declare module '@10up/component-tooltip' {
 		onClose?: () => void,
 	}
 
-	export declare class Tooltip {
+	export class Tooltip {
 		constructor(element: string, options: TooltipOptions);
 	}
 }

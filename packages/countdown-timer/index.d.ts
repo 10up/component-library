@@ -83,7 +83,7 @@ declare module '@10up/countdown-timer' {
 		seconds?: IntervalOptions,
 	};
 
-	export declare class CountdownTimer {
+	export class CountdownTimer {
 		constructor(element: string, options: CountdownTimerOptions);
 	}
 }
