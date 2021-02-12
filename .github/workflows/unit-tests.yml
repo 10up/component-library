@@ -8,7 +8,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [15.x]
 
     steps:
       - name: Checkout
@@ -27,11 +27,11 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
       - name: Install dependencies
-        run: npm install npm@latest && npm install
+        run: npm install
         env:
           CI: true
 
       - name: Run unit tests
-        run: npm run test
+        run: npm run build && npm run test
         env:
           CI: true
