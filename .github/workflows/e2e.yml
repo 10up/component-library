@@ -30,6 +30,7 @@ jobs:
           browser: chrome
           working-directory: e2e
           config: video=true,screenshotOnRunFailure=true
+          install-command: ''
 
       - name: Upload screenshots on failure
         uses: actions/upload-artifact@v1
