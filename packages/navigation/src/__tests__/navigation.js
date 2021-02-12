@@ -1,6 +1,8 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { axe } from 'jest-axe';
+import { render } from 'test-utils/dom';
+
 import { Navigation } from '..';
 
 beforeAll(() => {
@@ -19,8 +21,10 @@ beforeAll(() => {
 	});
 });
 
+let globalContainer;
+
 beforeEach(() => {
-	document.body.innerHTML = `
+	const { container } = render(`
 	<nav class="site-navigation" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 
 	<a href="#primary-nav" aria-controls="primary-nav" class="site-menu-toggle">
@@ -71,7 +75,13 @@ beforeEach(() => {
 	</ul>
 
 </nav>
-	`;
+	`);
+
+	globalContainer = container;
+});
+
+afterEach(() => {
+	document.body.removeChild(globalContainer);
 });
 
 test('callbacks are triggered properly', () => {
@@ -136,5 +146,5 @@ test('submenus expand appropriately', () => {
 test.skip('markup is accessible', async () => {
 	new Navigation('#primary-nav');
 
-	expect(await axe(document.body.innerHTML)).toHaveNoViolations();
+	expect(await axe(document.querySelector('#primary-nav'))).toHaveNoViolations();
 });
