@@ -7,15 +7,16 @@
 
 	&[aria-hidden="true"] {
 		display: none;
+		visibility: hidden;
 	}
 	&:target,
 	&[aria-hidden="false"] {
 		display: block;
+		visibility: visible;
 	}
 
 	& > .menu-item {
 		display: block;
-
 		@media (--width-medium) {
 			display: inline-block;
 			margin-right: 1em;
@@ -30,10 +31,12 @@
 
 	&[aria-hidden="true"] {
 		display: none;
+		visibility: hidden;
 	}
 	&:target,
 	&[aria-hidden="false"] {
 		display: block;
+		visibility: visible;
 	}
 
 	@media (--width-medium) {
@@ -62,14 +65,17 @@
 .site-menu-toggle {
 	&[aria-hidden="true"] {
 		display: none;
+		visibility: hidden;
 	}
 
 	&[aria-hidden="false"] {
 		display: block;
+		visibility: visible;
 	}
 
 	@media (--width-medium) {
 		display: none;
+		visibility: hidden;
 	}
 }
 
@@ -94,6 +100,7 @@
 	& [data-responsive-nav-control] {
 		@media (--width-medium) {
 			display: none;
+			visibility: hidden;
 		}
 	}
 	& .primary-menu {

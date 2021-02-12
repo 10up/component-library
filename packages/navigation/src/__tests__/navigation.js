@@ -52,17 +52,17 @@ beforeEach(() => {
 						<li id="menu-item-4496" class="menu-item">
 							<a href="#!themes">Themes</a>
 						</li>
-						<li id="menu-item-4496" class="menu-item">
+						<li id="menu-item-4497" class="menu-item">
 							<a href="#!last">Last WP Item</a>
 						</li>
 					</ul>
 				</li>
 			</ul>
 		</li>
-		<li id="menu-item-1915" class="menu-item">
+		<li id="menu-item-1985" class="menu-item">
 			<a href="#!giving">Giving Back</a>
 		</li>
-		<li id="menu-item-1916" class="menu-item menu-item-has-children">
+		<li id="menu-item-1816" class="menu-item menu-item-has-children">
 			<a href="#!blog">Blog</a>
 			<ul class="sub-menu">
 				<li class="menu-item"><a href="#!post">Blog Post 1</a></li>
@@ -70,7 +70,7 @@ beforeEach(() => {
 				<li class="menu-item"><a href="#!post">Blog Post 3</a></li>
 			</ul>
 		</li>
-		<li id="menu-item-1916" class="menu-item">
+		<li id="menu-item-1986" class="menu-item">
 			<a href="#!contact">Contact</a>
 		</li>
 	</ul>
@@ -117,7 +117,9 @@ test('callbacks are triggered properly', () => {
 	expect(onSubmenuClose).toHaveBeenCalled();
 });
 
-test('submenus expand appropriately', () => {
+test('submenus expand appropriately', async () => {
+	// TODO: for some reason toBeVisible assertions are not working here
+	// so we are checking for aria-hidden for now.
 	new Navigation('#primary-nav');
 
 	const submenu1 = screen.getByText('Our Work');
@@ -135,6 +137,10 @@ test('submenus expand appropriately', () => {
 		'aria-hidden',
 		'false',
 	);
+
+	// ensure it's still accessible
+	expect(await axe(document.querySelector('nav'))).toHaveNoViolations();
+
 	// close sub sub menu
 	userEvent.click(subsubmenu1);
 
@@ -146,8 +152,8 @@ test('submenus expand appropriately', () => {
 	);
 });
 
-test.skip('markup is accessible', async () => {
+test('markup is accessible', async () => {
 	new Navigation('#primary-nav');
 
-	expect(await axe(document.querySelector('#primary-nav'))).toHaveNoViolations();
+	expect(await axe(document.querySelector('nav'))).toHaveNoViolations();
 });
