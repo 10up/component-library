@@ -17,5 +17,11 @@ module.exports = {
 				'import/no-extraneous-dependencies': [2, { devDependencies: true }],
 			},
 		},
+		{
+			files: ['**/*/__tests__/**/*.js'],
+			rules: {
+				'import/no-unresolved': 0,
+			},
+		},
 	],
 };

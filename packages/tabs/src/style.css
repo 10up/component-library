@@ -84,9 +84,11 @@
 		left: -999em;
 		position: absolute;
 		top: -999em;
+		visibility: hidden;
 	}
 
 	&.is-active {
+		visibility: visible;
 		position: static;
 	}
 }

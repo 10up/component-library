@@ -4,8 +4,9 @@ module.exports = {
 	moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx'],
 	testPathIgnorePatterns: ['/node_modules/', '/mocks/'],
 	moduleNameMapper: {
-		'\\.css$': require.resolve('./style-mock'),
+		'\\.css$': require.resolve('./test-utils/style-mock'),
 	},
+	moduleDirectories: ['node_modules', './'],
 	collectCoverageFrom: [
 		'**/*.{js,jsx,ts,tsx}',
 		'!**/node_modules/**',

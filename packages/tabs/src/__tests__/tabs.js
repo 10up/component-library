@@ -1,18 +1,21 @@
-import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { render, injectCSS } from 'test-utils/dom';
 import { axe } from 'jest-axe';
 import { Tabs } from '..';
 
+let style;
+let globalContainer;
+
 beforeEach(() => {
-	document.body.innerHTML = `
+	const { container } = render(`
 		<div class="tabs">
 		<div class="tab-control">
 			<ul class="tab-list" role="tablist">
-				<li class="tab-item"><a href="#js-tab1" role="tab" aria-controls="js-tab1" data-testid="tab1">View Tab 1</a></li>
-				<li class="tab-item"><a href="#js-tab2" role="tab" aria-controls="js-tab2" data-testid="tab2">View Tab 2</a></li>
-				<li class="tab-item"><a href="#js-tab3" role="tab" aria-controls="js-tab3" data-testid="tab3">View Tab 3</a></li>
-				<li class="tab-item"><a href="#js-tab4" role="tab" aria-controls="js-tab4" data-testid="tab4">View Tab 4</a></li>
-				<li class="tab-item"><a href="#js-tab5" role="tab" aria-controls="js-tab5" data-testid="tab5">View Tab 5</a></li>
+				<li class="tab-item"><a href="#js-tab1" role="tab" aria-controls="js-tab1">View Tab 1</a></li>
+				<li class="tab-item"><a href="#js-tab2" role="tab" aria-controls="js-tab2">View Tab 2</a></li>
+				<li class="tab-item"><a href="#js-tab3" role="tab" aria-controls="js-tab3">View Tab 3</a></li>
+				<li class="tab-item"><a href="#js-tab4" role="tab" aria-controls="js-tab4">View Tab 4</a></li>
+				<li class="tab-item"><a href="#js-tab5" role="tab" aria-controls="js-tab5">View Tab 5</a></li>
 			</ul>
 		</div><!-- //.tab-control -->
 
@@ -46,48 +49,58 @@ beforeEach(() => {
 		</div><!-- //.tab-group -->
 
 	</div><!-- //.tabs -->
-	`;
+	`);
+
+	globalContainer = container;
+	style = injectCSS(`${__dirname}/../../dist/index.css`);
 });
 
-test('horizontal tabs works', () => {
+afterEach(() => {
+	document.body.removeChild(style);
+	document.body.removeChild(globalContainer);
+});
+
+test.each(['horizontal', 'vertical'])('%s tabs works', async (orientation) => {
 	const onCreate = jest.fn();
 	const onTabChange = jest.fn();
 
 	new Tabs('.tabs', {
 		onCreate,
 		onTabChange,
+		orientation,
 	});
 
-	expect(onCreate).toHaveBeenCalledTimes(1);
-	// should onTabChange be called on initialization?
-	expect(onTabChange).toHaveBeenCalledTimes(5);
-	userEvent.click(screen.getByTestId('tab2'));
-	expect(onTabChange).toHaveBeenCalledTimes(6);
-	expect(document.getElementById('js-tab1')).not.toHaveClass('is-active');
-	expect(document.getElementById('js-tab2')).toHaveClass('is-active');
-});
+	expect(onTabChange).toHaveBeenCalled();
 
-test('vertical tabs works', () => {
-	const onCreate = jest.fn();
-	const onTabChange = jest.fn();
-
-	new Tabs('.tabs', {
-		onCreate,
-		onTabChange,
-		orientation: 'vertical',
-	});
+	// reset onTabChange mock because at this point it has been called multiple times
+	onTabChange.mockReset();
 
 	expect(onCreate).toHaveBeenCalledTimes(1);
-	// should onTabChange be called on initialization?
-	expect(onTabChange).toHaveBeenCalledTimes(5);
-	userEvent.click(screen.getByTestId('tab2'));
-	expect(onTabChange).toHaveBeenCalledTimes(6);
-	expect(document.getElementById('js-tab1')).not.toHaveClass('is-active');
-	expect(document.getElementById('js-tab2')).toHaveClass('is-active');
+
+	const controlTab2 = document.querySelector('a[aria-controls="js-tab2"]');
+	const controlTab3 = document.querySelector('a[aria-controls="js-tab3"]');
+	const tabContent1 = document.getElementById('js-tab1');
+	const tabContent2 = document.getElementById('js-tab2');
+	const tabContent3 = document.getElementById('js-tab3');
+
+	userEvent.click(controlTab2);
+
+	expect(onTabChange).toHaveBeenCalled();
+	expect(tabContent1).not.toBeVisible();
+	expect(tabContent2).toBeVisible();
+
+	userEvent.click(controlTab3);
+
+	expect(tabContent3).toBeVisible();
+	expect(tabContent1).not.toBeVisible();
+	expect(tabContent2).not.toBeVisible();
+
+	// markup is valid after interactions
+	expect(await axe(document.querySelector('.tabs'))).toHaveNoViolations();
 });
 
-test.skip('markup is accessible', async () => {
-	new Tabs('.tabs');
+test.each(['horizontal', 'vertical'])('%s markup is accessible', async (orientation) => {
+	new Tabs('.tabs', { orientation });
 
-	expect(await axe(document.body.innerHTML)).toHaveNoViolations();
+	expect(await axe(document.querySelector('.tabs'))).toHaveNoViolations();
 });
