@@ -27,17 +27,9 @@
   },
   "dependencies": {
     "@10up/component-accordion": "^2.0.0",
-    "@10up/countdown-timer": "^2.0.0"
-  },
-  "@10up/scripts": {
-    "entry": {
-      "index": "./src/assets/index.js",
-      "style": "./src/assets/style.css"
-    },
-    "paths": {
-      "cssLoaderPaths": [
-        "./src/assets"
-      ]
-    }
+    "@10up/countdown-timer": "^2.0.0",
+    "@10up/component-tabs": "^2.0.0",
+    "@10up/component-navigation": "^2.1.0",
+    "@10up/component-tooltip": "^2.0.0"
   }
 }
