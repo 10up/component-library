@@ -1,26 +1,30 @@
 import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
+import { render, injectCSS } from 'test-utils/dom';
 import { axe } from 'jest-axe';
 import { Accordion } from '..';
 
+let globalContainer;
+let style;
+
 beforeEach(() => {
-	document.body.innerHTML = `
-	<div class="accordion accordion--parent" role="region" aria-labelledby="header1">
+	const { container } = render(`
+	<div class="accordion accordion--parent">
 			<button id="header1" class="accordion-header" type="button">Accordion Header 1</button>
-			<div class="accordion-content">
+			<div class="accordion-content" data-testid="accordion-content-1">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
 			</div> <!-- //.accordion-content -->
 
 			<button class="accordion-header" type="button">Accordion Header 2</button>
-			<div class="accordion-content">
+			<div class="accordion-content" data-testid="accordion-content-2">
 				<h2 class="accordion-label">Parent Accordion Heading</h2>
 				<p>here the content of 2nd tab <a href="#">link</a></p>
 			</div> <!-- //.accordion-content -->
 
 			<button class="accordion-header" type="button">Accordion Header with Nested Accordion</button>
-			<div class="accordion-content">
-				<div class="accordion" role="region" aria-labelledby="header2">
+			<div class="accordion-content" data-testid="accordion-content-nested">
+				<div class="accordion">
 					<button id="header2" class="accordion-header" type="button">Nested Accordion Header</button>
 					<div class="accordion-content">
 						<h2 class="accordion-label">Nested Accordion Heading</h2>
@@ -43,7 +47,7 @@ beforeEach(() => {
 
 		</div> <!-- //.accordion -->
 
-		<div class="accordion" role="region" aria-labelledby="header3">
+		<div class="accordion">
 			<button id="header3" class="accordion-header" type="button">Accordion Header</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
@@ -67,9 +71,16 @@ beforeEach(() => {
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 4th tab <a href="#">link</a></p>
 			</div> <!-- //.accordion-content -->
-
 		</div> <!-- //.accordion -->
-	`;
+	`);
+
+	globalContainer = container;
+	style = injectCSS(`${__dirname}/../../dist/index.css`);
+});
+
+afterEach(() => {
+	document.body.removeChild(globalContainer);
+	document.body.removeChild(style);
 });
 
 test('accordion functions trigger', () => {
@@ -109,6 +120,61 @@ test('accordion functions trigger', () => {
 	expect(onToggle).toHaveBeenCalledTimes(4);
 });
 
+test('accordion works as expected', async () => {
+	new Accordion('.accordion');
+
+	const header1 = screen.getByText('Accordion Header 1');
+
+	const header2 = screen.getByText('Accordion Header 2');
+	const content1 = screen.getByTestId('accordion-content-1');
+	const content2 = screen.getByTestId('accordion-content-2');
+
+	userEvent.click(header1);
+	expect(content1).toBeVisible();
+	userEvent.click(header1);
+	expect(content2).not.toBeVisible();
+
+	userEvent.click(header1);
+	userEvent.click(header2);
+	expect(content1).toBeVisible();
+	expect(content2).toBeVisible();
+
+	// ensure markup is accessible after interacting with the accordion
+	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
+
+	userEvent.click(header1);
+	expect(content1).not.toBeVisible();
+	expect(content2).toBeVisible();
+	userEvent.click(header2);
+	expect(content2).not.toBeVisible();
+});
+
+test('nested accordion works', async () => {
+	new Accordion('.accordion');
+
+	const nestedAccordionHeader = screen.getByText('Accordion Header with Nested Accordion');
+	const nestedAccordionContent = screen.getByTestId('accordion-content-nested');
+	userEvent.click(nestedAccordionHeader);
+
+	expect(nestedAccordionContent).toBeVisible();
+
+	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
+
+	// expand nested accordions
+	const subAccordionHeader = screen.getAllByText('Nested Accordion Header');
+
+	subAccordionHeader.forEach((h) => {
+		userEvent.click(h);
+
+		const subAccordionContent = h.parentElement.querySelector('.accordion-content');
+		expect(subAccordionContent).toBeVisible();
+	});
+
+	userEvent.click(nestedAccordionHeader);
+	expect(nestedAccordionContent).not.toBeVisible();
+});
+
 test('markup is accessible', async () => {
-	expect(await axe(document.body.innerHTML)).toHaveNoViolations();
+	new Accordion('.accordion');
+	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
 });

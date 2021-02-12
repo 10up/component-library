@@ -24,10 +24,12 @@
 .accordion-content {
   @nest .js & {
     display: none;
+    visibility: hidden;
 
     &.is-active {
       border-bottom: 1px solid #303030;
       display: block;
+      visibility: visible;
     }
   }
 }
