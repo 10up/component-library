@@ -25,8 +25,6 @@ jobs:
         uses: cypress-io/github-action@v2
         with:
           start: "(cd e2e && npm run test:e2e)"
-          wait-on: "http://localhost:8080"
-          wait-on-timeout: 600
           browser: chrome
           working-directory: e2e
           config: video=true,screenshotOnRunFailure=true
