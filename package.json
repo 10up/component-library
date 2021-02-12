@@ -14,7 +14,7 @@
   "homepage": "https://github.com/10up/component-library#readme",
   "scripts": {
     "test": "jest --clearCache && lerna run test --stream",
-    "build": "learna run build",
+    "build": "lerna run build",
     "codecov": "curl -s https://codecov.io/bash | bash -s",
     "prepare": "lerna bootstrap --hoist",
     "reinstall": "lerna clean --yes && npm run prepare"
