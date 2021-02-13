@@ -32,6 +32,9 @@ jobs:
           config: video=true,screenshotOnRunFailure=true
           install: false
           record: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
 
       - name: Upload screenshots on failure
         uses: actions/upload-artifact@v1
