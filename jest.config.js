@@ -8,11 +8,12 @@ module.exports = {
 	},
 	moduleDirectories: ['node_modules', './'],
 	collectCoverageFrom: [
-		'**/*.{js,jsx,ts,tsx}',
+		'**/*.{js,jsx}',
 		'!**/node_modules/**',
 		'!**/vendor/**',
 		'!**/dist/**',
 		'!**/build/**',
 		'!**/jest.config.{js,ts}',
+		'!**/babel.config.{js,ts}',
 	],
 };
