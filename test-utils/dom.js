@@ -10,6 +10,7 @@ export function render(html) {
 export function injectCSS(cssfile) {
 	const style = document.createElement('style');
 	if (!fs.existsSync(cssfile)) {
+		// eslint-disable-next-line no-console
 		console.error('CSS file does not exist, perhaps you need to run the build command?');
 	}
 	style.innerHTML = fs.readFileSync(cssfile);

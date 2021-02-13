@@ -51,8 +51,6 @@ test('callbacks are triggered properly', () => {
 	expect(onClose).toHaveBeenCalled();
 });
 
-test('tooltips with a link', () => {});
-
 test('markup is accessible', async () => {
 	new Tooltip('.a11y-tip');
 

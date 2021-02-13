@@ -22,20 +22,7 @@ document.addEventListener('DOMContentLoaded', () => {
 	}
 
 	if (document.querySelector('.accordion')) {
-		new Accordion('.accordion', {
-			onCreate() {
-				console.log('onCreated 3');
-			},
-			onOpen() {
-				console.log('onOpen');
-			},
-			onClose() {
-				console.log('onClose');
-			},
-			onToggle() {
-				console.log('onToggle');
-			},
-		});
+		new Accordion('.accordion');
 	}
 
 	if (document.querySelectorAll('.tabs')) {
