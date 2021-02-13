@@ -64,7 +64,6 @@ export default class Accordion {
 	 *
 	 * @param   {element} accordionArea      The accordionArea to scope changes.
 	 * @param   {number}  accordionAreaIndex The index of the accordionArea.
-	 * @returns {null}
 	 */
 	setupAccordion(accordionArea, accordionAreaIndex) {
 		const allAccordionLinks = accordionArea.querySelectorAll('.accordion-header');
@@ -119,7 +118,6 @@ export default class Accordion {
 	 *
 	 * @param {element} accordionLink The accordion heading link
 	 * @param {element} accordionContent The accordion content to open
-	 * @returns {null}
 	 */
 	openAccordionItem(accordionLink, accordionContent) {
 		accordionLink.setAttribute('aria-expanded', 'true');
@@ -141,7 +139,6 @@ export default class Accordion {
 	 *
 	 * @param {element} accordionLink The accordion heading link
 	 * @param {element} accordionContent The accordion content to open
-	 * @returns {null}
 	 */
 	closeAccordionItem(accordionLink, accordionContent) {
 		accordionLink.setAttribute('aria-expanded', 'false');
@@ -160,9 +157,8 @@ export default class Accordion {
 	/**
 	 * Toggles a given accordion item.
 	 * Add or remove necessary CSS classes and toggle ARIA attributes.
-
+	 *
 	 * @param   {object} event The accordion click event
-	 * @returns {null}
 	 */
 	toggleAccordionItem(event) {
 		const accordionLink = event.target;
@@ -197,12 +193,11 @@ export default class Accordion {
 
 	/**
 	 * Moves and focus between items based on the selected item and the key pressed.
-
+	 *
 	 * @param   {element[]} accordionLinks The array of accordion links.
 	 * @param	{element} selectedElement The accordion link where the key action triggers.
 	 * @param	{number} key The key code of the key pressed.
 	 * @param	{object} event The accordion keydown event.
-	 * @returns {null}
 	 */
 	accessKeyBindings(accordionLinks, selectedElement, key, event) {
 		let linkIndex;

@@ -404,7 +404,7 @@ export default class CountdownTimer {
 	 *
 	 * @param {number} milliseconds Number of milliseconds remaining in the countdown.
 	 * @param {number} time         Time we're counting to, in milliseconds.
-	 * @returns {number} null
+	 * @returns {Array}
 	 */
 	formatDiff(milliseconds, time) {
 		const msPerSecond = 1000;

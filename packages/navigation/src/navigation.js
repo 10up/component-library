@@ -92,7 +92,6 @@ export default class Navigation {
 	 * Includes adding classes and ARIA.
 	 * We use "scoped" classes so we can be more confident that there will be no collisions.
 	 *
-	 * @returns {null}
 	 */
 	setupMenu() {
 		const id = this.$menu.getAttribute('id');
@@ -122,8 +121,6 @@ export default class Navigation {
 	/**
 	 * Sets up the submenus.
 	 * Adds JS classes and initial AIRA attributes.
-	 *
-	 * @returns {null}
 	 */
 	setupSubMenus() {
 		this.$submenus.forEach(($submenu, index) => {
@@ -145,8 +142,6 @@ export default class Navigation {
 	/**
 	 * Binds our various listeners for the plugin.
 	 * Includes specific element listeners as well as media query.
-	 *
-	 * @returns {null}
 	 */
 	setupListeners() {
 		const comp = this;
@@ -182,7 +177,6 @@ export default class Navigation {
 	/**
 	 * Sets an media query related functions when the query boundry is reached.
 	 *
-	 * @returns {null}
 	 */
 	setMQ() {
 		this.setMQMenuA11y();
@@ -193,7 +187,6 @@ export default class Navigation {
 	 * Sets any ARIA that changes as a result of the media query boundry being passed.
 	 * Specifically for the toggle and main menu.
 	 *
-	 * @returns {null}
 	 */
 	setMQMenuA11y() {
 		// Large
@@ -213,7 +206,6 @@ export default class Navigation {
 	 * Sets an media query related functions when the query boundry is reached.
 	 * Specifically for submenus.
 	 *
-	 * @returns {null}
 	 */
 	setMQSubbmenuA11y() {
 		this.$submenus.forEach(($submenu) => {
@@ -225,7 +217,6 @@ export default class Navigation {
 	 * Opens the passed submenu.
 	 *
 	 * @param   {element} $submenu The submenu to open. Required.
-	 * @returns {null}
 	 */
 	openSubmenu($submenu) {
 		// Open the submenu by updating ARIA and class.
@@ -245,7 +236,6 @@ export default class Navigation {
 	 * Closes the passed submenu.
 	 *
 	 * @param   {element} $submenu The submenu to close. Required.
-	 * @returns {null}
 	 */
 	closeSubmenu($submenu) {
 		const $anchor = $submenu.previousElementSibling;
@@ -277,8 +267,7 @@ export default class Navigation {
 	/**
 	 * Closes all submenus in the node list.
 	 *
-	 * @param   {nodelist} $submenus The node list of submenus to close. Required.
-	 * @returns {null}
+	 * @param  {Array} $submenus The node list of submenus to close. Required.
 	 */
 	closeSubmenus($submenus) {
 		$submenus.forEach(($submenu) => {
@@ -295,7 +284,6 @@ export default class Navigation {
 	 * Opens or closes the menu according to current state.
 	 *
 	 * @param {object} event The event object.
-	 * @returns {null}
 	 */
 	listenerMenuToggleClick(event) {
 		const isExpanded = this.$menuToggle.getAttribute('aria-expanded') === 'true';
@@ -343,7 +331,6 @@ export default class Navigation {
 	 * Document click handler.
 	 * Closes all open submenus on a click outside of the menu.
 	 *
-	 * @returns {null}
 	 */
 	listenerDocumentClick() {
 		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
@@ -363,7 +350,6 @@ export default class Navigation {
 	 * Refocuses after closing submenus.
 	 *
 	 * @param   {object} event The event object.
-	 * @returns {null}
 	 */
 	listenerDocumentKeyup(event) {
 		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
@@ -388,7 +374,6 @@ export default class Navigation {
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
 	 * @param   {object} event The event object. Required.
-	 * @returns {null}
 	 */
 	listenerSubmenuAnchorClick(event) {
 		const $anchor = event.target;
@@ -429,7 +414,6 @@ export default class Navigation {
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
 	 * @param   {object} event The event object.
-	 * @returns {null}
 	 */
 	listenerSubmenuAnchorFocus(event) {
 		const $anchor = event.target;

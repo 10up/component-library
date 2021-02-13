@@ -3,7 +3,6 @@ import 'core-js/web/dom-collections';
 import 'core-js/es/array/includes';
 
 /**
- * @module @10up/Tooltip
  *
  * @description
  *
@@ -63,8 +62,7 @@ export default class Tooltip {
 	/**
 	 * Initialize a given tooltip area.
 	 *
-	 * @param   {element} $ttContainer The tooltip containing element.
-	 * @param ttContainer
+	 * @param   {element} ttContainer The tooltip containing element.
 	 * @returns {void}
 	 */
 	setupTooltip(ttContainer) {
