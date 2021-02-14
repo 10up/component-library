@@ -44,7 +44,7 @@ new Accordion( '.accordion', {
 
 ## Demo
 
-Example implementations at: https://10up.github.io/accordion-animate/demo/
+Example implementations at: https://baseline.10up.com/component/accordion/
 
 ## Support Level
 

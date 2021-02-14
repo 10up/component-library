@@ -31,7 +31,7 @@ referencing the CSS files directly.
 
 ## Demo
 
-Example implementations at: https://10up.github.io/component-animate/demo/
+Example implementations at: https://baseline.10up.com/component/animate/
 
 ## Support Level
 

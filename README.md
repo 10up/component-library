@@ -1,20 +1,17 @@
 # 10up Component Library
 
-> This package houses all of 10up's components, which currently includes the following:
+> This repo houses all of 10up's components, which currently includes the following:
 
 [![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/10up/component-library/branch/master/graph/badge.svg?token=rm4ggtw19O)](https://codecov.io/gh/10up/component-library)
 
-* [Accordion](https://baseline.10up.com/component/accordion/)
-* [Animate](https://baseline.10up.com/component/animate/)
-* [Countdown Timer](https://baseline.10up.com/component/countdown-timer/)
-* [Navigation](https://baseline.10up.com/component/responsive-navigation/)
-* [Tabs](https://baseline.10up.com/component/tabs/)
-* [Tooltip](https://baseline.10up.com/component/tooltips/)
+* [Accordion](packages/accordion/README.md)
+* [Animate](packages/animate/README.md)
+* [Countdown Timer](packages/countdown-timer/README.md)
+* [Navigation](packages/navigation/README.md)
+* [Tabs](packages/tabs/README.md)
+* [Tooltip](packages/tooltips/README.md)
 
-## Installation
-
-`npm install @10up/component-library --save`
 
 ## Support Level
 

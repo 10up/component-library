@@ -80,7 +80,9 @@ new Tabs( '.tabs', {
 
 #### Standalone
 
-Include the `tabs.js` file from the `dist/` directory and access the component from the gobal `TenUp` object.
+```html
+<script src="unpkg.com/@10up/component-tabs@2.0.0/index.umd.js"></script>
+```
 
 ```javascript
 let myTabs = new TenUp.tabs( '.tabs', {

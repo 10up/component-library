@@ -38,7 +38,7 @@ new CountdownTimer( '.countdown-timer', {
 
 ## Demo
 
-Example implementations at: https://10up.github.io/component-countdown-timer/demo/
+Example implementations at: https://baseline.10up.com/component/countdown-timer/
 
 ## Support Level
 
