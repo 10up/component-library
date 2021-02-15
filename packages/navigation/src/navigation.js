@@ -34,6 +34,16 @@ export default class Navigation {
 			return;
 		}
 
+		this.evtCallbacks = {};
+
+		// bind methods
+		this.setMQ = this.setMQ.bind(this);
+		this.listenerMenuToggleClick = this.listenerMenuToggleClick.bind(this);
+		this.listenerSubmenuAnchorFocus = this.listenerSubmenuAnchorFocus.bind(this);
+		this.listenerSubmenuAnchorClick = this.listenerSubmenuAnchorClick.bind(this);
+		this.listenerDocumentClick = this.listenerDocumentClick.bind(this);
+		this.listenerDocumentKeyup = this.listenerDocumentKeyup.bind(this);
+
 		// Settings
 		this.settings = { ...defaults, ...options };
 
@@ -84,8 +94,74 @@ export default class Navigation {
 	}
 
 	/**
-	 * Setup
+	 * Handle destroying tabs
+	 *
+	 * @param options Optional options
 	 */
+	destroy(options = {}) {
+		this.removeAllEventListeners();
+		this.mq.removeListener(this.setMQ);
+
+		const defaults = {
+			removeAttributes: true,
+		};
+
+		const settings = {
+			...defaults,
+			...options,
+		};
+
+		if (settings.removeAttributes) {
+			this.$menu.removeAttribute('aria-hidden');
+			this.$menu.removeAttribute('data-action');
+			this.$menuToggle.removeAttribute('aria-expanded');
+			this.$menuToggle.removeAttribute('aria-hidden');
+
+			this.$submenus.forEach(($submenu) => {
+				const $anchor = $submenu.previousElementSibling;
+
+				$submenu.removeAttribute('id');
+				$submenu.removeAttribute('aria-hidden');
+
+				// Update ARIA.
+				$submenu.removeAttribute('aria-label');
+				$anchor.removeAttribute('aria-controls');
+				$anchor.removeAttribute('aria-haspopup');
+			});
+		}
+	}
+
+	/**
+	 * Adds an event listener and caches the callback for later removal
+	 *
+	 * @param {element} element The element associaed with the event listener
+	 * @param {string} evtName The event name
+	 * @param {Function} callback The callback function
+	 */
+	addEventListener(element, evtName, callback) {
+		if (typeof this.evtCallbacks[evtName] === 'undefined') {
+			this.evtCallbacks[evtName] = [];
+		}
+
+		this.evtCallbacks[evtName].push({
+			element,
+			callback,
+		});
+
+		element.addEventListener(evtName, callback);
+	}
+
+	/**
+	 * Removes all event listeners
+	 */
+	removeAllEventListeners() {
+		Object.keys(this.evtCallbacks).forEach((evtName) => {
+			const events = this.evtCallbacks[evtName];
+			events.forEach(({ element, callback }) => {
+				element.removeEventListener(evtName, callback);
+			});
+		});
+	}
 
 	/**
 	 * Sets up the main menu for the navigation.
@@ -144,13 +220,12 @@ export default class Navigation {
 	 * Includes specific element listeners as well as media query.
 	 */
 	setupListeners() {
-		const comp = this;
 		// Media query listener.
 		// We're using this instead of resize + debounce because it should be more efficient than that combo.
-		this.mq.addListener(this.setMQ.bind(comp));
+		this.mq.addListener(this.setMQ);
 
 		// Menu toggle listener.
-		this.$menuToggle.addEventListener('click', this.listenerMenuToggleClick.bind(comp));
+		this.addEventListener(this.$menuToggle, 'click', this.listenerMenuToggleClick);
 
 		// Submenu listeners.
 		// Mainly applies to the anchors of submenus.
@@ -158,16 +233,16 @@ export default class Navigation {
 			const $anchor = $submenu.previousElementSibling;
 
 			if (this.settings.action === 'hover') {
-				$anchor.addEventListener('focus', this.listenerSubmenuAnchorFocus.bind(comp));
+				this.addEventListener($anchor, 'focus', this.listenerSubmenuAnchorFocus);
 			}
 
-			$anchor.addEventListener('click', this.listenerSubmenuAnchorClick.bind(comp));
+			this.addEventListener($anchor, 'click', this.listenerSubmenuAnchorClick);
 		});
 
 		// Document specific listeners.
 		// Mainly used to close any open menus.
-		document.addEventListener('click', this.listenerDocumentClick.bind(comp));
-		document.addEventListener('keyup', this.listenerDocumentKeyup.bind(comp));
+		this.addEventListener(document, 'click', this.listenerDocumentClick);
+		this.addEventListener(document, 'keyup', this.listenerDocumentKeyup);
 	}
 
 	/**
