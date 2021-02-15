@@ -107,8 +107,20 @@ test.each(['horizontal', 'vertical'])('%s markup is accessible', async (orientat
 
 test('destroy works', () => {
 	const tabsHTML = globalContainer.innerHTML;
-	const tabs = new Tabs('.tabs');
+	const onTabChange = jest.fn();
+	const tabs = new Tabs('.tabs', {
+		onTabChange,
+	});
+	onTabChange.mockReset();
+
+	const controlTab2 = document.querySelector('a[aria-controls="js-tab2"]');
+	userEvent.click(controlTab2);
+	expect(onTabChange).toHaveBeenCalled();
+	onTabChange.mockReset();
 
 	tabs.destroy();
 	expect(tabsHTML).toEqual(globalContainer.innerHTML);
+
+	userEvent.click(controlTab2);
+	expect(onTabChange).not.toHaveBeenCalled();
 });
