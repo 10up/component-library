@@ -10,7 +10,7 @@ let style;
 beforeEach(() => {
 	const { container } = render(`
 	<div class="accordion accordion--parent">
-			<button id="header1" class="accordion-header" type="button">Accordion Header 1</button>
+			<button class="accordion-header" type="button">Accordion Header 1</button>
 			<div class="accordion-content" data-testid="accordion-content-1">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -25,7 +25,7 @@ beforeEach(() => {
 			<button class="accordion-header" type="button">Accordion Header with Nested Accordion</button>
 			<div class="accordion-content" data-testid="accordion-content-nested">
 				<div class="accordion">
-					<button id="header2" class="accordion-header" type="button">Nested Accordion Header</button>
+					<button class="accordion-header" type="button">Nested Accordion Header</button>
 					<div class="accordion-content">
 						<h2 class="accordion-label">Nested Accordion Heading</h2>
 						<p>here the content of 1st tab <a href="#">link</a></p>
@@ -48,7 +48,7 @@ beforeEach(() => {
 		</div> <!-- //.accordion -->
 
 		<div class="accordion">
-			<button id="header3" class="accordion-header" type="button">Accordion Header</button>
+			<buttonclass="accordion-header" type="button">Accordion Header</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -172,6 +172,15 @@ test('nested accordion works', async () => {
 
 	userEvent.click(nestedAccordionHeader);
 	expect(nestedAccordionContent).not.toBeVisible();
+});
+
+test('destroying accordion works', async () => {
+	const originalMarkup = document.querySelector('.accordion').innerHTML;
+	const accordion = new Accordion('.accordion');
+
+	accordion.destroy();
+
+	expect(originalMarkup).toEqual(document.querySelector('.accordion').innerHTML);
 });
 
 test('markup is accessible', async () => {
