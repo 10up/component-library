@@ -85,5 +85,6 @@ declare module '@10up/countdown-timer' {
 
 	export class CountdownTimer {
 		constructor(element: string, options: CountdownTimerOptions);
+		destroy(removeAttributes: boolean);
 	}
 }
