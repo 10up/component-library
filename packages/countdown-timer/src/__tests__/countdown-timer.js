@@ -45,3 +45,26 @@ test('countdown timer starts a timer', () => {
 	expect(onTick).toHaveBeenCalledTimes(1);
 	expect(onEnd).not.toHaveBeenCalled();
 });
+
+test('destroy works', () => {
+	jest.useFakeTimers();
+	const timerHTML = globalContainer.innerHTML;
+	const countdownTimer = new CountdownTimer('.countdown-timer');
+	const timer = screen.getByRole('timer');
+
+	expect(timer).toHaveTextContent('1 year, 0 weeks, 0 days, 23 hours, 59 minutes');
+	// destroy and leave attributes and text content
+	countdownTimer.destroy({ removeAttributes: false, restoreTextContent: false });
+	const frozenTimer = timer.textContent;
+	jest.runAllTimers();
+	expect(timer).toHaveTextContent(frozenTimer);
+
+	// restore text content
+	countdownTimer.destroy({ removeAttributes: false, restoreTextContent: true });
+	expect(timer).not.toHaveTextContent('1 year, 0 weeks, 0 days, 23 hours');
+	expect(timerHTML).not.toEqual(document.body.innerHTML);
+
+	// destory and restore everything
+	countdownTimer.destroy();
+	expect(timerHTML).toEqual(globalContainer.innerHTML);
+});

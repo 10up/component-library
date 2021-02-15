@@ -1,5 +1,5 @@
 declare module '@10up/countdown-timer' {
-	type IntervalOptions = {
+	export type IntervalOptions = {
 		/**
 		 * If false, this interval will not be displayed in the timer under any circumstances. Useful if you only need to show approximate values
 		 * (e.g. “3 days, 12 hours since the last error”) or if you know the time you’re counting
@@ -23,7 +23,7 @@ declare module '@10up/countdown-timer' {
 		plural: string,
 	}
 
-	type CountdownTimerOptions = {
+	export type CountdownTimerOptions = {
 		/**
 		 * Called once per component instance after the instance is initialized on page load.
 		 * Called with a single argument containing the following properties: element
@@ -83,7 +83,20 @@ declare module '@10up/countdown-timer' {
 		seconds?: IntervalOptions,
 	};
 
+	export type DestroyOptions = {
+		/**
+		 * Remove all custom attributes added by the component
+		 */
+		removeAttributes: boolean,
+
+		/**
+		 * Restore the original text content of the timer
+		 */
+		restoreTextContent: boolean,
+	}
+
 	export class CountdownTimer {
 		constructor(element: string, options: CountdownTimerOptions);
+		destroy(options: DestroyOptions);
 	}
 }
