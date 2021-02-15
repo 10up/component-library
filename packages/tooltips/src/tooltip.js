@@ -25,6 +25,8 @@ export default class Tooltip {
 			onClose: null,
 		};
 
+		this.evtCallbacks = {};
+
 		// Tooltip Containers
 		this.$tooltips = document.querySelectorAll(element);
 
@@ -57,6 +59,42 @@ export default class Tooltip {
 		if (this.settings.onCreate && typeof this.settings.onCreate === 'function') {
 			this.settings.onCreate.call();
 		}
+	}
+
+	destroy() {
+		this.removeAllEventListeners();
+	}
+
+	/**
+	 * Adds an event listener and caches the callback for later removal
+	 *
+	 * @param {element} element The element associaed with the event listener
+	 * @param {string} evtName The event name
+	 * @param {Function} callback The callback function
+	 */
+	addEventListener(element, evtName, callback) {
+		if (typeof this.evtCallbacks[evtName] === 'undefined') {
+			this.evtCallbacks[evtName] = [];
+		}
+
+		this.evtCallbacks[evtName].push({
+			element,
+			callback,
+		});
+
+		element.addEventListener(evtName, callback);
+	}
+
+	/**
+	 * Removes all event listeners
+	 */
+	removeAllEventListeners() {
+		Object.keys(this.evtCallbacks).forEach((evtName) => {
+			const events = this.evtCallbacks[evtName];
+			events.forEach(({ element, callback }) => {
+				element.removeEventListener(evtName, callback);
+			});
+		});
 	}
 
 	/**
@@ -124,12 +162,12 @@ export default class Tooltip {
 			self.insertBefore(newButton, self.firstChild);
 
 			// Set event listener for trigger click
-			newButton.addEventListener('click', this.manageBoundTrigger);
+			this.addEventListener(newButton, 'click', this.manageBoundTrigger);
 		} // if self contains the toggleClass
 
 		if (self.classList.contains(ttToggleClass) === false) {
 			// Set Listeners for callbacks to fire
-			tip.addEventListener('transitionend', this.boundManageTT);
+			this.addEventListener(tip, 'transitionend', this.boundManageTT);
 		}
 
 		// Hide the tooltip on ESC because we have empathy and sometimes
@@ -139,7 +177,7 @@ export default class Tooltip {
 		// once they move focus away from the element that had the
 		// the tooltip, remove the hide-tip class so that the
 		// tip can be accessed again on re-focus.
-		trigger.addEventListener('keyup', this.boundManageEsc);
+		this.addEventListener(trigger, 'keyup', this.boundManageEsc);
 	}
 
 	/**
