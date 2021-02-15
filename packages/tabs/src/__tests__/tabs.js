@@ -104,3 +104,11 @@ test.each(['horizontal', 'vertical'])('%s markup is accessible', async (orientat
 
 	expect(await axe(document.querySelector('.tabs'))).toHaveNoViolations();
 });
+
+test('destroy works', () => {
+	const tabsHTML = globalContainer.innerHTML;
+	const tabs = new Tabs('.tabs');
+
+	tabs.destroy();
+	expect(tabsHTML).toEqual(globalContainer.innerHTML);
+});
