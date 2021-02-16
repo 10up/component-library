@@ -1,0 +1,11 @@
+@import "fade-in.css";
+@import "fade-out.css";
+
+@media (prefers-reduced-motion: reduce) {
+
+	.fade-in,
+	.fade-out {
+		animation-duration: 1ms !important;
+	}
+
+}

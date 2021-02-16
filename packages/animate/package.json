@@ -1,0 +1,37 @@
+{
+  "name": "@10up/animate",
+  "version": "2.0.0",
+  "author": "10up",
+  "description": "A lightweight utility animation library from 10up",
+  "main": "dist/index.js",
+  "source": "src/index.js",
+  "style": "./dist/index.css",
+  "scripts": {
+    "watch": "npm run build -- --watch",
+    "build": "microbundle build -f modern"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/10up/component-animate.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/10up/component-animate/issues"
+  },
+  "homepage": "https://baseline.10up.com/component/animate/",
+  "devDependencies": {
+    "@testing-library/dom": "^7.29.4",
+    "@testing-library/jest-dom": "^5.11.9",
+    "@testing-library/user-event": "^12.6.3",
+    "microbundle": "^0.13.0",
+    "postcss-import": "^14.0.0",
+    "postcss-preset-env": "^6.7.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "Firefox ESR",
+    "not dead",
+    "IE 11"
+  ]
+}

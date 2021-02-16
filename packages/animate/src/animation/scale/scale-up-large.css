@@ -1,0 +1,14 @@
+@keyframes scaleUpLarge {
+
+	from {
+		transform: scale(1);
+	}
+
+	to {
+		transform: scale(1.5);
+	}
+}
+
+.scale-up-large {
+	animation-name: scaleUpLarge;
+}

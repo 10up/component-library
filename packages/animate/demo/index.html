@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en-US">
+	<head>
+		<title>10up Component Library | TenUpAnimations</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<link href="https://fonts.googleapis.com/css?family=IBM+Plex+Sans&display=swap" rel="stylesheet">
+
+		<style>
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: border-box;
+			padding: 0;
+			margin: 0;
+		}
+
+		body {
+			color: #232323;
+			font-family: 'IBM Plex Sans', sans-serif;
+		}
+
+		label {
+			display: block;
+			margin-bottom: 5px;
+		}
+
+		label, button {
+			cursor: pointer;
+		}
+
+		legend {
+			display: block;
+			font-size: 22px;
+			font-weight: 600;
+			margin-bottom: 8px;
+			padding-left: 8px;
+			width: 100%;
+		}
+
+		fieldset {
+			border: 0;
+			display: block;
+			margin: 0;
+			padding: 0;
+			width: 100%;
+		}
+
+		/* Custom Form Controls */
+		.custom-select {
+			background: #fff;
+			border: 1px solid #ccc;
+			height: 36px;
+			margin-bottom: 1em;
+			overflow: hidden;
+			position: relative;
+		}
+
+		.custom-select:after {
+			border-color: #000 transparent transparent transparent;
+			border-style: solid;
+			border-width: 9px 7px 0 9px;
+			content: '';
+			height: 0;
+			pointer-events: none;
+			position: absolute;
+			right: 10px;
+			speak: none;
+			top: 14px;
+			width: 0;
+		}
+
+		.custom-select select {
+			-webkit-appearance: none;
+			-moz-appearance: none;
+			appearance: none;
+			background: none;
+			border: 0;
+			color: #000;
+			font-family: inherit;
+			font-size: inherit;
+			height: 100%;
+			margin: 0;
+			padding: 0 28px 0 8px;
+			width: 100%;
+			width: 110% \9;
+			z-index: 2;
+		}
+
+		.custom-select select:focus {
+			box-shadow: inset 0 0 0 1px blue;
+			outline: transparent;
+		}
+
+		.custom-select select::-ms-expand {
+			display: none;
+		}
+
+		.custom-select select:-moz-focusring {
+			color: transparent;
+			text-shadow: 0 0 0 #000;
+		}
+
+		.button {
+			border: 2px solid #e31e41;
+			color: #e31e41;
+			cursor: pointer;
+			display: block;
+			font-size: 1rem;
+			letter-spacing: .03em;
+			padding: .5em 1em;
+			text-align: center;
+			text-transform: uppercase;
+			white-space: nowrap;
+			width: 100%;
+		}
+
+		.button:hover,
+		.button:focus {
+			background: #e31e41;
+			color: #fff;
+		}
+
+		/* General Layout */
+		.col {
+			width: 50%;
+			min-width: 50%;
+		}
+
+		.gutter {
+			padding: .5em;
+			width: 100%;
+		}
+
+		/* Demo */
+		.demo-container {
+			margin: 1em auto;
+			max-width: 740px;
+			padding: 0 1em;
+		}
+
+		.demo-wrap {
+			border: 2px dashed #767676;
+			margin: 1em auto;
+			max-width: 300px;
+			padding: 1em;
+		}
+
+		.demo-controls {
+			padding: 0;
+			display: flex;
+			flex-wrap: wrap;
+		}
+
+		.demo-controls label {
+			display: block;
+		}
+
+		.demo-controls select {
+			display: block;
+		}
+
+		.demo-block {
+			background: #212121;
+			color: #eee;
+			line-height: 100px;
+			text-align: center;
+			width: 100%;
+		}
+
+		</style>
+
+		<link href="../dist/index.css" rel="stylesheet">
+
+		</style>
+	</head>
+	<body>
+
+		<div class="demo-container">
+
+			<form method="get" action="" id="js-animation-form">
+				<fieldset>
+					<legend>
+						Animation Library Options
+					</legend>
+					<div class="demo-controls">
+						<div class="col">
+							<div class="gutter">
+								<label for="js-control">Style</label>
+								<div class="custom-select">
+									<select id="js-control" aria-controls="js-demo-block">
+										<optgroup label="Fade">
+											<option  selected value="fade-in">Fade In</option>
+											<option value="fade-out">Fade Out</option>
+										</optgroup>
+										<optgroup label="Rotate">
+											<option value="rotate-90">Rotate 90&deg;</option>
+											<option value="rotate-180">Rotate 180&deg;</option>
+											<option value="rotate-270">Rotate 270&deg;</option>
+											<option value="rotate-360">Rotate 360&deg;</option>
+										</optgroup>
+										<optgroup label="Scale">
+											<option value="scale-down">Scale Down</option>
+											<option value="scale-down-small">Scale Down, Small</option>
+											<option value="scale-down-large">Scale Down, Large</option>
+											<option value="scale-up">Scale Up</option>
+											<option value="scale-up-small">Scale Up, Small</option>
+											<option value="scale-up-large">Scale Up, Large</option>
+										</optgroup>
+										<optgroup label="Shake">
+											<option value="shake-horizontal">Shake Horizontal</option>
+											<option value="shake-horizontal-large">Shake Horizontal, Large</option>
+											<option value="shake-horizontal-small">Shake Horizontal, Small</option>
+											<option value="shake-vertical">Shake Vertical</option>
+											<option value="shake-vertical-large">Shake Vertical, Large</option>
+											<option value="shake-vertical-small">Shake Vertical, Small</option>
+										</optgroup>
+										<optgroup label="Slide">
+											<option value="slide-in-down">Slide In, Down</option>
+											<option value="slide-in-left">Slide In, Left</option>
+											<option value="slide-in-right">Slide In, Right</option>
+											<option value="slide-in-up">Slide In, Up</option>
+											<option value="slide-out-down">Slide Out, Down</option>
+											<option value="slide-out-left">Slide Out, Left</option>
+											<option value="slide-out-right">Slide Out, Right</option>
+											<option value="slide-out-up">Slide Out, Up</option>
+										</optgroup>
+									</select>
+								</div><!--/.custom-select-->
+
+								<label for="js-speed">Duration</label>
+								<div class="custom-select">
+									<select id="js-speed" aria-controls="js-demo-block">
+										<option>
+											<option value="duration-150">150ms</option>
+											<option value="duration-200">200ms</option>
+											<option value="duration-250">250ms</option>
+											<option value="duration-300">300ms</option>
+											<option value="duration-350">350ms</option>
+											<option value="duration-400">400ms</option>
+											<option value="duration-450">450ms</option>
+											<option value="duration-500">500ms</option>
+											<option value="duration-550">550ms</option>
+											<option value="duration-600">600ms</option>
+											<option value="duration-650">650ms</option>
+											<option value="duration-700">700ms</option>
+											<option selected value="duration-750">750ms</option>
+											<option value="duration-800">800ms</option>
+											<option value="duration-850">850ms</option>
+											<option value="duration-900">900ms</option>
+											<option value="duration-950">950ms</option>
+											<option value="duration-1000">1000ms</option>
+										</option>
+									</select>
+								</div><!--/.custom-select-->
+							</div>
+						</div><!--/.col-->
+						<div class="col">
+							<div class="gutter">
+							<label for="js-timing">Timing</label>
+							<div class="custom-select">
+								<select id="js-timing" aria-controls="js-demo-block">
+									<option>
+										<option value="timing-ease-in-out">Ease In Out</option>
+										<option value="timing-ease-in">Ease In</option>
+										<option value="timing-ease-out">Ease Out</option>
+										<option value="timing-ease">Ease</option>
+										<option selected value="timing-linear">Linear</option>
+									</option>
+								</select>
+							</div><!--/.custom-select-->
+
+							<label for="js-delay">Delay</label>
+							<div class="custom-select">
+								<select id="js-delay" aria-controls="js-demo-block">
+									<option>
+										<option selected value="">No delay</option>
+										<option value="delay-150">150ms</option>
+										<option value="delay-200">200ms</option>
+										<option value="delay-250">250ms</option>
+										<option value="delay-300">300ms</option>
+										<option value="delay-350">350ms</option>
+										<option value="delay-400">400ms</option>
+										<option value="delay-450">450ms</option>
+										<option value="delay-500">500ms</option>
+										<option value="delay-550">550ms</option>
+										<option value="delay-600">600ms</option>
+										<option value="delay-650">650ms</option>
+										<option value="delay-700">700ms</option>
+										<option value="delay-750">750ms</option>
+										<option value="delay-800">800ms</option>
+										<option value="delay-850">850ms</option>
+										<option value="delay-900">900ms</option>
+										<option value="delay-950">950ms</option>
+										<option value="delay-1000">1000ms</option>
+									</option>
+								</select>
+							</div><!--/.custom-select-->
+							</div>
+						</div><!--/.col-->
+					</div><!--/.demo-controls-->
+					<div class="gutter">
+						<button class="button" type="submit">Apply this animation</button>
+					</div>
+				</fieldset>
+			</form>
+
+			<div class="demo-wrap">
+				<div id="js-demo-block" class="demo-block duration-750">
+					Animate Me!
+				</div>
+			</div><!--/.demo-wrap-->
+
+		</div>
+
+		<script>
+
+			var form = document.getElementById( 'js-animation-form' );
+			var target = document.getElementById( 'js-demo-block' );
+			var formElements,
+				formElementsCount,
+				delayValue,
+				delayValueForTimer,
+				value,
+				timer,
+				i;
+
+			form.addEventListener('submit', function( e ) {
+
+				e.preventDefault();
+				formElements = e.target.elements;
+				formElementsCount = formElements.length;
+				delayValue = (document.getElementById('js-delay').value === '') ? 1000 : document.getElementById('js-delay').value;
+				delayValueForTimer = Number( delayValue.toString().replace(/delay-/i, '') );
+
+				if ( formElementsCount > 0 ) {
+
+					clearTimeout(timer);
+					target.setAttribute('class', 'demo-block');
+
+					for (i = 0; i < formElementsCount; i = i + 1) {
+
+						value = formElements[i].value;
+
+						if ( value !== '' ) {
+							target.classList.add(value);
+						}
+					}
+				}
+
+				timer = setTimeout( function() {
+					target.setAttribute('class', 'demo-block');
+				}, delayValueForTimer + 1000 );
+
+			}, false);
+
+		</script>
+	</body>
+</html>

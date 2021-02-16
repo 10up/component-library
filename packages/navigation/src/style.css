@@ -1,0 +1,161 @@
+@custom-media --width-medium (width >= 48em);
+
+.primary-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	&[aria-hidden="true"] {
+		display: none;
+		visibility: hidden;
+	}
+	&:target,
+	&[aria-hidden="false"] {
+		display: block;
+		visibility: visible;
+	}
+
+	& > .menu-item {
+		display: block;
+		@media (--width-medium) {
+			display: inline-block;
+			margin-right: 1em;
+		}
+	}
+}
+
+.sub-menu {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+
+	&[aria-hidden="true"] {
+		display: none;
+		visibility: hidden;
+	}
+	&:target,
+	&[aria-hidden="false"] {
+		display: block;
+		visibility: visible;
+	}
+
+	@media (--width-medium) {
+		left: 0;
+		position: absolute;
+		top: 100%;
+	}
+
+	& > .menu-item {
+		display: block;
+	}
+}
+.primary-menu[data-action="hover"] {
+	& .menu-item {
+		&:hover {
+			@media (--width-medium) {
+				& > .sub-menu,
+				& > .sub-menu[aria-hidden="true"] {
+					display: block;
+				}
+			}
+		}
+	}
+}
+
+.site-menu-toggle {
+	&[aria-hidden="true"] {
+		display: none;
+		visibility: hidden;
+	}
+
+	&[aria-hidden="false"] {
+		display: block;
+		visibility: visible;
+	}
+
+	@media (--width-medium) {
+		display: none;
+		visibility: hidden;
+	}
+}
+
+.menu-item {
+	@media (--width-medium) {
+		position: relative;
+	}
+}
+
+.menu-item-has-children {
+	white-space: nowrap;
+}
+
+.menu-item-has-children > a:after {
+	content: "+";
+	display: inline-block;
+	margin-left: .25em;
+	font-weight: 700;
+}
+
+.no-js {
+	& [data-responsive-nav-control] {
+		@media (--width-medium) {
+			display: none;
+			visibility: hidden;
+		}
+	}
+	& .primary-menu {
+		display: none;
+		list-style: none;
+		margin: 0;
+		padding-left: 0;
+
+		@media (--width-medium) {
+			display: block;
+		}
+
+		&:target {
+			display: block;
+		}
+
+		& ul {
+			list-style: none;
+			margin: 0;
+			padding-left: 0;
+		}
+		& li {
+			position: relative;
+
+			&:hover,
+			&:focus-within {
+				& > ul {
+					display: block;
+				}
+			}
+
+			& > a {
+				&:focus {
+					& > ul {
+						display: block;
+					}
+				}
+			}
+
+			& > ul {
+				display: none;
+
+				@media (--width-medium) {
+					left: 0;
+					position: absolute;
+					top: 100%;
+				}
+			}
+		}
+		& > li {
+			display: block;
+
+			@media (--width-medium) {
+				display: inline-block;
+			}
+		}
+	}
+}

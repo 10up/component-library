@@ -1,0 +1,14 @@
+@keyframes scaleDownSmall {
+
+	from {
+		transform: scale(1);
+	}
+
+	to {
+		transform: scale(0.9);
+	}
+}
+
+.scale-down-small {
+	animation-name: scaleDownSmall;
+}

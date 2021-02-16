@@ -1,0 +1,87 @@
+---
+layout: layout
+title: Component Library Playground - Tooltips
+---
+<style>
+	div { margin: 50px 100px; }
+</style>
+		<!--
+		A Tooltip with a span
+		-->
+
+		<div>
+			<span class="a11y-tip">
+				<span class="a11y-tip__trigger">
+					Tooltip Trigger span
+				</span>
+
+				<span class="a11y-tip__help">
+					Tooltip Trigger span content
+				</span>
+			</span><!--/.a11y-tip-->
+		</div>
+
+		<!--
+		A Tooltip with a link
+		-->
+
+		<div>
+			<span class="a11y-tip a11y-tip--no-delay">
+				<a href="#tt_id" class="a11y-tip__trigger">
+					Link w/top tooltip
+				</a>
+
+				<span id="tt_id" class="a11y-tip__help a11y-tip__help--top">
+					Activate this link to go somewhere!
+				</span>
+			</span><!--/.a11y-tip-->
+		</div>
+
+		<!--
+		A Tooltip with a button
+		-->
+
+		<div>
+			<span class="a11y-tip">
+				<button type="button" class="a11y-tip__trigger" aria-describedby="tt_id" aria-controls="tt_id">
+					Button w/bottom tooltip
+				</button>
+
+				<span id="tt_id" role="tooltip" class="a11y-tip__help a11y-tip__help--bottom">
+					Buttons do things on the page. Activate it to perform an action.
+				</span>
+			</span><!--/.a11y-tip-->
+		</div>
+
+		<!--
+		A Tooltip with an input
+		-->
+
+		<div>
+			<label for="test">
+				Input with right tooltip
+			</label>
+			<span class="a11y-tip">
+				<input id="test" placeholder="enter text" class="a11y-tip__trigger" aria-describedby="test_desc" type="text">
+
+				<span id="test_desc" role="tooltip" class="a11y-tip__help a11y-tip__help--right">
+					Enter something here. Text would be fine.
+				</span>
+			</span><!--/.a11y-tip-->
+		</div>
+
+		<!--
+		Click to show/hide tooltip
+		-->
+
+		<div>
+			<span class="a11y-tip a11y-tip--toggle">
+				<span class="a11y-tip__trigger">
+					Tooltip Toggle Trigger
+				</span>
+
+				<span class="a11y-tip__help">
+					Tooltip content goes here
+				</span>
+			</span><!--/.a11y-tip-->
+		</div>

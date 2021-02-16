@@ -1,0 +1,51 @@
+name: chrome e2e tests
+
+on: [pull_request]
+
+jobs:
+  e2e-tests:
+    runs-on: ubuntu-16.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v1
+
+      - name: Setup npm cache
+        uses: actions/cache@v1
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+      - name: Install dependencies (root)
+        run: npm install
+      - name: Build Packages
+        run: npm run build
+
+      - name: Run e2e tests
+        uses: cypress-io/github-action@v2
+        with:
+          start: "npm run start:ci"
+          wait-on: "http://localhost:9090"
+          wait-on-timeout: 600
+          browser: chrome
+          working-directory: e2e
+          config: video=true,screenshotOnRunFailure=true
+          install: false
+          record: true
+        env:
+          # pass the Dashboard record key as an environment variable
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+
+      - name: Upload screenshots on failure
+        uses: actions/upload-artifact@v1
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: e2e/cypress//screenshots
+
+      - name: Upload videos
+        uses: actions/upload-artifact@v1
+        if: always()
+        with:
+          name: cypress-videos
+          path: e2e/cypress/videos

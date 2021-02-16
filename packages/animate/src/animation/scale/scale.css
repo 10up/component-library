@@ -1,0 +1,18 @@
+@import "scale-down-large.css";
+@import "scale-down-small.css";
+@import "scale-down.css";
+@import "scale-up-large.css";
+@import "scale-up-small.css";
+@import "scale-up.css";
+
+@media (prefers-reduced-motion: reduce) {
+
+	.scale-down-large,
+	.scale-down-small,
+	.scale-down,
+	.scale-up-large,
+	.scale-up-small,
+	.scale-up {
+		animation-duration: 1ms !important;
+	}
+}

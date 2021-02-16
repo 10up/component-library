@@ -1,0 +1,4 @@
+.duration-600 {
+	animation-duration: 600ms;
+	animation-fill-mode: both;
+}
