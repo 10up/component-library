@@ -48,7 +48,7 @@ beforeEach(() => {
 		</div> <!-- //.accordion -->
 
 		<div class="accordion">
-			<buttonclass="accordion-header" type="button">Accordion Header</button>
+			<button class="accordion-header" type="button">Accordion Header</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
