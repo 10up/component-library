@@ -96,7 +96,7 @@ declare module '@10up/countdown-timer' {
 	}
 
 	export class CountdownTimer {
-		constructor(element: string, options: CountdownTimerOptions);
-		destroy(options: DestroyOptions);
+		constructor(element: string, options?: CountdownTimerOptions);
+		destroy(options?: DestroyOptions);
 	}
 }

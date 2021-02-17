@@ -1,5 +1,5 @@
 declare module '@10up/component-tabs' {
-	type TabsOptions = {
+	export type TabsOptions = {
 		/**
 		 * Called after the tab is initialized on page load
 		 */
@@ -16,7 +16,15 @@ declare module '@10up/component-tabs' {
 		orientation?: 'vertical' | 'horizontal',
 	}
 
+	export type DestroyOptions = {
+		/**
+		 * Remove all custom attributes added by the component
+		 */
+		removeAttributes: boolean,
+	}
+
 	export class Tabs {
-		constructor(element: string, options: TabsOptions);
+		constructor(element: string, options?: TabsOptions);
+		destroy(options?: DestroyOptions);
 	}
 }
