@@ -1,3 +1,4 @@
+import { screen } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { render, injectCSS } from 'test-utils/dom';
 import { axe } from 'jest-axe';
@@ -77,11 +78,10 @@ test.each(['horizontal', 'vertical'])('%s tabs works', async (orientation) => {
 
 	expect(onCreate).toHaveBeenCalledTimes(1);
 
-	const controlTab2 = document.querySelector('a[aria-controls="js-tab2"]');
-	const controlTab3 = document.querySelector('a[aria-controls="js-tab3"]');
-	const tabContent1 = document.getElementById('js-tab1');
-	const tabContent2 = document.getElementById('js-tab2');
-	const tabContent3 = document.getElementById('js-tab3');
+	const [, controlTab2, controlTab3] = screen.getAllByRole('tab');
+	const [tabContent1, tabContent2, tabContent3] = screen.getAllByRole('tabpanel', {
+		hidden: true,
+	});
 
 	userEvent.click(controlTab2);
 
@@ -113,7 +113,7 @@ test('destroy works', () => {
 	});
 	onTabChange.mockReset();
 
-	const controlTab2 = document.querySelector('a[aria-controls="js-tab2"]');
+	const controlTab2 = screen.getAllByRole('tab')[1];
 	userEvent.click(controlTab2);
 	expect(onTabChange).toHaveBeenCalled();
 	onTabChange.mockReset();

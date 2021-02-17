@@ -130,23 +130,30 @@ test('accordion works as expected', async () => {
 	const content2 = screen.getByTestId('accordion-content-2');
 
 	userEvent.click(header1);
+	expect(content1).toHaveAttribute('aria-hidden', 'false');
 	expect(content1).toBeVisible();
 	userEvent.click(header1);
 	expect(content2).not.toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'true');
 
 	userEvent.click(header1);
 	userEvent.click(header2);
 	expect(content1).toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'false');
 	expect(content2).toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'false');
 
 	// ensure markup is accessible after interacting with the accordion
 	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
 
 	userEvent.click(header1);
 	expect(content1).not.toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'true');
 	expect(content2).toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'false');
 	userEvent.click(header2);
 	expect(content2).not.toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'true');
 });
 
 test('nested accordion works', async () => {
@@ -176,9 +183,16 @@ test('nested accordion works', async () => {
 
 test('destroying accordion works', async () => {
 	const originalMarkup = document.querySelector('.accordion').innerHTML;
-	const accordion = new Accordion('.accordion');
+	const header1 = screen.getByText('Accordion Header 1');
+	const onOpen = jest.fn();
+	const accordion = new Accordion('.accordion', {
+		onOpen,
+	});
 
 	accordion.destroy();
+
+	userEvent.click(header1);
+	expect(onOpen).not.toHaveBeenCalled();
 
 	expect(originalMarkup).toEqual(document.querySelector('.accordion').innerHTML);
 });
