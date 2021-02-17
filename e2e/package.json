@@ -26,10 +26,10 @@
     "postcss-preset-env": "^6.7.0"
   },
   "dependencies": {
-    "@10up/component-accordion": "^2.0.0",
-    "@10up/countdown-timer": "^2.0.0",
-    "@10up/component-tabs": "^2.0.0",
-    "@10up/component-navigation": "^2.1.0",
-    "@10up/component-tooltip": "^2.0.0"
+    "@10up/component-accordion": "^2.0.0-rc.1",
+    "@10up/countdown-timer": "^2.0.0-rc.1",
+    "@10up/component-tabs": "^2.0.0-rc.1",
+    "@10up/component-navigation": "^2.1.0-rc.1",
+    "@10up/component-tooltip": "^2.0.0-rc.1"
   }
 }

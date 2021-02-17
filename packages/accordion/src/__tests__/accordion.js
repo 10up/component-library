@@ -10,7 +10,7 @@ let style;
 beforeEach(() => {
 	const { container } = render(`
 	<div class="accordion accordion--parent">
-			<button id="header1" class="accordion-header" type="button">Accordion Header 1</button>
+			<button class="accordion-header" type="button">Accordion Header 1</button>
 			<div class="accordion-content" data-testid="accordion-content-1">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -25,7 +25,7 @@ beforeEach(() => {
 			<button class="accordion-header" type="button">Accordion Header with Nested Accordion</button>
 			<div class="accordion-content" data-testid="accordion-content-nested">
 				<div class="accordion">
-					<button id="header2" class="accordion-header" type="button">Nested Accordion Header</button>
+					<button class="accordion-header" type="button">Nested Accordion Header</button>
 					<div class="accordion-content">
 						<h2 class="accordion-label">Nested Accordion Heading</h2>
 						<p>here the content of 1st tab <a href="#">link</a></p>
@@ -48,7 +48,7 @@ beforeEach(() => {
 		</div> <!-- //.accordion -->
 
 		<div class="accordion">
-			<button id="header3" class="accordion-header" type="button">Accordion Header</button>
+			<button class="accordion-header" type="button">Accordion Header</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
@@ -130,23 +130,30 @@ test('accordion works as expected', async () => {
 	const content2 = screen.getByTestId('accordion-content-2');
 
 	userEvent.click(header1);
+	expect(content1).toHaveAttribute('aria-hidden', 'false');
 	expect(content1).toBeVisible();
 	userEvent.click(header1);
 	expect(content2).not.toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'true');
 
 	userEvent.click(header1);
 	userEvent.click(header2);
 	expect(content1).toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'false');
 	expect(content2).toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'false');
 
 	// ensure markup is accessible after interacting with the accordion
 	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
 
 	userEvent.click(header1);
 	expect(content1).not.toBeVisible();
+	expect(content1).toHaveAttribute('aria-hidden', 'true');
 	expect(content2).toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'false');
 	userEvent.click(header2);
 	expect(content2).not.toBeVisible();
+	expect(content2).toHaveAttribute('aria-hidden', 'true');
 });
 
 test('nested accordion works', async () => {
@@ -172,6 +179,22 @@ test('nested accordion works', async () => {
 
 	userEvent.click(nestedAccordionHeader);
 	expect(nestedAccordionContent).not.toBeVisible();
+});
+
+test('destroying accordion works', async () => {
+	const originalMarkup = document.querySelector('.accordion').innerHTML;
+	const header1 = screen.getByText('Accordion Header 1');
+	const onOpen = jest.fn();
+	const accordion = new Accordion('.accordion', {
+		onOpen,
+	});
+
+	accordion.destroy();
+
+	userEvent.click(header1);
+	expect(onOpen).not.toHaveBeenCalled();
+
+	expect(originalMarkup).toEqual(document.querySelector('.accordion').innerHTML);
 });
 
 test('markup is accessible', async () => {

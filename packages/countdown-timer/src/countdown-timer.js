@@ -56,6 +56,8 @@ export default class CountdownTimer {
 			},
 		};
 
+		this.setIntervalsIds = [];
+
 		const intervals = ['years', 'weeks', 'days', 'hours', 'minutes', 'seconds'];
 		const opts = options;
 
@@ -92,6 +94,40 @@ export default class CountdownTimer {
 	}
 
 	/**
+	 * Destroys the timers
+	 *
+	 * @param options Optional options
+	 */
+	destroy(options = {}) {
+		this.setIntervalsIds.forEach((id) => window.clearInterval(id));
+
+		const defaults = {
+			removeAttributes: true,
+			restoreTextContent: true,
+		};
+
+		const settings = {
+			...defaults,
+			...options,
+		};
+
+		const attributes = ['role', 'aria-label', 'aria-atomic', 'aria-live'];
+		this.$timers.forEach((timer) => {
+			timer.classList.remove('tenup-countdown-timer');
+
+			if (settings.removeAttributes === true) {
+				attributes.forEach((attr) => {
+					timer.removeAttribute(attr);
+				});
+			}
+
+			if (settings.restoreTextContent === true) {
+				timer.textContent = timer._originalTextContent;
+			}
+		});
+	}
+
+	/**
 	 * Set up a countdown timer.
 	 *
 	 * @param {object} timer HTML element for this timer.
@@ -123,6 +159,7 @@ export default class CountdownTimer {
 		}
 
 		// Clear fallback content.
+		tmr._originalTextContent = tmr.textContent;
 		tmr.textContent = '';
 
 		/**
@@ -397,6 +434,7 @@ export default class CountdownTimer {
 		updateTime();
 
 		repeat = window.setInterval(updateTime, delay);
+		this.setIntervalsIds.push(repeat);
 	}
 
 	/**
