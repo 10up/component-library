@@ -1,3 +1,7 @@
 import './style.css';
 
-export { default as Tabs } from './tabs';
+import Tabs from './tabs';
+
+export { Tabs };
+
+export default Tabs;
