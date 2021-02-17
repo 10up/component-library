@@ -17,7 +17,8 @@
     "build": "lerna run build",
     "codecov": "curl -s https://codecov.io/bash | bash -s",
     "prepare": "lerna bootstrap --hoist",
-    "reinstall": "lerna clean --yes && npm run prepare"
+    "reinstall": "lerna clean --yes && npm run prepare",
+    "preinstall": "check-node-version --npm 7"
   },
   "dependencies": {
     "core-js": "^3.8.3"
@@ -25,6 +26,7 @@
   "devDependencies": {
     "@10up/babel-preset-default": "^1.1.0",
     "@10up/eslint-config": "^2.3.0",
+    "check-node-version": "^4.1.0",
     "cypress": "^6.4.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-jest": "^24.1.3",
