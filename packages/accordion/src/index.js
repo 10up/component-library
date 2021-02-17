@@ -1,3 +1,7 @@
 import './style.css';
 
-export { default as Accordion } from './accordion';
+import Accordion from './accordion';
+
+export { Accordion };
+
+export default Accordion;
