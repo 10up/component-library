@@ -14,19 +14,23 @@
 		<th class="th">orientation</th>
 		<td class="td">Whether the tabs are horizontal or vertical, defaults to horizontal</td>
 	</tr>
-</table>
-
-<h3>Callbacks</h3>
-
-<table class="table--code u-spacing__bottom--large">
-	<caption>List of Callbacks for this component</caption>
 	<tr>
-		<th class="th">onCreate</th>
-		<td class="td">Called after the tab is initialized on page load</td>
+		<th>onCreate</th>
+		<td>Called after the tab is initialized on page load</td>
 	</tr>
 	<tr>
 		<th>onTabChange</th>
 		<td>Called when a tab item is changed</td>
+	</tr>
+</table>
+
+<h3>Methods</h3>
+
+<table class="table--code u-spacing__bottom--large">
+	<caption>List of avaliable methods</caption>
+	<tr>
+		<th class="th">destroy()</th>
+		<td class="td">Destroys the component, removing event listeners and any extra markup and attributes.</td>
 	</tr>
 </table>
 

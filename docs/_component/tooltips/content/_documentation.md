@@ -6,6 +6,16 @@
 <code>npm install @10up/component-tooltip --save</code>
 </div>
 
+<h3>Methods</h3>
+
+<table class="table--code u-spacing__bottom--large">
+	<caption>List of avaliable methods</caption>
+	<tr>
+		<th class="th">destroy()</th>
+		<td class="td">Destroys the component, removing event listeners and any extra markup and attributes.</td>
+	</tr>
+</table>
+
 <h3>Classes</h3>
 
 <table class="table--code">

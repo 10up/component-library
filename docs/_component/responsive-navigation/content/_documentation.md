@@ -14,18 +14,11 @@
 		<th class="th">action</th>
 		<td class="td">The action to use to open menu items <em>(default) hover</em></td>
 	</tr>
-</table>
-
-<h3>Callbacks</h3>
-
-<table class="table--code u-spacing__bottom--large">
-	<caption>List of Callbacks for this component</caption>
-
- 	<tr>
- 		<th class="th">onCreate</th>
- 		<td class="td">Called after the component is initialized on page load</td>
+	<tr>
+ 		<th>onCreate</th>
+ 		<td>Called after the component is initialized on page load</td>
  	</tr>
- 	<tr>
+	<tr>
  		<th>onOpen</th>
  		<td>Called when a menu item is opened</td>
  	</tr>
@@ -41,7 +34,17 @@
  		<th>onSubmenuClose</th>
  		<td>Called when a submenu item is closed</td>
  	</tr>
- </table>
+</table>
+
+<h3>Methods</h3>
+
+<table class="table--code u-spacing__bottom--large">
+	<caption>List of avaliable methods</caption>
+	<tr>
+		<th class="th">destroy()</th>
+		<td class="td">Destroys the component, removing event listeners and any extra markup and attributes.</td>
+	</tr>
+</table>
 
 <h3>Classes</h3>
 

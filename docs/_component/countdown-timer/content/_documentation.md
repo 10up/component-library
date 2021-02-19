@@ -25,6 +25,16 @@
 <h4 id="why-no-months-">Why no months?</h4>
 <p class="u-spacing__bottom--large">Since various months can contain different numbers of days, a month is not an exact unit of time, so it’s not as useful for counting toward or away from a specific point in time. All supported intervals contain an exact number of seconds. The one exception is <code>years</code>, which can contain either 365 or 366 days. The component will factor this into its calculations by adding an extra day for each leap year as necessary.</p>
 
+<h4 id="settings">Methods</h4>
+
+<table class="table--code u-spacing__bottom--large">
+	<caption>List of avaliable methods</caption>
+	<tr>
+		<th class="th">destroy()</th>
+		<td class="td">Destroys the component, removing event listeners and any extra markup and attributes.</td>
+	</tr>
+</table>
+
 <h4 id="settings">General Settings</h4>
 
 <table class="table--code u-spacing__bottom--large">

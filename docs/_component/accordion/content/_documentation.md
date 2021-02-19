@@ -6,7 +6,7 @@
 <code>npm install @10up/component-accordion --save</code>
 </div>
 
-<h3>API</h3>
+<h3>Options</h3>
 
 <table class="table--code u-spacing__bottom--large">
 	<caption>List of APIs for this component</caption>
@@ -16,7 +16,7 @@
 	</tr>
 	<tr>
 		<th>onOpen</th>
-		<td>Called when an accordion item is opened</td>
+		<td>options.Called when an accordion item is opened</td>
 	</tr>
 	<tr>
 		<th>onClose</th>
@@ -25,6 +25,16 @@
 	<tr>
 		<th>onToggle</th>
 		<td>Called when an accordion item is toggled</td>
+	</tr>
+</table>
+
+<h3>Methods</h3>
+
+<table class="table--code u-spacing__bottom--large">
+	<caption>List of avaliable methods</caption>
+	<tr>
+		<th class="th">destroy()</th>
+		<td class="td">Destroys the component, removing event listeners and any extra markup and attributes.</td>
 	</tr>
 </table>
 
