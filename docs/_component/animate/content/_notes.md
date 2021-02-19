@@ -2,6 +2,6 @@ Adding small touches of motion to a UI can create a nice level of polish and gen
 commitment to creating accessible interfaces</a>.
 
 <ul class="button-group button-group--flush">
-	<li><a href="https://github.com/10up/component-animate">View this repository on GitHub</a></li>
-	<li><a href="https://github.com/10up/component-animate/issues/new/choose">File an issue</a></li>
+	<li><a href="https://github.com/10up/component-library/tree/develop/packages/animate">View this repository on GitHub</a></li>
+	<li><a href="https://github.com/10up/component-library/issues/new?assignees=&labels=component-animate&template=Bug-Report.md">File an issue</a></li>
 </ul>

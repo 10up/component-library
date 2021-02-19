@@ -8,6 +8,6 @@ The Tooltip component can be used in three forms:
 There are also delay and timing options available, however the default timing of 1 second mimics the title attribute timing (which was the previous WCAG standard; timing requirements have since been removed).
 
 <ul class="button-group button-group--flush">
-	<li><a href="https://github.com/10up/component-tooltip">View this repository on GitHub</a></li>
-	<li><a href="https://github.com/10up/component-tooltip/issues/new/choose">File an issue</a></li>
+	<li><a href="https://github.com/10up/component-library/tree/develop/packages/tooltips">View this repository on GitHub</a></li>
+	<li><a href="https://github.com/10up/component-library/issues/new?assignees=&labels=component-tooltip&template=Bug-Report.md">File an issue</a></li>
 </ul>

@@ -14,11 +14,6 @@ iframe_height: short
 	<p class="u-lighten">
 		{{ page.description }}
 	</p>
-	<a href="https://travis-ci.org/10up/component-navigation" class="u-spacing__bottom--large u-inline-block">
-		<img
-			src="https://travis-ci.org/10up/component-navigation.svg?branch=master"
-			alt="Build status.">
-	</a>
 </div>
 
 {% include_relative content/_notes.md %}
