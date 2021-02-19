@@ -1,0 +1,11 @@
+.author-card {
+  display: flex;
+}
+
+.author-card-info {
+  margin-left: 1em;
+}
+
+.author-card-author {
+  margin: 0 0 .5em;
+}
