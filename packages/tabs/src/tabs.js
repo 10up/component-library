@@ -28,6 +28,8 @@ export default class Tabs {
 			40: 1,
 		};
 
+		this.evtCallbacks = {};
+
 		// Defaults
 		const defaults = {
 			// Default orientation is horizontal
@@ -69,6 +71,103 @@ export default class Tabs {
 	}
 
 	/**
+	 * Handle destroying tabs
+	 *
+	 * @param options Optional options
+	 */
+	destroy(options = {}) {
+		this.removeAllEventListeners();
+
+		const defaults = {
+			removeAttributes: true,
+		};
+
+		const settings = {
+			...defaults,
+			...options,
+		};
+
+		if (settings.removeAttributes) {
+			this.$tabs.forEach((tabArea) => {
+				// remove all is active tab contents and tab items
+				tabArea
+					.querySelectorAll('.tab-content.is-active, .tab-item.is-active')
+					.forEach((el) => {
+						el.classList.remove('is-active');
+					});
+
+				// remove tabindexes from tab-content
+				tabArea.querySelectorAll('.tab-content').forEach((el) => {
+					el.removeAttribute('tabindex');
+				});
+
+				const [tabLinks, tabList] = this.getTabLinksAndList(tabArea);
+
+				tabList.removeAttribute('aria-orientation');
+
+				tabLinks.forEach((tabLink) => {
+					tabLink.removeAttribute('id');
+					tabLink.removeAttribute('aria-selected');
+					tabLink.removeAttribute('tabindex');
+					tabLink.parentNode.removeAttribute('role');
+
+					const tabId = tabLink.getAttribute('aria-controls');
+					const tabContent = document.getElementById(tabId);
+
+					tabContent.removeAttribute('aria-labelledby');
+					tabContent.removeAttribute('aria-hidden');
+				});
+			});
+		}
+	}
+
+	/**
+	 * Adds an event listener and caches the callback for later removal
+	 *
+	 * @param {element} element The element associaed with the event listener
+	 * @param {string} evtName The event name
+	 * @param {Function} callback The callback function
+	 */
+	addEventListener(element, evtName, callback) {
+		if (typeof this.evtCallbacks[evtName] === 'undefined') {
+			this.evtCallbacks[evtName] = [];
+		}
+
+		this.evtCallbacks[evtName].push({
+			element,
+			callback,
+		});
+
+		element.addEventListener(evtName, callback);
+	}
+
+	/**
+	 * Removes all event listeners
+	 */
+	removeAllEventListeners() {
+		Object.keys(this.evtCallbacks).forEach((evtName) => {
+			const events = this.evtCallbacks[evtName];
+			events.forEach(({ element, callback }) => {
+				element.removeEventListener(evtName, callback);
+			});
+		});
+	}
+
+	/**
+	 * Returns the tab links and list for the given tabArea
+	 *
+	 * @param {element} tabArea The tabArea to scope changes
+	 *
+	 * @returns {Array}
+	 */
+	getTabLinksAndList(tabArea) {
+		const tabLinks = tabArea.querySelectorAll('.tab-list [role="tab"]');
+		const tabList = tabArea.querySelector('.tab-list');
+
+		return [tabLinks, tabList];
+	}
+
+	/**
 	 * Initialize a given tab area
 	 * Configure tab properties and set ARIA attributes.
 	 *
@@ -76,8 +175,7 @@ export default class Tabs {
 	 * @returns {void}
 	 */
 	setupTabs(tabArea) {
-		const tabLinks = tabArea.querySelectorAll('.tab-list [role="tab"]');
-		const tabList = tabArea.querySelector('.tab-list');
+		const [tabLinks, tabList] = this.getTabLinksAndList(tabArea);
 
 		tabList.setAttribute('aria-orientation', this.settings.orientation);
 
@@ -98,7 +196,7 @@ export default class Tabs {
 			this.goToTab(0, tabArea);
 
 			// Activate the tab on [click]
-			tabLink.addEventListener('click', (event) => {
+			this.addEventListener(tabLink, 'click', (event) => {
 				event.preventDefault();
 
 				if (!event.target.parentNode.classList.contains('is-active')) {
@@ -107,7 +205,7 @@ export default class Tabs {
 			});
 
 			// Activate the tab on [space]
-			tabLink.addEventListener('keyup', (event) => {
+			this.addEventListener(tabLink, 'keyup', (event) => {
 				if (
 					event.which === 32 &&
 					!event.target.parentNode.classList.contains('is-active')
@@ -118,7 +216,7 @@ export default class Tabs {
 			});
 
 			// Keyboard home, end, up, down key bindings
-			tabLink.addEventListener('keydown', (event) => {
+			this.addEventListener(tabLink, 'keydown', (event) => {
 				const key = event.keyCode;
 				const newIndex = this.determineNextTab(event, tabArea, tabLinks);
 
@@ -144,7 +242,7 @@ export default class Tabs {
 			});
 
 			// Keyboard left, right key bindings
-			tabLink.addEventListener('keyup', (event) => {
+			this.addEventListener(tabLink, 'keyup', (event) => {
 				const key = event.keyCode;
 				const newIndex = this.determineNextTab(event, tabArea, tabLinks);
 

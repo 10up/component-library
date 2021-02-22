@@ -1,11 +1,6 @@
 name: eslint
 
-on:
-  pull_request:
-    types:
-      - opened
-      - synchronize
-      - closed
+on: [pull_request]
 
 jobs:
   eslint:

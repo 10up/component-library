@@ -1,3 +1,7 @@
 import './style.css';
 
-export { default as Navigation } from './navigation';
+import Navigation from './navigation';
+
+export { Navigation };
+
+export default Navigation;

@@ -31,7 +31,15 @@ declare module '@10up/component-navigation' {
 		action?: 'click' | 'hover',
 	}
 
+	export type DestroyOptions = {
+		/**
+		 * Remove all custom attributes added by the component
+		 */
+		removeAttributes: boolean,
+	}
+
 	export class Navigation {
-		constructor(element: string, options: NavigationOptions);
+		constructor(element: string, options?: NavigationOptions);
+		destroy(options?: DestroyOptions);
 	}
 }

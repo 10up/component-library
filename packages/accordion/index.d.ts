@@ -1,5 +1,5 @@
 declare module '@10up/component-accordion' {
-	type AccordionOptions = {
+	export type AccordionOptions = {
 		/**
 		 * Called after the accordion is initialized on page load.
 		 */

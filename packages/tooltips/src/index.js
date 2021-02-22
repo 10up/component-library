@@ -1,3 +1,7 @@
 import './style.css';
 
-export { default as Tooltip } from './tooltip';
+import Tooltip from './tooltip';
+
+export { Tooltip };
+
+export default Tooltip;
