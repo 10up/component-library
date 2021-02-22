@@ -8,7 +8,8 @@
   "style": "./dist/index.css",
   "scripts": {
     "watch": "npm run build -- --watch",
-    "build": "microbundle build -f modern"
+    "build": "microbundle build -f modern",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
