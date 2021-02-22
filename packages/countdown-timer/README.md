@@ -2,11 +2,6 @@
 
 > A countdown timer component that displays the amount of time remaining until (or elapsed since) the time specified in the component's `datetime` attribute.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status][cli-img]][cli-url]
-
-
-[cli-img]: https://github.com/10up/component-countdown-timer/workflows/Accessibility%20Tests/badge.svg
-[cli-url]: https://github.com/10up/component-countdown-timer/actions?query=workflow%3A%22Accessibility+Tests%22
 
 ## Installation
 
