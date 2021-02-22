@@ -84,8 +84,7 @@
 
 	<p id="standalone-desc" class="c-callout--secondary">
 		* <strong>Standalone <abbr title="JavaScript">JS</abbr></strong> is used on projects that are not set up to handle
-		ES6. To use this version you will need to download the compiled
-		JavaScript from the <a href="https://github.com/10up/component-tooltip/blob/master/dist/tooltip.js">component's dist directory</a> and pull it into your
+		ES6. To use this version you will need to download the UMD bundle from the <a href="https://cdn.jsdelivr.net/npm/@10up/component-tooltip@latest/dist/">NPM</a> and pull it into your
 		project. The same process should be
 		followed with the CSS if it cannot process through the NPM package.
 	</p>
