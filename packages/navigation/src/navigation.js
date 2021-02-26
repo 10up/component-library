@@ -20,6 +20,7 @@ export default class Navigation {
 		const defaults = {
 			action: 'hover',
 			breakpoint: '(min-width: 48em)',
+			subMenuSelector: '.sub-menu',
 
 			// Event callbacks
 			onCreate: null,
@@ -314,7 +315,9 @@ export default class Navigation {
 	 */
 	closeSubmenu($submenu) {
 		const $anchor = $submenu.previousElementSibling;
-		const $childSubmenus = $submenu.querySelectorAll('li > .sub-menu[aria-hidden="false"]');
+		const $childSubmenus = $submenu.querySelectorAll(
+			`li > ${this.settings.subMenuSelector}[aria-hidden="false"]`,
+		);
 
 		// Close the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', true);
@@ -408,7 +411,9 @@ export default class Navigation {
 	 *
 	 */
 	listenerDocumentClick() {
-		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
+		const $openSubmenus = this.$menu.querySelectorAll(
+			`${this.settings.subMenuSelector}[aria-hidden="false"]`,
+		);
 
 		// Bail if no submenus are found.
 		if ($openSubmenus.length === 0) {
@@ -427,7 +432,9 @@ export default class Navigation {
 	 * @param   {object} event The event object.
 	 */
 	listenerDocumentKeyup(event) {
-		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
+		const $openSubmenus = this.$menu.querySelectorAll(
+			`${this.settings.subMenuSelector}[aria-hidden="false"]`,
+		);
 
 		// Bail early if not using the escape key or if no submenus are found.
 		if ($openSubmenus.length === 0 || event.keyCode !== 27) {
@@ -455,7 +462,9 @@ export default class Navigation {
 		const $submenu = $anchor.nextElementSibling;
 		const isHidden = $submenu.getAttribute('aria-hidden') === 'true';
 
-		let $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
+		let $openSubmenus = this.$menu.querySelectorAll(
+			`${this.settings.subMenuSelector}[aria-hidden="false"]`,
+		);
 
 		$openSubmenus = Array.from($openSubmenus).filter((menu) => !menu.contains($anchor));
 
@@ -494,7 +503,7 @@ export default class Navigation {
 		const $anchor = event.target;
 		const $menuItem = $anchor.parentNode;
 		const $submenu = $anchor.nextElementSibling;
-		const $childSubmenus = $menuItem.parentNode.querySelectorAll('.sub-menu');
+		const $childSubmenus = $menuItem.parentNode.querySelectorAll(this.settings.subMenuSelector);
 
 		// Bail early if no submenu is found or if we're on a small screen.
 		if (!$submenu || !this.mq.matches) {
