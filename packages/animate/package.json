@@ -1,6 +1,6 @@
 {
   "name": "@10up/animate",
-  "version": "2.0.0-rc.1",
+  "version": "2.0.0-rc.2",
   "author": "10up",
   "description": "A lightweight utility animation library from 10up",
   "main": "dist/index.js",
@@ -8,7 +8,8 @@
   "style": "./dist/index.css",
   "scripts": {
     "watch": "npm run build -- --watch",
-    "build": "microbundle build -f modern"
+    "build": "microbundle build -f modern",
+    "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
