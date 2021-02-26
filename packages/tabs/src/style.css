@@ -81,14 +81,6 @@
 	padding: 15px;
 
 	&[aria-hidden=true] {
-		left: -999em;
-		position: absolute;
-		top: -999em;
-		visibility: hidden;
-	}
-
-	&.is-active {
-		visibility: visible;
-		position: static;
+		display: none;
 	}
 }
