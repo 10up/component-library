@@ -4,7 +4,7 @@
 		<title>10up Component Library | Accordion</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="../dist/css/style.css" rel="stylesheet">
+		<link href="../dist/index.css" rel="stylesheet">
 		<style>
 			.accordion {margin-bottom: 1em;}
 			.accordion .accordion {padding: 1em;}
@@ -49,28 +49,28 @@
 
 		</div> <!-- //.accordion -->
 
-		<div class="accordion">
-			<button id="header3" class="accordion-header" type="button">Accordion Header</button>
-			<div class="accordion-content">
-				<h2 class="accordion-label">Accordion Heading</h2>
+		<div class="custom-accordion">
+			<button id="header3" class="custom-header" type="button">Accordion Header</button>
+			<div class="custom-content">
+				<h2 class="custom-label">Accordion Heading</h2>
 				<p>here the content of 1st tab <a href="#">link</a></p>
-			</div> <!-- //.accordion-content -->
+			</div> <!-- //.custom-content -->
 
-			<button class="accordion-header" type="button">Accordion Header</button>
-			<div class="accordion-content">
-				<h2 class="accordion-label">Accordion Heading</h2>
+			<button class="custom-header" type="button">Accordion Header</button>
+			<div class="custom-content">
+				<h2 class="custom-label">Accordion Heading</h2>
 				<p>here the content of 2nd tab <a href="#">link</a></p>
-			</div> <!-- //.accordion-content -->
+			</div> <!-- //.custom-content -->
 
-			<button class="accordion-header" type="button">Accordion Header</button>
-			<div class="accordion-content">
-				<h2 class="accordion-label">Accordion Heading</h2>
+			<button class="custom-header" type="button">Accordion Header</button>
+			<div class="custom-content">
+				<h2 class="custom-label">Accordion Heading</h2>
 				<p>here the content of 3rd tab <a href="#">link</a></p>
-			</div> <!-- //.accordion-content -->
+			</div> <!-- //.custom-content -->
 
-			<button class="accordion-header" type="button">Accordion Header</button>
-			<div class="accordion-content">
-				<h2 class="accordion-label">Accordion Heading</h2>
+			<button class="custom-header" type="button">Accordion Header</button>
+			<div class="custom-content">
+				<h2 class="custom-label">Accordion Heading</h2>
 				<p>here the content of 4th tab <a href="#">link</a></p>
 			</div> <!-- //.accordion-content -->
 
@@ -91,6 +91,12 @@
 				onToggle: function() {
 					console.log( 'onToggle' )
 				}
+			} );
+
+			var customClassesAccordion = new window.TenUp.Accordion( '.custom-accordion', {
+				headerClass: 'custom-header',
+				contentClass: 'custom-content',
+				labelClass: 'custom-label'
 			} );
 		</script>
 	</body>
