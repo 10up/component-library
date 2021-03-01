@@ -16,12 +16,13 @@ The styles can be imported into your existing codebase by using PostCSS imports,
 
 #### JavaScript
 
-Create a new instance by supplying the selector to use for the accordion and an object containing any necessary callback functions.
+Create a new instance by supplying the selector to use for the accordion and an object containing any necessary callback functions. Custom classes for the child elements can also be supplied. The default classes are shown in the following configuration.
 
 ```javascript
 import Accordion from '@10up/component-accordion';
 
 new Accordion( '.accordion', {
+	// Callbacks
 	onCreate: function() {
 		console.log( 'onCreate callback' );
 	},
@@ -34,6 +35,10 @@ new Accordion( '.accordion', {
 	onToggle: function() {
 		console.log( 'onToggle callback' );
 	}
+	// Classes
+	headerClass: 'accordion-header',
+	contentClass: 'accordion-content',
+	labelClass: 'accordion-label',
 } );
 ```
 
