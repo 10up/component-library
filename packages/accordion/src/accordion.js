@@ -98,7 +98,9 @@ export default class Accordion {
 	 */
 	getAccordionLinksAndContent(accordionArea) {
 		const allAccordionLinks = accordionArea.querySelectorAll(`.${this.settings.headerClass}`);
-		const allAccordionContent = accordionArea.querySelectorAll(`.${this.settings.contentClass}`);
+		const allAccordionContent = accordionArea.querySelectorAll(
+			`.${this.settings.contentClass}`,
+		);
 
 		// Make sure accordionLinks and accordionContent are direct descendants of accordionArea
 		const accordionLinks = Array.prototype.slice
@@ -160,7 +162,7 @@ export default class Accordion {
 
 			// Make sure the selected element is a header and a direct descendant of the current accordionArea
 			if (
-				selectedElement.classList.contains(headerClass) &&
+				selectedElement.classList.contains(this.settings.headerClass) &&
 				selectedElement.parentNode === accordionArea
 			) {
 				this.accessKeyBindings(accordionLinks, selectedElement, key, event);
