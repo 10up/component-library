@@ -127,6 +127,7 @@ export default class Navigation {
 				$submenu.removeAttribute('aria-label');
 				$anchor.removeAttribute('aria-controls');
 				$anchor.removeAttribute('aria-haspopup');
+				$anchor.removeAttribute('aria-expanded');
 			});
 		}
 	}
@@ -209,6 +210,7 @@ export default class Navigation {
 			$submenu.setAttribute('aria-label', 'Submenu');
 			$anchor.setAttribute('aria-controls', submenuID);
 			$anchor.setAttribute('aria-haspopup', true);
+			$anchor.setAttribute('aria-expanded', false);
 
 			// Sets up ARIA tags related to screen size based on our media query.
 			this.setMQSubbmenuA11y();
@@ -477,9 +479,11 @@ export default class Navigation {
 		if (isHidden) {
 			// Yes, open it.
 			this.openSubmenu($submenu);
+			$anchor.setAttribute('aria-expanded', true);
 		} else {
 			// No, close it.
 			this.closeSubmenu($submenu);
+			$anchor.setAttribute('aria-expanded', false);
 		}
 	}
 
