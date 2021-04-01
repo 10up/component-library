@@ -9,7 +9,7 @@
   "module": "dist/index.module.js",
   "source": "src/index.js",
   "style": "./dist/index.css",
-  "types": "./index.d.ts",
+  "types": "./types/index.d.ts",
   "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
@@ -17,7 +17,8 @@
     "build": "npm run build:modern && npm run build:umd",
     "build:modern": "microbundle build",
     "build:umd": "microbundle build -i src/index.umd.js --name TenUpAccordion -f umd --external none",
-    "prepare": "npm run build"
+    "prepare": "npm run build && npm run types",
+    "types": "tsc"
   },
   "browserslist": [
     "> 1%",

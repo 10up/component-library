@@ -1,0 +1,17 @@
+{
+  "exclude": [
+    "**/*/__tests__/**/*.js",
+    "**/*/*.umd.js",
+    "**/*/types",
+    "**/*.d.ts"
+  ],
+  "compilerOptions": {
+    "module":"esnext",
+    "moduleResolution": "node",
+    "checkJs": true,
+    "allowJs": true,
+    "declaration": true,
+    "emitDeclarationOnly": true,
+    "removeComments": true
+  }
+}
