@@ -188,12 +188,12 @@ export default class Accordion {
 	 * Open a given accordion item
 	 * Add or remove necessary CSS classes and toggle ARIA attributes.
 	 *
-	 * @param {element} accordionLink The accordion heading link
-	 * @param {element} accordionContent The accordion content to open
+	 * @param {object} accordionElements The accordion elements
 	 */
-	openAccordionItem(accordionLink, accordionContent) {
-		accordionLink.setAttribute('aria-expanded', 'true');
-		accordionContent.setAttribute('aria-hidden', 'false');
+	openAccordionItem(accordionElements) {
+		const { link, content } = accordionElements;
+		link.setAttribute('aria-expanded', 'true');
+		content.setAttribute('aria-hidden', 'false');
 
 		/**
 		 * Called when an accordion item is opened.
@@ -201,7 +201,7 @@ export default class Accordion {
 		 * @callback onOpen
 		 */
 		if (this.settings.onOpen && typeof this.settings.onOpen === 'function') {
-			this.settings.onOpen.call();
+			this.settings.onOpen.call(accordionElements);
 		}
 	}
 
@@ -209,12 +209,12 @@ export default class Accordion {
 	 * Close a given accordion item
 	 * Add or remove necessary CSS classes and toggle ARIA attributes.
 	 *
-	 * @param {element} accordionLink The accordion heading link
-	 * @param {element} accordionContent The accordion content to open
+	 * @param {object} accordionElements The accordion elements
 	 */
-	closeAccordionItem(accordionLink, accordionContent) {
-		accordionLink.setAttribute('aria-expanded', 'false');
-		accordionContent.setAttribute('aria-hidden', 'true');
+	closeAccordionItem(accordionElements) {
+		const { link, content } = accordionElements;
+		link.setAttribute('aria-expanded', 'false');
+		content.setAttribute('aria-hidden', 'true');
 
 		/**
 		 * Called when an accordion item is closed.
@@ -222,7 +222,7 @@ export default class Accordion {
 		 * @callback onClose
 		 */
 		if (this.settings.onClose && typeof this.settings.onClose === 'function') {
-			this.settings.onClose.call();
+			this.settings.onClose.call(accordionElements);
 		}
 	}
 
@@ -237,6 +237,12 @@ export default class Accordion {
 		const accordionContent = accordionLink.nextElementSibling;
 		const accordionHeading = accordionContent.querySelector('.accordion-label');
 
+		const accordionElements = {
+			link: accordionLink,
+			content: accordionContent,
+			heading: accordionHeading,
+		};
+
 		// Toggle active class on accordion link and content.
 		accordionLink.classList.toggle('is-active');
 		accordionContent.classList.toggle('is-active');
@@ -248,9 +254,9 @@ export default class Accordion {
 		}
 
 		if (accordionContent.classList.contains('is-active')) {
-			this.openAccordionItem(accordionLink, accordionContent);
+			this.openAccordionItem(accordionElements);
 		} else {
-			this.closeAccordionItem(accordionLink, accordionContent);
+			this.closeAccordionItem(accordionElements);
 		}
 
 		/**
@@ -259,7 +265,7 @@ export default class Accordion {
 		 * @callback onToggle
 		 */
 		if (this.settings.onToggle && typeof this.settings.onToggle === 'function') {
-			this.settings.onToggle.call();
+			this.settings.onToggle.call(accordionElements);
 		}
 	}
 

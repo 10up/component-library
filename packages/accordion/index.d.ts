@@ -1,4 +1,10 @@
 declare module '@10up/component-accordion' {
+	export interface AccordionElements {
+		link: HTMLAnchorElement,
+		content: HTMLElement,
+		heading: HTMLElement
+	}
+
 	export type AccordionOptions = {
 		/**
 		 * Called after the accordion is initialized on page load.
@@ -7,15 +13,15 @@ declare module '@10up/component-accordion' {
 		/**
 		 * Called when an accordion item is opened
 		 */
-		onOpen?: () => void,
+		onOpen?: (accordionElements?: AccordionElements) => void,
 		/**
 		 * Called when an accordion item is closed
 		 */
-		onClose?: () => void,
+		onClose?: (ccordionElements?: AccordionElements) => void,
 		/**
 		 * Called when an accordion item is toggled
 		 */
-		onToggle?: () => void,
+		onToggle?: (ccordionElements?: AccordionElements) => void,
 	};
 
 	export class Accordion {
