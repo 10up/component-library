@@ -25,13 +25,13 @@ new Accordion( '.accordion', {
 	onCreate: function() {
 		console.log( 'onCreate callback' );
 	},
-	onOpen: function() {
+	onOpen: function( { link, content, heading } ) {
 		console.log( 'onOpen callback' );
 	},
-	onClose: function() {
+	onClose: function( { link, content, heading } ) {
 		console.log( 'onClose callback' );
 	},
-	onToggle: function() {
+	onToggle: function( { link, content, heading } ) {
 		console.log( 'onToggle callback' );
 	}
 } );
