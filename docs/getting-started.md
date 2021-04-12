@@ -56,7 +56,7 @@ README.md</code></pre>
 
 ## Running Locally
 
-Naviate to the [docs](https://github.com/10up/component-library/tree/develop/docs) directory from the command line.
+Navigate to the [docs](https://github.com/10up/component-library/tree/develop/docs) directory from the command line.
 
 <pre class="u-spacing__bottom--large"><code>gem install bundler
 bundle install
