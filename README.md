@@ -44,7 +44,7 @@ This repository is broken into four parts. Within each part, there is an include
 
 * [e2e](/test-utils): Testing suite for packages. Includes all package components for local testing.
 
-* [docs](/docs): The public facing documentation site. Includes codebase utilizng Jeckyl to construct site. Pulls componets from latest release on npm.
+* [docs](/docs): The public facing documentation site. Includes codebase utilizng Jekyll to construct site. Pulls componets from latest release on npm.
 
 ## Like what you see?
 
