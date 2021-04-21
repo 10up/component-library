@@ -23,13 +23,15 @@
     "concurrently": "^5.3.0",
     "microbundle": "^0.13.0",
     "postcss-import": "^14.0.0",
-    "postcss-preset-env": "^6.7.0"
+    "postcss-preset-env": "^6.7.0",
+    "start-server-and-test": "^1.12.0",
+    "cypress": "^7.1.0"
   },
   "dependencies": {
     "@10up/component-accordion": "^2.0.0",
-    "@10up/countdown-timer": "^2.0.0",
-    "@10up/component-tabs": "^2.0.0",
     "@10up/component-navigation": "^2.1.0",
-    "@10up/component-tooltip": "^2.0.0"
+    "@10up/component-tabs": "^2.0.0",
+    "@10up/component-tooltip": "^2.0.0",
+    "@10up/countdown-timer": "^2.0.0"
   }
 }
