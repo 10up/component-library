@@ -17,23 +17,34 @@
     "build": "lerna run build",
     "codecov": "curl -s https://codecov.io/bash | bash -s",
     "prepare": "lerna bootstrap --hoist",
-    "reinstall": "lerna clean --yes && npm run prepare",
-    "preinstall": "check-node-version --npm 7"
+    "reinstall": "lerna clean --yes && npm run prepare"
   },
   "dependencies": {
     "core-js": "^3.8.3"
   },
   "devDependencies": {
     "@10up/babel-preset-default": "^1.1.0",
-    "@10up/eslint-config": "^2.3.0",
-    "check-node-version": "^4.1.0",
+    "@10up/eslint-config": "^2.3.3",
+    "@babel/core": "^7.13.16",
+    "@babel/eslint-parser": "^7.13.14",
     "cypress": "^6.4.0",
+    "eslint": "^7.24.0",
+    "eslint-config-airbnb": "^18.2.1",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^7.2.0",
     "eslint-plugin-cypress": "^2.11.2",
+    "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jest": "^24.1.3",
+    "eslint-plugin-jsdoc": "^31.6.1",
+    "eslint-plugin-jsx-a11y": "^6.4.1",
+    "eslint-plugin-prettier": "^3.4.0",
+    "eslint-plugin-react": "^7.23.2",
+    "eslint-plugin-react-hooks": "^1.7.0",
     "husky": "^4.3.8",
     "jest": "^26.6.3",
     "lerna": "^3.22.1",
     "lint-staged": "^10.5.4",
+    "prettier": "^2.2.1",
     "start-server-and-test": "^1.12.0"
   },
   "husky": {
