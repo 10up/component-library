@@ -1,0 +1,310 @@
+.c {
+	color: #666;
+}
+
+/* Comment */
+.err {
+	color: #8c0101;
+	background-color: #FFAAAA
+}
+
+/* Error */
+.k {
+	color: #006699;
+}
+
+/* Keyword */
+.o {
+	color: #555555
+}
+
+/* Operator */
+.cm {
+	color: #666;
+}
+
+/* Comment.Multiline */
+/* Edited to remove italics and make into comment */
+.cp {
+	color: #5e6b6b;
+}
+
+/* Comment.Preproc */
+.c1 {
+	color: #666;
+}
+
+/* Comment.Single */
+.cs {
+	color: #666;
+}
+
+/* Comment.Special */
+.gd {
+	background-color: #FFCCCC;
+	border: 1px solid #CC0000
+}
+
+/* Generic.Deleted */
+.ge {
+	font-style: italic
+}
+
+/* Generic.Emph */
+.gr {
+	color: #FF0000
+}
+
+/* Generic.Error */
+.gh {
+	color: #003300;
+}
+
+/* Generic.Heading */
+.gi {
+	background-color: #CCFFCC;
+	border: 1px solid #00CC00
+}
+
+/* Generic.Inserted */
+.go {
+	color: #AAAAAA
+}
+
+/* Generic.Output */
+.gp {
+	color: #000099;
+}
+
+/* Generic.Prompt */
+.gs {
+}
+
+/* Generic.Strong */
+.gu {
+	color: #003300;
+}
+
+/* Generic.Subheading */
+.gt {
+	color: #99CC66
+}
+
+/* Generic.Traceback */
+.kc {
+	color: #006699;
+}
+
+/* Keyword.Constant */
+.kd {
+	color: #006699;
+}
+
+/* Keyword.Declaration */
+.kn {
+	color: #006699;
+}
+
+/* Keyword.Namespace */
+.kp {
+	color: #006699
+}
+
+/* Keyword.Pseudo */
+.kr {
+	color: #006699;
+}
+
+/* Keyword.Reserved */
+.kt {
+	color: #007788;
+}
+
+/* Keyword.Type */
+.m {
+	color: #b94a00
+}
+
+/* Literal.Number */
+.s {
+	color: #bd3f45
+}
+
+/* Literal.String */
+.na {
+	color: #2d7dad
+}
+
+/* Name.Attribute */
+.nb {
+	color: #336666
+}
+
+/* Name.Builtin */
+.nc {
+	color: #007961;
+}
+
+/* Name.Class */
+.no {
+	color: #336600
+}
+
+/* Name.Constant */
+.nd {
+	color: #5757f3
+}
+
+/* Name.Decorator */
+.ni {
+	color: #999999;
+}
+
+/* Name.Entity */
+.ne {
+	color: #CC0000;
+}
+
+/* Name.Exception */
+.nf {
+	color: #b801e6
+}
+
+/* Name.Function */
+.nl {
+	color: #5757f3
+}
+
+/* Name.Label */
+.nn {
+	color: #00CCFF;
+}
+
+/* Name.Namespace */
+.nt {
+	color: #2f6f9f;
+}
+
+/* Name.Tag */
+.nv {
+	color: #007777
+}
+
+/* Name.Variable */
+.ow {
+	color: #000000;
+}
+
+/* Operator.Word */
+.w {
+	color: #bbbbbb
+}
+
+/* Text.Whitespace */
+.mf {
+	color: #b94a00
+}
+
+/* Literal.Number.Float */
+.mh {
+	color: #b94a00
+}
+
+/* Literal.Number.Hex */
+.mi {
+	color: #b94a00
+}
+
+/* Literal.Number.Integer */
+.mo {
+	color: #b94a00
+}
+
+/* Literal.Number.Oct */
+.sb {
+	color: #CC3300
+}
+
+/* Literal.String.Backtick */
+.sc {
+	color: #CC3300
+}
+
+/* Literal.String.Char */
+.sd {
+	color: #CC3300;
+	font-style: italic
+}
+
+/* Literal.String.Doc */
+.s2 {
+	color: #CC3300
+}
+
+/* Literal.String.Double */
+.se {
+	color: #CC3300;
+}
+
+/* Literal.String.Escape */
+.sh {
+	color: #CC3300
+}
+
+/* Literal.String.Heredoc */
+.si {
+	color: #AA0000
+}
+
+/* Literal.String.Interpol */
+.sx {
+	color: #CC3300
+}
+
+/* Literal.String.Other */
+.sr {
+	color: #33AAAA
+}
+
+/* Literal.String.Regex */
+.s1 {
+	color: #CC3300
+}
+
+/* Literal.String.Single */
+.ss {
+	color: #FFCC33
+}
+
+/* Literal.String.Symbol */
+.bp {
+	color: #336666
+}
+
+/* Name.Builtin.Pseudo */
+.vc {
+	color: #007777
+}
+
+/* Name.Variable.Class */
+.vg {
+	color: #007777
+}
+
+/* Name.Variable.Global */
+.vi {
+	color: #007777
+}
+
+/* Name.Variable.Instance */
+.il {
+	color: #b94a00
+}
+
+/* Literal.Number.Integer.Long */
+
+.css .o,
+.css .o + .nt,
+.css .nt + .nt {
+	color: #666;
+}

@@ -1,0 +1,27 @@
+---
+title: contributing
+layout: default
+seo-title: Contributing
+description: Guidelines on how to give back to this library.
+keywords: contributing
+category: contributing
+---
+
+<div class="u-align-center--small">
+	<h1>{{page.title}}</h1>
+	<p class="u-lighten u-spacing__bottom--large">
+		{{ page.description }}
+	</p>
+</div>
+
+We don't know everything! We welcome pull requests and spirited, but respectful, debates. Please contribute via [pull requests on GitHub](https://github.com/10up/component-library/pulls).
+
+All contributions to the component library should be tested against version 2.1 of the Web Accessibility Content Guidelines ([WCAG 2.1](https://www.w3.org/TR/WCAG21/))
+
+1. Checkout the `develop` branch of the [component-library](https://github.com/10up/component-library).
+2. Create your feature branch: `git checkout -b component/my-new-component`
+3. Commit your changes: `git commit -m 'Added some great feature!'`
+4. Push to the branch: `git push origin component/my-new-component`
+5. [Submit a pull request](https://github.com/10up/component-library/compare)
+
+View the [project readme](https://github.com/10up/component-library) on github for further information

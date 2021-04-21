@@ -157,3 +157,35 @@ test('markup is accessible', async () => {
 
 	expect(await axe(document.querySelector('nav'))).toHaveNoViolations();
 });
+
+test('destroy works', () => {
+	const navigationHTML = globalContainer.innerHTML;
+	const onSubmenuOpen = jest.fn();
+	const tabs = new Navigation('#primary-nav', {
+		onSubmenuOpen,
+	});
+
+	const submenu1 = screen.getByText('Our Work');
+	userEvent.click(submenu1);
+	expect(onSubmenuOpen).toHaveBeenCalled();
+	onSubmenuOpen.mockReset();
+	tabs.destroy();
+	expect(navigationHTML).toEqual(globalContainer.innerHTML);
+
+	userEvent.click(submenu1);
+	expect(onSubmenuOpen).not.toHaveBeenCalled();
+});
+
+test('aria-expanded attribute is properly set for submenus', async () => {
+	new Navigation('#primary-nav');
+
+	const submenu1 = screen.getByText('Our Work');
+	expect(submenu1).toHaveAttribute('aria-expanded', 'false');
+	// open
+	userEvent.click(submenu1);
+	expect(submenu1).toHaveAttribute('aria-expanded', 'true');
+
+	// close
+	userEvent.click(submenu1);
+	expect(submenu1).toHaveAttribute('aria-expanded', 'false');
+});

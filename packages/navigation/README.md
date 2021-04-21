@@ -2,8 +2,6 @@
 
 > An accessible and responsive navigation component.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) ![Accessibility Tests](https://github.com/10up/component-navigation/workflows/Accessibility%20Tests/badge.svg)
-
 ## Installation
 
 ### NPM

@@ -1,6 +1,6 @@
 {
   "name": "@10up/component-accordion",
-  "version": "2.0.0",
+  "version": "2.0.0-rc.2",
   "author": "10up",
   "description": "Accessible accordion component.",
   "main": "dist/index.js",
@@ -16,7 +16,8 @@
     "watch": "concurrently \"npm run build:modern -- --watch\" \"npm run build:umd -- --watch\"",
     "build": "npm run build:modern && npm run build:umd",
     "build:modern": "microbundle build",
-    "build:umd": "microbundle build -i src/index.umd.js --name TenUpAccordion -f umd --external none"
+    "build:umd": "microbundle build -i src/index.umd.js --name TenUpAccordion -f umd --external none",
+    "prepare": "npm run build"
   },
   "browserslist": [
     "> 1%",

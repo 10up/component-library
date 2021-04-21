@@ -1,10 +1,5 @@
 # 10up Accordion component
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status][cli-img]][cli-url]
-
-[cli-img]: https://github.com/10up/component-accordion/workflows/Automated%20Tests/badge.svg
-[cli-url]: https://github.com/10up/component-accordion/actions?query=workflow%3A%22Automated+Tests%22
-
 [View official documentation for this package](https://baseline.10up.com/component/accordion)
 
 ## Installation
@@ -30,13 +25,13 @@ new Accordion( '.accordion', {
 	onCreate: function() {
 		console.log( 'onCreate callback' );
 	},
-	onOpen: function() {
+	onOpen: function( { link, content, heading } ) {
 		console.log( 'onOpen callback' );
 	},
-	onClose: function() {
+	onClose: function( { link, content, heading } ) {
 		console.log( 'onClose callback' );
 	},
-	onToggle: function() {
+	onToggle: function( { link, content, heading } ) {
 		console.log( 'onToggle callback' );
 	}
 } );

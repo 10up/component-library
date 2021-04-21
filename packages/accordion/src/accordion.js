@@ -6,6 +6,8 @@ export default class Accordion {
 	 * @param options The acccordion options.
 	 */
 	constructor(element, options = {}) {
+		this.evtCallbacks = {};
+
 		// Defaults
 		const defaults = {
 			// Event callbacks
@@ -59,13 +61,38 @@ export default class Accordion {
 	}
 
 	/**
-	 * Initialize a given accordion area.
-	 * Configure accordion properties and set ARIA attributes.
-	 *
-	 * @param   {element} accordionArea      The accordionArea to scope changes.
-	 * @param   {number}  accordionAreaIndex The index of the accordionArea.
+	 * Destroys the accordion and removes all event listeners.
 	 */
-	setupAccordion(accordionArea, accordionAreaIndex) {
+	destroy() {
+		this.removeAllEventListeners();
+
+		this.$accordions.forEach((accordionArea) => {
+			const [accordionLinks, accordionContent] = this.getAccordionLinksAndContent(
+				accordionArea,
+			);
+
+			accordionLinks.forEach((accordionLink) => {
+				accordionLink.removeAttribute('id');
+				accordionLink.removeAttribute('aria-expanded');
+				accordionLink.removeAttribute('aria-controls');
+			});
+
+			accordionContent.forEach((accordion) => {
+				accordion.removeAttribute('id');
+				accordion.removeAttribute('aria-hidden');
+				accordion.removeAttribute('aria-labelledby');
+			});
+		});
+	}
+
+	/**
+	 * Returns elements for all accordion links and content.
+	 *
+	 * @param {element} accordionArea Tge accordionArea to scope changes.
+	 *
+	 * @returns {Array}
+	 */
+	getAccordionLinksAndContent(accordionArea) {
 		const allAccordionLinks = accordionArea.querySelectorAll('.accordion-header');
 		const allAccordionContent = accordionArea.querySelectorAll('.accordion-content');
 
@@ -77,8 +104,53 @@ export default class Accordion {
 			.call(allAccordionContent)
 			.filter((content) => content.parentNode === accordionArea);
 
+		return [accordionLinks, accordionContent];
+	}
+
+	/**
+	 * Adds an event listener and caches the callback for later removal
+	 *
+	 * @param {element} element The element associaed with the event listener
+	 * @param {string} evtName The event name
+	 * @param {Function} callback The callback function
+	 */
+	addEventListener(element, evtName, callback) {
+		if (typeof this.evtCallbacks[evtName] === 'undefined') {
+			this.evtCallbacks[evtName] = [];
+		}
+
+		this.evtCallbacks[evtName].push({
+			element,
+			callback,
+		});
+
+		element.addEventListener(evtName, callback);
+	}
+
+	/**
+	 * Removes all event listeners
+	 */
+	removeAllEventListeners() {
+		Object.keys(this.evtCallbacks).forEach((evtName) => {
+			const events = this.evtCallbacks[evtName];
+			events.forEach(({ element, callback }) => {
+				element.removeEventListener(evtName, callback);
+			});
+		});
+	}
+
+	/**
+	 * Initialize a given accordion area.
+	 * Configure accordion properties and set ARIA attributes.
+	 *
+	 * @param   {element} accordionArea      The accordionArea to scope changes.
+	 * @param   {number}  accordionAreaIndex The index of the accordionArea.
+	 */
+	setupAccordion(accordionArea, accordionAreaIndex) {
+		const [accordionLinks, accordionContent] = this.getAccordionLinksAndContent(accordionArea);
+
 		// Handle keydown event to move between accordion items
-		accordionArea.addEventListener('keydown', (event) => {
+		this.addEventListener(accordionArea, 'keydown', (event) => {
 			const selectedElement = event.target;
 			const key = event.which;
 
@@ -98,7 +170,7 @@ export default class Accordion {
 			accordionLink.setAttribute('aria-controls', `panel${accordionAreaIndex}-${index}`);
 
 			// Handle click event to toggle accordion items
-			accordionLink.addEventListener('click', (event) => {
+			this.addEventListener(accordionLink, 'click', (event) => {
 				event.preventDefault();
 				this.toggleAccordionItem(event);
 			});
@@ -116,12 +188,12 @@ export default class Accordion {
 	 * Open a given accordion item
 	 * Add or remove necessary CSS classes and toggle ARIA attributes.
 	 *
-	 * @param {element} accordionLink The accordion heading link
-	 * @param {element} accordionContent The accordion content to open
+	 * @param {object} accordionElements The accordion elements
 	 */
-	openAccordionItem(accordionLink, accordionContent) {
-		accordionLink.setAttribute('aria-expanded', 'true');
-		accordionContent.setAttribute('aria-hidden', 'false');
+	openAccordionItem(accordionElements) {
+		const { link, content } = accordionElements;
+		link.setAttribute('aria-expanded', 'true');
+		content.setAttribute('aria-hidden', 'false');
 
 		/**
 		 * Called when an accordion item is opened.
@@ -129,7 +201,7 @@ export default class Accordion {
 		 * @callback onOpen
 		 */
 		if (this.settings.onOpen && typeof this.settings.onOpen === 'function') {
-			this.settings.onOpen.call();
+			this.settings.onOpen.call(accordionElements);
 		}
 	}
 
@@ -137,12 +209,12 @@ export default class Accordion {
 	 * Close a given accordion item
 	 * Add or remove necessary CSS classes and toggle ARIA attributes.
 	 *
-	 * @param {element} accordionLink The accordion heading link
-	 * @param {element} accordionContent The accordion content to open
+	 * @param {object} accordionElements The accordion elements
 	 */
-	closeAccordionItem(accordionLink, accordionContent) {
-		accordionLink.setAttribute('aria-expanded', 'false');
-		accordionContent.setAttribute('aria-hidden', 'true');
+	closeAccordionItem(accordionElements) {
+		const { link, content } = accordionElements;
+		link.setAttribute('aria-expanded', 'false');
+		content.setAttribute('aria-hidden', 'true');
 
 		/**
 		 * Called when an accordion item is closed.
@@ -150,7 +222,7 @@ export default class Accordion {
 		 * @callback onClose
 		 */
 		if (this.settings.onClose && typeof this.settings.onClose === 'function') {
-			this.settings.onClose.call();
+			this.settings.onClose.call(accordionElements);
 		}
 	}
 
@@ -165,6 +237,12 @@ export default class Accordion {
 		const accordionContent = accordionLink.nextElementSibling;
 		const accordionHeading = accordionContent.querySelector('.accordion-label');
 
+		const accordionElements = {
+			link: accordionLink,
+			content: accordionContent,
+			heading: accordionHeading,
+		};
+
 		// Toggle active class on accordion link and content.
 		accordionLink.classList.toggle('is-active');
 		accordionContent.classList.toggle('is-active');
@@ -176,9 +254,9 @@ export default class Accordion {
 		}
 
 		if (accordionContent.classList.contains('is-active')) {
-			this.openAccordionItem(accordionLink, accordionContent);
+			this.openAccordionItem(accordionElements);
 		} else {
-			this.closeAccordionItem(accordionLink, accordionContent);
+			this.closeAccordionItem(accordionElements);
 		}
 
 		/**
@@ -187,7 +265,7 @@ export default class Accordion {
 		 * @callback onToggle
 		 */
 		if (this.settings.onToggle && typeof this.settings.onToggle === 'function') {
-			this.settings.onToggle.call();
+			this.settings.onToggle.call(accordionElements);
 		}
 	}
 

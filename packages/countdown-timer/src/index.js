@@ -1,1 +1,5 @@
-export { default as CountdownTimer } from './countdown-timer';
+import CountdownTimer from './countdown-timer';
+
+export { CountdownTimer };
+
+export default CountdownTimer;

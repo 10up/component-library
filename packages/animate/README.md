@@ -4,10 +4,7 @@
 series of CSS classes that can be combined or used in isolation to bring small
 elements of motion into a UI.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Build Status][cli-img]][cli-url]
 
-[cli-img]: https://github.com/10up/component-animate/workflows/Accessibility%20Tests/badge.svg
-[cli-url]: https://github.com/10up/component-animate/actions?query=workflow%3A%22Accessibility+Tests%22
 
 [View official documentation for this package](https://baseline.10up.com/component/animate)
 

@@ -1,5 +1,5 @@
 declare module '@10up/component-tooltip' {
-	type TooltipOptions = {
+	export type TooltipOptions = {
 		/**
 		 * Called after the tooltip is initialized
 		 */
@@ -17,6 +17,6 @@ declare module '@10up/component-tooltip' {
 	}
 
 	export class Tooltip {
-		constructor(element: string, options: TooltipOptions);
+		constructor(element: string, options?: TooltipOptions);
 	}
 }

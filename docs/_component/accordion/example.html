@@ -1,0 +1,78 @@
+<!doctype html>
+<html>
+	<head>
+		<title>10up Component Library | Accordion</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<!-- It is not recommended to use the JSDelivr CDN for production. -->
+		<!-- Instead please install the components with npm or by including the files directly in your project -->
+		<style>body {margin: 0;padding: 0;}</style>
+		<link href="https://cdn.jsdelivr.net/npm/@10up/component-accordion@next/dist/index.css" rel="stylesheet">
+	</head>
+	<body>
+
+		<div class="accordion">
+
+			<button class="accordion-header" type="button">Accordion Header 1 - with Nested Accordion</button>
+			<div class="accordion-content">
+				<h2 class="accordion-label">Accordion Heading 1</h2>
+				<p>here the content of 1st tab <a href="#">link</a></p>
+
+				<div class="accordion">
+
+					<button class="accordion-header" type="button">Nested Accordion Header 1</button>
+					<div class="accordion-content">
+						<h2 class="accordion-label">Nested Accordion Heading 1</h2>
+						<p>here the content of nested 1st tab <a href="#">link</a></p>
+					</div> <!-- //.accordion-content -->
+
+					<button class="accordion-header" type="button">Nested Accordion Header 2</button>
+					<div class="accordion-content">
+						<h2 class="accordion-label">Nested Accordion Heading 2</h2>
+						<p>here the content of nested 2nd tab <a href="#">link</a></p>
+					</div> <!-- //.accordion-content -->
+
+				</div> <!-- //.accordion -->
+			</div> <!-- / .accordion-content -->
+
+			<button class="accordion-header" type="button">Accordion Header 2</button>
+			<div class="accordion-content">
+				<h2 class="accordion-label">Accordion Heading 2</h2>
+				<p>here the content of 2nd tab <a href="#">link</a></p>
+			</div> <!-- / .accordion-content -->
+
+			<button class="accordion-header" type="button">Accordion Header 3</button>
+			<div class="accordion-content">
+				<h2 class="accordion-label">Accordion Heading 3</h2>
+				<p>here the content of 3rd tab <a href="#">link</a></p>
+			</div> <!-- / .accordion-content -->
+
+			<button class="accordion-header" type="button">Accordion Header 4</button>
+			<div class="accordion-content">
+				<h2 class="accordion-label">Accordion Heading 4</h2>
+				<p>here the content of 4th tab <a href="#">link</a></p>
+			</div> <!-- / .accordion-content -->
+
+		</div> <!-- / .accordion -->
+
+		<!-- It is not recommended to use the JSDelivr CDN for production. -->
+		<!-- Instead please install the components with npm or by including the files directly in your project -->
+		<script src="https://cdn.jsdelivr.net/npm/@10up/component-accordion@next/dist/index.umd.js"></script>
+		<script type="text/javascript">
+			let myAccordion = new TenUp.accordion( '.accordion', {
+				onCreate: function() {
+					console.log( 'onCreated' )
+				},
+				onOpen: function() {
+					console.log( 'onOpen' )
+				},
+				onClose: function() {
+					console.log( 'onClose' )
+				},
+				onToggle: function() {
+					console.log( 'onToggle' )
+				}
+			} );
+		</script>
+	</body>
+</html>

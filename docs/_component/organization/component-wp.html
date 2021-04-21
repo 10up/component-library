@@ -1,0 +1,65 @@
+<div itemscope itemtype="https://schema.org/Organization">
+
+  <a itemprop="url" href="http://www.example.com/" class="logo">
+    <img itemprop="logo" src="https://via.placeholder.com/50" alt="" />
+    <span><?php echo esc_html('Amazing Company'); ?></span>
+  </a>
+
+  <!-- the name of the organization -->
+  <h3 itemprop="name"><?php echo esc_html('Amazing Company'); ?></h3>
+
+  <!-- address -->
+  <div itemprop="address" itemscope itemtype="https://schema.org/PostalAddress">
+    <p><strong>Address</strong>:
+      <span itemprop="streetAddress"><?php echo esc_html('35 Broad St'); ?></span>,
+      <span itemprop="addressLocality"><?php echo esc_html('Red Bank'); ?></span>,
+      <span itemprop="addressRegion"><abbr title="New Jersey"><?php echo esc_html('NJ'); ?></abbr></span>
+      <span itemprop="postalCode"><?php echo esc_html('07701'); ?></span>
+    </p>
+  </div><!--/itemtype=PostalAddress-->
+
+  <!-- Contact information -->
+  <p><strong>Phone</strong>:
+    <a href="tel:+14251235678" itemprop="telephone"><?php echo esc_html('(425) 123-4567'); ?></a>
+  </p>
+
+  <p><strong>Fax</strong>:
+    <a href="fax:+14251235678" itemprop="faxNumber"><?php echo esc_html('(425) 987-0987'); ?></a>
+  </p>
+
+  <p><strong>Email</strong>:
+    <a href="mailto:hello@example.com" itemprop="email"><?php echo esc_html('hello@example.com'); ?></a>
+  </p>
+
+  <!-- Personel inforamtion -->
+  <p><strong>Founder</strong>:
+    <span itemprop="founder" itemscope itemtype="https://schema.org/Person">
+      <span itemprop="name"><?php echo esc_html('Jayne D. Founder'); ?></span>
+    </span>
+  </p>
+
+  <p><strong>Current employees of this company</strong>:
+    <span itemprop="employee" itemscope itemtype="https://schema.org/Person">
+      <a href="mailto:elle.harrison@example.com" itemprop="email">
+        <span itemprop="name"><?php echo esc_html('Elle Harrison'); ?></span>
+      </a>
+    </span>,
+
+    <span itemprop="employee" itemscope itemtype="https://schema.org/Person">
+      <a href="mailto:james.wormington@example.com" itemprop="email">
+        <span itemprop="name"><?php echo esc_html('James Wormington'); ?></span>
+      </a>
+    </span>
+  </p>
+
+  <p><strong>Former employees (alumni) of this company</strong>:
+    <span itemprop="alumni" itemscope itemtype="https://schema.org/Person">
+      <span itemprop="name"><?php echo esc_html('Jack Dan'); ?></span>
+    </span>,
+
+    <span itemprop="alumni" itemscope itemtype="https://schema.org/Person">
+      <span itemprop="name"><?php echo esc_html('John Smith'); ?></span>
+    </span>
+  </p>
+
+</div><!--/itemtype=Organization-->
