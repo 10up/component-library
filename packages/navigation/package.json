@@ -10,7 +10,7 @@
   "source": "src/index.js",
   "style": "./dist/index.css",
   "types": "./index.d.ts",
-    "scripts": {
+  "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "watch": "concurrently \"npm run build:modern -- --watch\" \"npm run build:umd -- --watch\"",
@@ -38,6 +38,8 @@
     "postcss-preset-env": "^6.7.0"
   },
   "dependencies": {
-    "core-js": "^3.8.3"
+    "core-js": "^3.8.3",
+    "element-closest-polyfill": "^1.0.2",
+    "throttle-debounce": "^3.0.1"
   }
 }

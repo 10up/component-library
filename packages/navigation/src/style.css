@@ -1,161 +1,116 @@
-@custom-media --width-medium (width >= 48em);
-
-.primary-menu {
+/*--------------------------------------------------------------
+# Basic Menu Layout
+--------------------------------------------------------------*/
+ul.menu,
+.menu > ul {
+	display: block;
 	list-style: none;
 	margin: 0;
 	padding: 0;
 
-	&[aria-hidden="true"] {
-		display: none;
-		visibility: hidden;
-	}
-	&:target,
-	&[aria-hidden="false"] {
-		display: block;
-		visibility: visible;
-	}
-
-	& > .menu-item {
-		display: block;
-		@media (--width-medium) {
-			display: inline-block;
-			margin-right: 1em;
-		}
-	}
-}
-
-.sub-menu {
-	list-style: none;
-	margin: 0;
-	padding: 0;
-
-	&[aria-hidden="true"] {
-		display: none;
-		visibility: hidden;
-	}
-	&:target,
-	&[aria-hidden="false"] {
-		display: block;
-		visibility: visible;
-	}
-
-	@media (--width-medium) {
-		left: 0;
-		position: absolute;
-		top: 100%;
-	}
-
-	& > .menu-item {
-		display: block;
-	}
-}
-.primary-menu[data-action="hover"] {
-	& .menu-item {
-		&:hover {
-			@media (--width-medium) {
-				& > .sub-menu,
-				& > .sub-menu[aria-hidden="true"] {
-					display: block;
-				}
-			}
-		}
-	}
-}
-
-.site-menu-toggle {
-	&[aria-hidden="true"] {
-		display: none;
-		visibility: hidden;
-	}
-
-	&[aria-hidden="false"] {
-		display: block;
-		visibility: visible;
-	}
-
-	@media (--width-medium) {
-		display: none;
-		visibility: hidden;
-	}
-}
-
-.menu-item {
-	@media (--width-medium) {
+	& > li {
 		position: relative;
 	}
-}
 
-.menu-item-has-children {
-	white-space: nowrap;
-}
-
-.menu-item-has-children > a:after {
-	content: "+";
-	display: inline-block;
-	margin-left: .25em;
-	font-weight: 700;
-}
-
-.no-js {
-	& [data-responsive-nav-control] {
-		@media (--width-medium) {
-			display: none;
-			visibility: hidden;
-		}
+	& > li a {
+		color: inherit;
+		cursor: pointer;
+		display: block;
 	}
-	& .primary-menu {
+
+	& .sub-menu, & .children {
 		display: none;
 		list-style: none;
 		margin: 0;
-		padding-left: 0;
+		overflow: hidden;
+		padding: 0;
+		white-space: nowrap;
+		width: auto;
+	}
 
-		@media (--width-medium) {
+	& li.active > .sub-menu,
+	& li.active > .children {
+		display: block;
+	}
+
+	& .current-menu-item > .sub-menu {
+		display: block;
+	}
+
+	@nest .horizontal-menu & {
+		align-items: center;
+		display: flex;
+		height: 100%;
+
+		& > li {
+			align-items: center;
+			display: flex;
+		}
+
+		& > li > .sub-menu {
 			display: block;
+			left: 50%;
+			opacity: 0;
+			position: absolute;
+			top: 100%;
+			transform: translate(-50%, 0);
+			visibility: hidden;
+			z-index: 10;
 		}
 
-		&:target {
-			display: block;
+		& > li.active > .sub-menu {
+			opacity: 1;
+			transform: translate3d(-50%, -5px, 0) rotateX(0);
+			visibility: visible;
 		}
+	}
 
-		& ul {
-			list-style: none;
-			margin: 0;
-			padding-left: 0;
-		}
-		& li {
-			position: relative;
+}
 
-			&:hover,
-			&:focus-within {
-				& > ul {
+/*--------------------------------------------------------------
+# No JS default layout  for horizontal menus on small screens
+# Vertical menus will open with focus-within
+--------------------------------------------------------------*/
+.no-js .horizontal-menu ul.menu,
+.no-js .horizontal-menu .menu > ul {
+
+	& > li:hover,
+	& > li:focus-within {
+		@media (hover: hover), (-ms-high-contrast: none) {
+			& > .sub-menu {
+				opacity: 1;
+				transform: translate3d(-50%, -5px, 0) rotateX(0);
+				visibility: visible;
+
+				& li:hover .sub-menu,
+				& li:focus-within .sub-menu {
 					display: block;
 				}
 			}
-
-			& > a {
-				&:focus {
-					& > ul {
-						display: block;
-					}
-				}
-			}
-
-			& > ul {
-				display: none;
-
-				@media (--width-medium) {
-					left: 0;
-					position: absolute;
-					top: 100%;
-				}
-			}
 		}
-		& > li {
-			display: block;
+	}
 
-			@media (--width-medium) {
-				display: inline-block;
-			}
+	@media (max-width: 768px) {
+		display: block;
+
+		& li {
+			display: block;
+		}
+
+		& .sub-menu {
+			display: none;
+			left: 0;
+			opacity: 1;
+			position: relative;
+			transform: translate(0, 0);
+			visibility: visible;
+		}
+
+		& li:focus-within .sub-menu {
+			display: block;
 		}
 	}
 }
+
+
+

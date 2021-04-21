@@ -3,3 +3,10 @@ dist
 .DS_Store
 *.log
 coverage
+/packages/navigation/.idea
+/.idea/component-library.iml
+/.idea/inspectionProfiles
+/.idea/jsLinters
+/.idea/modules.xml
+/.idea/vcs.xml
+/.idea

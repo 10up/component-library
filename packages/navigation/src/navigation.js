@@ -1,106 +1,75 @@
-import 'core-js/es/array/from';
+import { throttle } from 'throttle-debounce';
+import 'core-js/features/array/from';
 import 'core-js/web/dom-collections';
+import 'element-closest-polyfill';
 
 /**
- * @module TenUpNavigation
- *
- * @description
- *
- * Create responsive navigation.
+ * Create Navigation
  */
-export default class Navigation {
+export default class CreateNavigation {
 	/**
-	 * constructor method
+	 * Constructor
 	 *
-	 * @param {string} element Element selector for navigation container.
-	 * @param {object} options Object of optional callbacks.
+	 * @param {string} navSelector Selector for navigation element
+	 * @param {string} breakPoint css unit property for when this menu should be considered "mobile"
+	 * @param {Object} options for optional changes to the menu and adding a menu button
 	 */
-	constructor(element, options = {}) {
-		// Defaults
+	constructor(navSelector, breakPoint = '', options = {}) {
 		const defaults = {
-			action: 'hover',
-			breakpoint: '(min-width: 48em)',
-
-			// Event callbacks
-			onCreate: null,
-			onOpen: null,
-			onClose: null,
-			onSubmenuOpen: null,
-			onSubmenuClose: null,
+			navButtonElement: null, // button selector to open/close navigation
+			subMenuElement: '.sub-menu', // submenu selector
+			activeClass: 'active', // class added to li menu item when submenu considered "opened"
+			desktopHover: true, // allow hover events on top level items for hover-capable devices
+			autoCloseMenu: true, // close mobile menu when clicking elsewhere. if string given it wont close unless that selector is a parent of what was clicked
+			onInit: null, // function after menu is instantiated
+			onMenuOpen: null, // function for when menu is opened. param passed is the menu button that opened it
+			onMenuClose: null, // function for when menu is closed. param passed is the menu button that closed it
+			onSubMenuOpen: null, // function for after a submenu opened. Params passed are the submenu and the menu item that holds the submenu
+			onSubMenuClose: null, // function for after a submenu closed. Params passed are the submenu and the menu item that holds the submenu
+			onResize: null, // runs when menu is resized.
 		};
 
-		if (!element || typeof element !== 'string') {
-			console.error( '10up Navigation: No target supplied. A valid target (menu) must be used.' ); // eslint-disable-line
-			return;
-		}
-
-		this.evtCallbacks = {};
-
-		// bind methods
-		this.setMQ = this.setMQ.bind(this);
-		this.listenerMenuToggleClick = this.listenerMenuToggleClick.bind(this);
-		this.listenerSubmenuAnchorFocus = this.listenerSubmenuAnchorFocus.bind(this);
-		this.listenerSubmenuAnchorClick = this.listenerSubmenuAnchorClick.bind(this);
-		this.listenerDocumentClick = this.listenerDocumentClick.bind(this);
-		this.listenerDocumentKeyup = this.listenerDocumentKeyup.bind(this);
-
-		// Settings
-		this.settings = { ...defaults, ...options };
-
-		// Set media queries.
-		this.mq = window.matchMedia(this.settings.breakpoint);
-
-		// Menu container selector.
-		this.$menu = document.querySelector(element);
-
-		// Bail out if there's no menu.
-		if (!this.$menu) {
-			console.error( '10up Navigation: Target not found. A valid target (menu) must be used.' ); // eslint-disable-line
-			return;
-		}
-
-		this.$menuToggle = document.querySelector(
-			`[aria-controls="${this.$menu.getAttribute('id')}"]`,
-		);
-
-		// Also bail early if the toggle isn't set.
-		if (!this.$menuToggle) {
-			console.error( '10up Navigation: No menu toggle found. A valid menu toggle must be used.' ); // eslint-disable-line
-			return;
-		}
-
-		// Set all submenus and menu items.
-		this.$submenus = this.$menu.querySelectorAll('ul');
-		this.$menuItems = this.$menu.querySelectorAll('li');
-
-		// Update the html element classes for styles.
-		// Otherwise it'll fallback to :target.
+		// check and set whether js is disabled
 		document.querySelector('html').classList.remove('no-js');
 		document.querySelector('html').classList.add('js');
 
-		// Setup tasks
-		this.setupMenu();
-		this.setupSubMenus();
-		this.setupListeners();
+		// setup properties
+		this.breakpoint = breakPoint;
+		this.menuToggle = null;
+		this.navSelector = navSelector;
+		this.navElement = document.querySelector(this.navSelector);
 
-		/**
-		 * Called after the component is initialized on page load.
-		 *
-		 * @callback onCreate
-		 */
-		if (this.settings.onCreate && typeof this.settings.onCreate === 'function') {
-			this.settings.onCreate.call();
+		if (this.navElement === null) {
+			console.error('Nav menu is not found on this page'); // eslint-disable-line
 		}
+
+		this.menuItems = this.navElement.querySelectorAll('li');
+		this.options = { ...defaults, ...options };
+		this.subMenus = this.getSubMenus();
+		this.topLevelItems = this.getTopLevelItems();
+
+		// bind events so they work properly and can be removed if destroyed
+		this.resize = this.resize.bind(this);
+		this.hoverOnEvent = this.hoverOnEvent.bind(this);
+		this.hoverOffEvent = this.hoverOffEvent.bind(this);
+		this.clickEvents = this.clickEvents.bind(this);
+		this.focusOutEvent = this.focusOutEvent.bind(this);
+		this.throttleResize = throttle(700, false, this.resize);
+
+		if (this.options.navButtonElement) {
+			this.menuToggleEvent = this.menuToggleEvent.bind(this);
+		}
+
+		this.setup();
 	}
 
 	/**
-	 * Handle destroying tabs
+	 * Destroy instance
 	 *
-	 * @param options Optional options
+	 * @param {Object} options for how to destroy
 	 */
 	destroy(options = {}) {
 		this.removeAllEventListeners();
-		this.mq.removeListener(this.setMQ);
 
 		const defaults = {
 			removeAttributes: true,
@@ -112,403 +81,506 @@ export default class Navigation {
 		};
 
 		if (settings.removeAttributes) {
-			this.$menu.removeAttribute('aria-hidden');
-			this.$menu.removeAttribute('data-action');
-			this.$menuToggle.removeAttribute('aria-expanded');
-			this.$menuToggle.removeAttribute('aria-hidden');
+			if (this.menuToggle) {
+				this.menuToggle.removeAttribute('aria-hidden');
+				this.menuToggle.removeAttribute('aria-expanded');
+				this.menuToggle.removeAttribute('aria-pressed');
+			}
 
-			this.$submenus.forEach(($submenu) => {
-				const $anchor = $submenu.previousElementSibling;
+			this.subMenus.forEach((subMenu) => {
+				const menuItem = subMenu.closest('li');
+				const anchor = menuItem.querySelector('a');
+				menuItem.classList.remove('js-has-submenu'); // add class to let us know this has a submenu. dont rely on wordpress classes
+				menuItem.classList.remove('js-top-level-item');
+				menuItem.classList.remove('active');
+				subMenu.removeAttribute('aria-label');
+				subMenu.removeAttribute('aria-hidden');
 
-				$submenu.removeAttribute('id');
-				$submenu.removeAttribute('aria-hidden');
-
-				// Update ARIA.
-				$submenu.removeAttribute('aria-label');
-				$anchor.removeAttribute('aria-controls');
-				$anchor.removeAttribute('aria-haspopup');
-				$anchor.removeAttribute('aria-expanded');
+				anchor.removeAttribute('aria-controls');
+				anchor.removeAttribute('aria-haspopup');
 			});
 		}
-	}
-
-	/**
-	 * Adds an event listener and caches the callback for later removal
-	 *
-	 * @param {element} element The element associaed with the event listener
-	 * @param {string} evtName The event name
-	 * @param {Function} callback The callback function
-	 */
-	addEventListener(element, evtName, callback) {
-		if (typeof this.evtCallbacks[evtName] === 'undefined') {
-			this.evtCallbacks[evtName] = [];
-		}
-
-		this.evtCallbacks[evtName].push({
-			element,
-			callback,
-		});
-
-		element.addEventListener(evtName, callback);
 	}
 
 	/**
 	 * Removes all event listeners
 	 */
 	removeAllEventListeners() {
-		Object.keys(this.evtCallbacks).forEach((evtName) => {
-			const events = this.evtCallbacks[evtName];
-			events.forEach(({ element, callback }) => {
-				element.removeEventListener(evtName, callback);
+		document.body.removeEventListener('mouseenter', this.hoverOnEvent, true);
+		document.body.removeEventListener('mouseleave', this.hoverOffEvent, true);
+		document.body.removeEventListener('click', this.clickEvents);
+		document.querySelector(`${this.navSelector}`).removeEventListener('focusout', this.focusOutEvent); // eslint-disable-line
+		window.removeEventListener('resize', this.throttleResize);
+	}
+
+	/**
+	 * Sets up the menu system and calls various functions
+	 */
+	setup() {
+		// Add aria attributes to submenus
+		this.setupSubmenus();
+
+		// optionally add a button to open/close menu.
+		// creates a menu button with aria attributes and click event for open/close
+		if (this.options.navButtonElement) {
+			this.setupMenuToggle();
+		}
+
+		// Hover events for desktop top level menu items only
+		if (this.menuItems.length !== 0 && this.options.desktopHover) {
+			document.body.addEventListener('mouseenter', this.hoverOnEvent, true);
+			document.body.addEventListener('mouseleave', this.hoverOffEvent, true);
+		}
+
+		document.body.addEventListener('click', this.clickEvents);
+		document
+			.querySelector(`${this.navSelector}`)
+			.addEventListener('focusout', this.focusOutEvent);
+
+		// resize event check for submenus off screen and fix, changes menu to vertical if necessary
+		window.addEventListener('resize', this.throttleResize);
+		this.resize();
+
+		if (this.options.onInit && typeof this.options.onInit === 'function') {
+			this.options.onInit.call();
+		}
+	}
+
+	/**
+	 * Adds and removes a class of horizontal-menu on desktop for easy styling.
+	 * Good to add horizontal-menu manually in markup, just in case there is no js.
+	 * with .no-js horizontal-menu goes mobile at 768px.
+	 * Otherwise this class is added and removed making it go vertical/horizontal and ignores that default media query
+	 */
+	setOrientation() {
+		if (!this.isMobile()) {
+			this.navElement.classList.add('horizontal-menu');
+		} else {
+			this.navElement.classList.remove('horizontal-menu');
+		}
+	}
+
+	/**
+	 * Gets all submenus in this nav
+	 *
+	 * @return {boolean|Element} of all submenus
+	 */
+	getSubMenus() {
+		if (this.navElement !== null) {
+			return this.navElement.querySelectorAll(this.options.subMenuElement);
+		}
+		return false;
+	}
+
+	/**
+	 * Returns top level items in an array
+	 *
+	 * @return {Element[]} top level elements
+	 */
+	getTopLevelItems() {
+		const firstLiFound = this.navElement.querySelector('li');
+		const topLevelItems = Array.from(firstLiFound.parentNode.children);
+
+		topLevelItems[topLevelItems.length - 1].dataset.lastMenuItem = '';
+		topLevelItems.forEach((item) => {
+			item.classList.add('js-top-level-item');
+		});
+
+		return topLevelItems;
+	}
+
+	/**
+	 * Adds the proper ADA compliant attributes and id's for each submenu
+	 */
+	setupSubmenus() {
+		if (this.subMenus.length > 0) {
+			this.subMenus.forEach((subMenu, index) => {
+				const menuItem = subMenu.closest('li');
+				const anchor = menuItem.querySelector('a');
+				menuItem.classList.add('js-has-submenu'); // add class to let us know this has a submenu
+
+				if (!subMenu.hasAttribute('id')) {
+					subMenu.setAttribute('id', `submenu-${index}`);
+				}
+				subMenu.setAttribute('aria-label', 'Submenu');
+				subMenu.setAttribute('aria-hidden', 'true');
+
+				anchor.setAttribute('aria-controls', subMenu.getAttribute('id'));
+				anchor.setAttribute('aria-haspopup', 'true');
 			});
-		});
+		}
 	}
 
 	/**
-	 * Sets up the main menu for the navigation.
-	 * Includes adding classes and ARIA.
-	 * We use "scoped" classes so we can be more confident that there will be no collisions.
+	 * Creates proper code for the button element chosen. It will open the menu on click or enter
+	 * Element to be toggle must have an ID and this menu button must have an aria-controls that equals that ID
 	 *
+	 * This element does not have to be the navigation. it can be anything.
 	 */
-	setupMenu() {
-		const id = this.$menu.getAttribute('id');
-		const href = this.$menuToggle.getAttribute('href');
-		const hrefTarget = href.replace('#', '');
+	setupMenuToggle() {
+		this.menuToggle = document.querySelector(this.options.navButtonElement);
 
-		this.$menu.dataset.action = this.settings.action;
-
-		// Check for a valid ID on the menu.
-		if (!id || id === '') {
-			console.error( '10up Navigation: Target (menu) must have a valid ID attribute.' ); // eslint-disable-line
+		if (!this.menuToggle.hasAttribute('aria-controls')) {
+			console.error(
+				'You have added a button to use to toggle this navigation. Therefore you must have a navigation element to open/close. Please give this button an aria-controls attribute that has a value pointing to an id. The id would be the element we are opening and closing.',
+			); // eslint-disable-line
 			return;
 		}
 
-		// Check that the menu toggle is set to use the menu for fallback.
-		if (hrefTarget !== id) {
-			console.warn( '10up Navigation: The menu toggle href and menu ID are not equal.' ); // eslint-disable-line
+		// Provide default label if none found
+		if (!this.menuToggle.hasAttribute('aria-label')) {
+			this.menuToggle.setAttribute('aria-label', 'Menu Button');
 		}
 
-		// Update ARIA.
-		this.$menuToggle.setAttribute('aria-controls', hrefTarget);
+		this.menuToggle.setAttribute('aria-hidden', `${!this.isMobile()}`);
 
-		// Sets up ARIA tags related to screen size based on our media query.
-		this.setMQMenuA11y();
+		// presume it begins closed
+		this.menuToggle.setAttribute('aria-expanded', 'false');
+		this.menuToggle.setAttribute('aria-pressed', 'false');
+
+		// add toggle event to menu button
+		this.menuToggle.addEventListener('click', this.menuToggleEvent);
 	}
 
-	/**
-	 * Sets up the submenus.
-	 * Adds JS classes and initial AIRA attributes.
-	 */
-	setupSubMenus() {
-		this.$submenus.forEach(($submenu, index) => {
-			const $anchor = $submenu.previousElementSibling;
-			const submenuID = `tenUp-submenu-${index}`;
-
-			$submenu.setAttribute('id', submenuID);
-
-			// Update ARIA.
-			$submenu.setAttribute('aria-label', 'Submenu');
-			$anchor.setAttribute('aria-controls', submenuID);
-			$anchor.setAttribute('aria-haspopup', true);
-			$anchor.setAttribute('aria-expanded', false);
-
-			// Sets up ARIA tags related to screen size based on our media query.
-			this.setMQSubbmenuA11y();
-		});
-	}
-
-	/**
-	 * Binds our various listeners for the plugin.
-	 * Includes specific element listeners as well as media query.
-	 */
-	setupListeners() {
-		// Media query listener.
-		// We're using this instead of resize + debounce because it should be more efficient than that combo.
-		this.mq.addListener(this.setMQ);
-
-		// Menu toggle listener.
-		this.addEventListener(this.$menuToggle, 'click', this.listenerMenuToggleClick);
-
-		// Submenu listeners.
-		// Mainly applies to the anchors of submenus.
-		this.$submenus.forEach(($submenu) => {
-			const $anchor = $submenu.previousElementSibling;
-
-			if (this.settings.action === 'hover') {
-				this.addEventListener($anchor, 'focus', this.listenerSubmenuAnchorFocus);
-			}
-
-			this.addEventListener($anchor, 'click', this.listenerSubmenuAnchorClick);
-		});
-
-		// Document specific listeners.
-		// Mainly used to close any open menus.
-		this.addEventListener(document, 'click', this.listenerDocumentClick);
-		this.addEventListener(document, 'keyup', this.listenerDocumentKeyup);
-	}
-
-	/**
-	 * Set
-	 */
-
-	/**
-	 * Sets an media query related functions when the query boundry is reached.
-	 *
-	 */
-	setMQ() {
-		this.setMQMenuA11y();
-		this.setMQSubbmenuA11y();
-	}
-
-	/**
-	 * Sets any ARIA that changes as a result of the media query boundry being passed.
-	 * Specifically for the toggle and main menu.
-	 *
-	 */
-	setMQMenuA11y() {
-		// Large
-		if (this.mq.matches) {
-			this.$menu.setAttribute('aria-hidden', false);
-			this.$menuToggle.setAttribute('aria-expanded', true);
-			this.$menuToggle.setAttribute('aria-hidden', true);
-			// Small
+	menuToggleEvent() {
+		if (this.menuToggle.getAttribute('aria-expanded') === 'false') {
+			this.openMenu();
 		} else {
-			this.$menu.setAttribute('aria-hidden', true);
-			this.$menuToggle.setAttribute('aria-expanded', false);
-			this.$menuToggle.setAttribute('aria-hidden', false);
+			this.closeMenu();
 		}
 	}
 
 	/**
-	 * Sets an media query related functions when the query boundry is reached.
-	 * Specifically for submenus.
-	 *
+	 * Opens a menu when a menu button is clicked
 	 */
-	setMQSubbmenuA11y() {
-		this.$submenus.forEach(($submenu) => {
-			$submenu.setAttribute('aria-hidden', true);
-		});
-	}
-
-	/**
-	 * Opens the passed submenu.
-	 *
-	 * @param   {element} $submenu The submenu to open. Required.
-	 */
-	openSubmenu($submenu) {
-		// Open the submenu by updating ARIA and class.
-		$submenu.setAttribute('aria-hidden', false);
-
-		/**
-		 * Called when a submenu item is opened.
-		 *
-		 * @callback onSubmenuOpen - optional.
-		 */
-		if (this.settings.onSubmenuOpen && typeof this.settings.onSubmenuOpen === 'function') {
-			this.settings.onSubmenuOpen.call();
+	openMenu() {
+		this.menuToggle.setAttribute('aria-expanded', 'true');
+		this.menuToggle.setAttribute('aria-pressed', 'true');
+		this.openItem(this.menuToggle);
+		if (this.options.onMenuOpen && typeof this.options.onMenuOpen === 'function') {
+			this.options.onMenuOpen.call(this, this.menuToggle);
 		}
 	}
 
 	/**
-	 * Closes the passed submenu.
-	 *
-	 * @param   {element} $submenu The submenu to close. Required.
+	 * Closes a menu when a menu button is clicked
 	 */
-	closeSubmenu($submenu) {
-		const $anchor = $submenu.previousElementSibling;
-		const $childSubmenus = $submenu.querySelectorAll('li > .sub-menu[aria-hidden="false"]');
-
-		// Close the submenu by updating ARIA and class.
-		$submenu.setAttribute('aria-hidden', true);
-
-		if ($childSubmenus) {
-			// Close any children as well.
-			// Update their ARIA and class.
-			this.closeSubmenus($childSubmenus);
-		}
-
-		if (!this.mq.matches) {
-			$anchor.focus();
-		}
-
-		/**
-		 * Called when a submenu item is closed.
-		 *
-		 * @callback onSubmenuClose - optional.
-		 */
-		if (this.settings.onSubmenuClose && typeof this.settings.onSubmenuClose === 'function') {
-			this.settings.onSubmenuClose.call();
+	closeMenu() {
+		this.menuToggle.setAttribute('aria-expanded', 'false');
+		this.menuToggle.setAttribute('aria-pressed', 'false');
+		this.closeItem(this.menuToggle);
+		if (this.options.onMenuClose && typeof this.options.onMenuClose === 'function') {
+			this.options.onMenuClose.call(this, this.menuToggle);
 		}
 	}
 
 	/**
-	 * Closes all submenus in the node list.
+	 * Based on the breakpoint provided we return whether we are on mobile or not
 	 *
-	 * @param  {Array} $submenus The node list of submenus to close. Required.
+	 * @return {boolean} if this menu is considered mobile based on breakpoint
 	 */
-	closeSubmenus($submenus) {
-		$submenus.forEach(($submenu) => {
-			this.closeSubmenu($submenu);
-		});
+	isMobile() {
+		let { breakpoint } = this; // assuming we have a pixel or rem size
+
+		// always in mobile mode
+		if (breakpoint === true) {
+			return true;
+		}
+
+		// always desktop mode
+		if (breakpoint === false) {
+			return false;
+		}
+
+		// using a css variable
+		if (this.breakpoint.includes('--')) {
+			breakpoint = getComputedStyle(document.documentElement).getPropertyValue(breakpoint);
+		}
+
+		return matchMedia(`(max-width: ${breakpoint}`).matches;
 	}
 
 	/**
-	 * Listeners
+	 * Checks if the menu is horizontal by testing flex direction
+	 * Helpful
+	 *
+	 * @return {boolean} if menu is using flex and direction is row returns true
 	 */
+	isMenuHorizontal() {
+		const firstLiFound = this.navElement.querySelector('li').parentElement;
+		const style = getComputedStyle(firstLiFound);
+		const display = style.getPropertyValue('display');
+		const direction = style.getPropertyValue('flex-direction');
+		return direction !== 'column' && display === 'flex';
+	}
 
 	/**
-	 * Menu toggle handler.
-	 * Opens or closes the menu according to current state.
+	 * Opens another item from this elements aria-controls attribute
 	 *
-	 * @param {object} event The event object.
+	 * @param controlElement element with an aria-controls attribute. Will set that element to open (false)
 	 */
-	listenerMenuToggleClick(event) {
-		const isExpanded = this.$menuToggle.getAttribute('aria-expanded') === 'true';
+	openItem(controlElement) {
+		document
+			.querySelector(`#${controlElement.getAttribute('aria-controls')}`)
+			.setAttribute('aria-hidden', 'false');
+	}
 
-		// Don't act like a link.
-		event.preventDefault();
+	/**
+	 * Closes another item from this elements aria-controls attribute
+	 *
+	 * @param controlElement element with an aria-controls attribute. Will set that element to closed (true)
+	 */
+	closeItem(controlElement) {
+		document
+			.querySelector(`#${controlElement.getAttribute('aria-controls')}`)
+			.setAttribute('aria-hidden', 'true');
+	}
 
-		// Don't bubble.
-		event.stopPropagation();
+	/**
+	 * Closes all menu items and submenus
+	 *
+	 * @param excludeMenuItem exclude an item from being closed
+	 */
+	closeAllMenuItems(excludeMenuItem = null) {
+		if (this.subMenus.length !== 0) {
+			this.subMenus.forEach((submenu) => {
+				if (excludeMenuItem === null || !submenu.contains(excludeMenuItem)) {
+					submenu.setAttribute('aria-hidden', 'true');
+				}
+			});
+		}
 
-		// Is the menu currently open?
-		if (isExpanded) {
-			// Update ARIA
-			this.$menu.setAttribute('aria-hidden', true);
-			this.$menuToggle.setAttribute('aria-expanded', false);
+		if (this.menuItems.length !== 0) {
+			this.menuItems.forEach((item) => {
+				if (
+					excludeMenuItem === null ||
+					(excludeMenuItem !== item && !item.contains(excludeMenuItem))
+				) {
+					item.classList.remove(this.options.activeClass);
+					item.classList.remove('clicked-open');
+				}
+			});
+		}
+	}
 
-			/**
-			 * Called when a menu item is closed.
-			 *
-			 * @callback onClose - optional
-			 */
-			if (this.settings.onClose && typeof this.settings.onClose === 'function') {
-				this.settings.onClose.call();
-			}
-		} else {
-			// Update ARIA
-			this.$menu.setAttribute('aria-hidden', false);
-			this.$menuToggle.setAttribute('aria-expanded', true);
+	/**
+	 * On Resize of browser we change menu button aria from hidden/visible
+	 * We also set the menu aria to visible on desktop and on mobile only hide if menu button is not currently active
+	 */
+	resize() {
+		// if there is a navbutton we should change its aria-hidden
+		if (this.options.navButtonElement && this.menuToggle !== null) {
+			this.menuToggle.setAttribute('aria-hidden', `${!this.isMobile()}`);
 
-			// Focus the first link in the menu
-			this.$menu.querySelectorAll('a')[0].focus();
-
-			/**
-			 * Called when a menu item is opened.
-			 *
-			 * @callback onOpen - optional
-			 */
-			if (this.settings.onOpen && typeof this.settings.onOpen === 'function') {
-				this.settings.onOpen.call();
+			// if resize goes desktop, the menu's aria-hidden should be false
+			// if its mobile and the menu toggle is not expanded, close menu and menu items
+			if (!this.isMobile()) {
+				this.openItem(this.menuToggle);
+			} else if (
+				this.isMobile() &&
+				this.menuToggle.getAttribute('aria-expanded') === 'false'
+			) {
+				this.closeItem(this.menuToggle);
+				this.closeAllMenuItems();
 			}
 		}
-	}
 
-	/**
-	 * Document click handler.
-	 * Closes all open submenus on a click outside of the menu.
-	 *
-	 */
-	listenerDocumentClick() {
-		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
+		this.fixSubmenus();
+		this.setOrientation();
 
-		// Bail if no submenus are found.
-		if ($openSubmenus.length === 0) {
-			return;
-		}
-
-		// Close the submenus.
-		this.closeSubmenus($openSubmenus);
-	}
-
-	/**
-	 * Document keyup handler.
-	 * Closes all open menus on a escape key.
-	 * Refocuses after closing submenus.
-	 *
-	 * @param   {object} event The event object.
-	 */
-	listenerDocumentKeyup(event) {
-		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
-
-		// Bail early if not using the escape key or if no submenus are found.
-		if ($openSubmenus.length === 0 || event.keyCode !== 27) {
-			return;
-		}
-
-		// Close submenus
-		this.closeSubmenus($openSubmenus);
-
-		// If we're set to click, set the focus back.
-		if (this.settings.action === 'click') {
-			$openSubmenus[0].previousElementSibling.focus();
+		if (this.options.onResize && typeof this.options.onResize === 'function') {
+			this.options.onResize.call(this, this.isMobile());
 		}
 	}
 
 	/**
-	 * Submenu anchor click handler.
-	 * Opens or closes the submenu accordingly.
-	 * Only fires based on settings and if the media query is appropriate.
-	 *
-	 * @param   {object} event The event object. Required.
+	 * on resize check if desktop and check if menus, when open would be off screen. if so add class
 	 */
-	listenerSubmenuAnchorClick(event) {
-		const $anchor = event.target;
-		const $submenu = $anchor.nextElementSibling;
-		const isHidden = $submenu.getAttribute('aria-hidden') === 'true';
-
-		let $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
-
-		$openSubmenus = Array.from($openSubmenus).filter((menu) => !menu.contains($anchor));
-
-		// Close the submenus.
-		this.closeSubmenus($openSubmenus);
-
-		// Bail if set to hover and we're on a large screen.
-		if (this.settings.action === 'hover' && this.mq.matches) {
+	fixSubmenus() {
+		// if mobile simply remove and return
+		// expect mobile site to be vertical and no need to check for offscreen menus
+		if (this.isMobile()) {
+			this.topLevelItems.forEach((item) => {
+				item.classList.remove('submenu-offscreen-right');
+				item.classList.remove('submenu-offscreen-left');
+			});
 			return;
 		}
 
-		// Don't let the link act like a link.
-		event.preventDefault();
+		this.topLevelItems.forEach((item) => {
+			// get top level element
+			const topSubMenu = item.querySelector(this.options.subMenuElement);
 
-		// Don't bubble.
-		event.stopPropagation();
+			if (topSubMenu) {
+				// make item visible so we can get left edge quick
+				const { display } = window.getComputedStyle(topSubMenu);
+				if (display !== 'block') {
+					topSubMenu.style.display = 'block';
+				}
+				const rightEdge = topSubMenu.getBoundingClientRect().right;
+				const leftEdge = topSubMenu.getBoundingClientRect().left;
 
-		// Is the submenu hidden?
-		if (isHidden) {
-			// Yes, open it.
-			this.openSubmenu($submenu);
-			$anchor.setAttribute('aria-expanded', true);
-		} else {
-			// No, close it.
-			this.closeSubmenu($submenu);
-			$anchor.setAttribute('aria-expanded', false);
+				// set menu back to initial display value
+				if (display !== 'block') {
+					topSubMenu.style.removeProperty('display');
+				}
+
+				const viewport = document.documentElement.clientWidth;
+				// if the submenu is off the page, pull it back somewhat by using a class
+				if (rightEdge > viewport) {
+					topSubMenu.closest('li').classList.remove('submenu-offscreen-left');
+					topSubMenu.closest('li').classList.add('submenu-offscreen-right');
+					return;
+				}
+
+				if (leftEdge < 0) {
+					topSubMenu.closest('li').classList.remove('submenu-offscreen-right');
+					topSubMenu.closest('li').classList.add('submenu-offscreen-left');
+					return;
+				}
+
+				// if its not offscreen reset and remove classes
+				topSubMenu.closest('li').classList.remove('submenu-offscreen-right');
+				topSubMenu.closest('li').classList.remove('submenu-offscreen-left');
+			}
+		});
+	}
+
+	/**
+	 * Desktop Hover On
+	 *
+	 * @param e event
+	 */
+	hoverOnEvent(e) {
+		const menuItem = e.target.closest(
+			`${this.navSelector} li.js-has-submenu.js-top-level-item`,
+		);
+		if (menuItem === null || menuItem !== e.target) {
+			return;
+		}
+
+		if (!menuItem.classList.contains('clicked-open')) {
+			this.closeAllMenuItems(menuItem); // wont close this item or its parent
+			this.openSubMenu(menuItem);
 		}
 	}
 
 	/**
-	 * Submenu anchor focus handler.
-	 * Opens or closes the submenu accordingly.
-	 * Only fires based on settings and if the media query is appropriate.
+	 * Desktop Hover Off
 	 *
-	 * @param   {object} event The event object.
+	 * @param e event
 	 */
-	listenerSubmenuAnchorFocus(event) {
-		const $anchor = event.target;
-		const $menuItem = $anchor.parentNode;
-		const $submenu = $anchor.nextElementSibling;
-		const $childSubmenus = $menuItem.parentNode.querySelectorAll('.sub-menu');
+	hoverOffEvent(e) {
+		const menuItem = e.target.closest(
+			`${this.navSelector} li.js-has-submenu.js-top-level-item`,
+		);
 
-		// Bail early if no submenu is found or if we're on a small screen.
-		if (!$submenu || !this.mq.matches) {
+		if (menuItem === null || menuItem !== e.target) {
 			return;
 		}
 
-		// Close all sibling menus
-		this.closeSubmenus($childSubmenus);
+		if (!menuItem.classList.contains('clicked-open')) {
+			this.closeSubMenu(menuItem);
+		}
+	}
 
-		// Open this menu
-		this.openSubmenu($submenu);
+	/**
+	 * Click events
+	 *
+	 * @param e event
+	 */
+	clickEvents(e) {
+		if (this.menuItems.length === 0) {
+			return;
+		}
+
+		// if clicking off the entire menu, close submenus
+		if (!e.target.closest(`${this.navSelector}`)) {
+			this.closeAllMenuItems();
+		}
+
+		// if a button is being used to show/hide the menu then clicking off the button and menu holder, assuming there is one, closes menu
+		if (
+			this.options.autoCloseMenu &&
+			this.menuToggle !== null &&
+			this.menuToggle.getAttribute('aria-hidden') === 'false' &&
+			!e.target.closest(`${this.options.navButtonElement}`) &&
+			!e.target.closest(`#${this.menuToggle.getAttribute('aria-controls')}`)
+		) {
+			if (
+				typeof this.options.autoCloseMenu === 'string' ||
+				this.options.autoCloseMenu instanceof String
+			) {
+				if (e.target.closest(`${this.options.autoCloseMenu}`)) {
+					this.closeMenu();
+				}
+			} else {
+				this.closeMenu();
+			}
+		}
+
+		// Opening a sub menu with a click when appropriate
+		// on mobile,  on desktop when hover is turned off, or if the anchor is href="#"
+		const menuItem = e.target.closest(`${this.navSelector} li.js-has-submenu`);
+		if (menuItem) {
+			if (!this.options.desktopHover || this.isMobile() || e.target.closest(`a[href="#"]`)) {
+				e.preventDefault();
+				if (!menuItem.classList.contains('clicked-open')) {
+					if (this.isMenuHorizontal()) {
+						this.closeAllMenuItems(menuItem);
+					}
+					menuItem.classList.add('clicked-open');
+					this.openSubMenu(menuItem);
+				} else {
+					menuItem.classList.remove('clicked-open');
+					this.closeSubMenu(menuItem);
+				}
+			}
+		}
+	}
+
+	/**
+	 * Focus off menu event
+	 */
+	focusOutEvent() {
+		setTimeout(() => {
+			if (!this.navElement.contains(document.activeElement)) {
+				this.closeAllMenuItems();
+			}
+		}, 100);
+	}
+
+	/**
+	 * Open Submenu
+	 *
+	 * @param menuItem li parent element of submenu
+	 */
+	openSubMenu(menuItem) {
+		menuItem.classList.add('active');
+		if (menuItem.classList.contains('js-has-submenu')) {
+			const subMenu = menuItem.querySelector(`${this.options.subMenuElement}`);
+			subMenu.setAttribute('aria-hidden', 'false');
+
+			if (this.options.onSubMenuOpen && typeof this.options.onSubMenuOpen === 'function') {
+				this.options.onSubMenuOpen.call(this, menuItem, subMenu);
+			}
+		}
+	}
+
+	/**
+	 * Close Submenu
+	 *
+	 * @param menuItem li parent element of submenu
+	 */
+	closeSubMenu(menuItem) {
+		menuItem.classList.remove('active');
+		if (menuItem.classList.contains('js-has-submenu')) {
+			const subMenu = menuItem.querySelector(`${this.options.subMenuElement}`);
+			subMenu.setAttribute('aria-hidden', 'true');
+
+			if (this.options.onSubMenuClose && typeof this.options.onSubMenuClose === 'function') {
+				this.options.onSubMenuClose.call(this, menuItem, subMenu);
+			}
+		}
 	}
 }
