@@ -1,0 +1,41 @@
+:root {
+	--c-reading-position: #a30811;
+}
+
+.reading-position {
+
+	/* Reset the appearance */
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+
+	/* Progress bar container for Firefox/IE10+ */
+	background-color: transparent;
+
+	/* Get rid of the default border in Firefox/Opera. */
+	border: none;
+
+	/* Progress bar value for IE10+ */
+	color: var(--c-reading-position);
+	height: 4px;
+	left: 0;
+
+	/* Positioning */
+	position: fixed;
+	top: 0;
+
+	/* Dimensions */
+	width: 100%;
+}
+
+progress::-webkit-progress-bar {
+	background-color: transparent;
+}
+
+progress::-webkit-progress-value {
+	background-color: var(--c-reading-position);
+}
+
+progress::-moz-progress-bar {
+	background-color: var(--c-reading-position);
+}
