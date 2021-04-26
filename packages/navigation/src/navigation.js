@@ -11,14 +11,14 @@ export default class CreateNavigation {
 	 * Constructor
 	 *
 	 * @param {string} navSelector Selector for navigation element
-	 * @param {string} breakPoint css unit property for when this menu should be considered "mobile"
-	 * @param {Object} options for optional changes to the menu and adding a menu button
+	 * @param {O=bbject} options for optional changes to the menu and adding a menu button
 	 */
-	constructor(navSelector, breakPoint = '', options = {}) {
+	constructor(navSelector, options = {}) {
 		const defaults = {
-			navButtonElement: null, // button selector to open/close navigation
+			navButtonElement: true, // button selector to open/close navigation, true to simply get button from id of navSelector
 			subMenuElement: '.sub-menu', // submenu selector
 			activeClass: 'active', // class added to li menu item when submenu considered "opened"
+			breakpoint: '768px',
 			desktopHover: true, // allow hover events on top level items for hover-capable devices
 			autoCloseMenu: true, // close mobile menu when clicking elsewhere. if string given it wont close unless that selector is a parent of what was clicked
 			onInit: null, // function after menu is instantiated
@@ -34,7 +34,6 @@ export default class CreateNavigation {
 		document.querySelector('html').classList.add('js');
 
 		// setup properties
-		this.breakpoint = breakPoint;
 		this.menuToggle = null;
 		this.navSelector = navSelector;
 		this.navElement = document.querySelector(this.navSelector);
@@ -45,6 +44,7 @@ export default class CreateNavigation {
 
 		this.menuItems = this.navElement.querySelectorAll('li');
 		this.options = { ...defaults, ...options };
+		this.breakpoint = this.options.breakpoint;
 		this.subMenus = this.getSubMenus();
 		this.topLevelItems = this.getTopLevelItems();
 
@@ -54,6 +54,7 @@ export default class CreateNavigation {
 		this.hoverOffEvent = this.hoverOffEvent.bind(this);
 		this.clickEvents = this.clickEvents.bind(this);
 		this.focusOutEvent = this.focusOutEvent.bind(this);
+		this.focusInEvent = this.focusInEvent.bind(this);
 		this.throttleResize = throttle(700, false, this.resize);
 
 		if (this.options.navButtonElement) {
@@ -66,7 +67,7 @@ export default class CreateNavigation {
 	/**
 	 * Destroy instance
 	 *
-	 * @param {Object} options for how to destroy
+	 * @param {object} options for how to destroy
 	 */
 	destroy(options = {}) {
 		this.removeAllEventListeners();
@@ -136,6 +137,10 @@ export default class CreateNavigation {
 		document
 			.querySelector(`${this.navSelector}`)
 			.addEventListener('focusout', this.focusOutEvent);
+
+		document
+			.querySelector(`${this.navSelector}`)
+			.addEventListener('focusin', this.focusInEvent);
 
 		// resize event check for submenus off screen and fix, changes menu to vertical if necessary
 		window.addEventListener('resize', this.throttleResize);
@@ -218,9 +223,21 @@ export default class CreateNavigation {
 	 * This element does not have to be the navigation. it can be anything.
 	 */
 	setupMenuToggle() {
-		this.menuToggle = document.querySelector(this.options.navButtonElement);
+		// backwards compatibility allows button to automatically be set to target the navigation element only
+		if (this.options.navButtonElement === true) {
+			const menuId = this.navElement.getAttribute('id');
+			if (!menuId) {
+				console.error(
+					'You must ad an ID to your navigation to use with your button. Or change the option of navButtonElement to a button element selector.',
+				);
+			}
+			this.menuToggle = document.querySelector(`[aria-controls="${menuId}"`);
+		} else {
+			this.menuToggle = document.querySelector(this.options.navButtonElement);
+		}
 
 		if (!this.menuToggle.hasAttribute('aria-controls')) {
+			// eslint-disable-next-line no-console
 			console.error(
 				'You have added a button to use to toggle this navigation. Therefore you must have a navigation element to open/close. Please give this button an aria-controls attribute that has a value pointing to an id. The id would be the element we are opening and closing.',
 			); // eslint-disable-line
@@ -290,6 +307,14 @@ export default class CreateNavigation {
 		// always desktop mode
 		if (breakpoint === false) {
 			return false;
+		}
+
+		if (breakpoint.includes('min-width')) {
+			return !matchMedia(`${breakpoint}`).matches;
+		}
+
+		if (breakpoint.includes('max-width')) {
+			return matchMedia(`${breakpoint}`).matches;
 		}
 
 		// using a css variable
@@ -455,11 +480,14 @@ export default class CreateNavigation {
 		const menuItem = e.target.closest(
 			`${this.navSelector} li.js-has-submenu.js-top-level-item`,
 		);
-		if (menuItem === null || menuItem !== e.target) {
+		if (menuItem === null) {
 			return;
 		}
 
-		if (!menuItem.classList.contains('clicked-open')) {
+		if (
+			!menuItem.classList.contains('clicked-open') &&
+			!menuItem.classList.contains('active')
+		) {
 			this.closeAllMenuItems(menuItem); // wont close this item or its parent
 			this.openSubMenu(menuItem);
 		}
@@ -548,6 +576,16 @@ export default class CreateNavigation {
 				this.closeAllMenuItems();
 			}
 		}, 100);
+	}
+
+	focusInEvent(e) {
+		const menuItem = e.target.closest(`${this.navSelector} li.js-has-submenu`);
+		if (menuItem) {
+			this.closeAllMenuItems(menuItem);
+			this.openSubMenu(menuItem);
+		} else {
+			this.closeAllMenuItems();
+		}
 	}
 
 	/**
