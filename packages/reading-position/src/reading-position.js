@@ -62,6 +62,62 @@ export default class ReadingPosition {
 	}
 
 	/**
+	 * Handle destroying tabs
+	 *
+	 * @param options Optional options
+	 */
+	destroy(options = {}) {
+		this.removeAllEventListeners();
+
+		const defaults = {
+			removeAttributes: true,
+		};
+
+		const settings = {
+			...defaults,
+			...options,
+		};
+
+		if (settings.removeAttributes) {
+			this.readingPositionElement.removeAttribute('role');
+			this.readingPositionElement.removeAttribute('max');
+			this.readingPositionElement.removeAttribute('value');
+		}
+	}
+
+	/**
+	 * Adds an event listener and caches the callback for later removal
+	 *
+	 * @param {element} element The element associaed with the event listener
+	 * @param {string} evtName The event name
+	 * @param {Function} callback The callback function
+	 */
+	addEventListener(element, evtName, callback) {
+		if (typeof this.evtCallbacks[evtName] === 'undefined') {
+			this.evtCallbacks[evtName] = [];
+		}
+
+		this.evtCallbacks[evtName].push({
+			element,
+			callback,
+		});
+
+		element.addEventListener(evtName, callback);
+	}
+
+	/**
+	 * Removes all event listeners
+	 */
+	removeAllEventListeners() {
+		Object.keys(this.evtCallbacks).forEach((evtName) => {
+			const events = this.evtCallbacks[evtName];
+			events.forEach(({ element, callback }) => {
+				element.removeEventListener(evtName, callback);
+			});
+		});
+	}
+
+	/**
 	 * Setup the reading position indicator
 	 *
 	 * @param {HTMLElement} element HTMLDomNode of the progress element
@@ -76,9 +132,9 @@ export default class ReadingPosition {
 		element.setAttribute('max', 100);
 
 		// add event listeners for scroll, resize and orientationchange because they all affect the percentage
-		document.addEventListener('scroll', this.debouncedHandleScroll.bind(this));
-		window.addEventListener('resize', this.debouncedHandleScroll.bind(this));
-		window.addEventListener('orientationchange', this.debouncedHandleScroll.bind(this));
+		this.addEventListener(document, 'scroll', this.debouncedHandleScroll.bind(this));
+		this.addEventListener(window, 'resize', this.debouncedHandleScroll.bind(this));
+		this.addEventListener(window, 'orientationchange', this.debouncedHandleScroll.bind(this));
 	}
 
 	/**

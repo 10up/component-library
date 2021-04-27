@@ -19,6 +19,16 @@ declare module '@10up/reading-position' {
 		 * Called when an accordion item is toggled
 		 */
 		scrollEnd?: () => void,
+
+		/**
+		 *  DOMNode that the percentage should start at
+		 */
+		startElement?: null,
+
+		/**
+		 *  DOMNode that the percentage should end at
+		 */
+		endElement?: null,
 	}
 
 	export type DestroyOptions = {
