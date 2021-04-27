@@ -25,6 +25,8 @@ export default class ReadingPosition {
 			scrollEnd: null,
 		};
 
+		this.evtCallbacks = {};
+
 		if (!elementSelector || typeof elementSelector !== 'string') {
 			console.error( '10up ReadingPosition: No target supplied. A valid target (readingPosition) must be used.' ); // eslint-disable-line
 			return;
@@ -80,8 +82,6 @@ export default class ReadingPosition {
 
 		if (settings.removeAttributes) {
 			this.readingPositionElement.removeAttribute('role');
-			this.readingPositionElement.removeAttribute('max');
-			this.readingPositionElement.removeAttribute('value');
 		}
 	}
 
