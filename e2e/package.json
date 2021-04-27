@@ -32,6 +32,7 @@
     "@10up/component-navigation": "^2.1.0",
     "@10up/component-tabs": "^2.0.0",
     "@10up/component-tooltip": "^2.0.0",
-    "@10up/countdown-timer": "^2.0.0"
+    "@10up/countdown-timer": "^2.0.0",
+    "@10up/reading-position": "^1.0.0"
   }
 }
