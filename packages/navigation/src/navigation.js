@@ -58,7 +58,7 @@ export default class CreateNavigation {
 		this.clickEvents = this.clickEvents.bind(this);
 		this.focusOutEvent = this.focusOutEvent.bind(this);
 		this.focusInEvent = this.focusInEvent.bind(this);
-		this.throttleResize = throttle(700, false, this.resize);
+		this.throttleResize = throttle(400, false, this.resize);
 
 		if (this.options.navButtonElement) {
 			this.menuToggleEvent = this.menuToggleEvent.bind(this);
@@ -396,6 +396,7 @@ export default class CreateNavigation {
 	 * We also set the menu aria to visible on desktop and on mobile only hide if menu button is not currently active
 	 */
 	resize() {
+		this.setOrientation();
 		// if there is a navbutton we should change its aria-hidden
 		if (this.options.navButtonElement && this.menuToggle !== null) {
 			this.menuToggle.setAttribute('aria-hidden', `${!this.isMobile()}`);
@@ -414,7 +415,6 @@ export default class CreateNavigation {
 		}
 
 		this.fixSubmenus();
-		this.setOrientation();
 
 		if (this.options.onResize && typeof this.options.onResize === 'function') {
 			this.options.onResize.call(this, this.isMobile());
