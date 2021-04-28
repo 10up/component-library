@@ -11,14 +11,14 @@ export default class CreateNavigation {
 	 * Constructor
 	 *
 	 * @param {string} navSelector Selector for navigation element
-	 * @param {O=bbject} options for optional changes to the menu and adding a menu button
+	 * @param {object} options for optional changes to the menu and adding a menu button
 	 */
 	constructor(navSelector, options = {}) {
 		const defaults = {
 			navButtonElement: true, // button selector to open/close navigation, true to simply get button from id of navSelector
 			subMenuElement: '.sub-menu', // submenu selector
 			activeClass: 'active', // class added to li menu item when submenu considered "opened"
-			breakpoint: '768px',
+			breakpoint: '768px', // accepts true for always mobile, false for always desktop or any css unit
 			desktopHover: true, // allow hover events on top level items for hover-capable devices
 			autoCloseMenu: true, // close mobile menu when clicking elsewhere. if string given it wont close unless that selector is a parent of what was clicked
 			onInit: null, // function after menu is instantiated
@@ -28,6 +28,9 @@ export default class CreateNavigation {
 			onSubMenuClose: null, // function for after a submenu closed. Params passed are the submenu and the menu item that holds the submenu
 			onResize: null, // runs when menu is resized.
 		};
+
+		// unique id allows for multiple instances without issue
+		this.instance = CreateNavigation.instances++;
 
 		// check and set whether js is disabled
 		document.querySelector('html').classList.remove('no-js');
@@ -65,6 +68,42 @@ export default class CreateNavigation {
 	}
 
 	/**
+	 * Sets up the menu system and calls various functions
+	 */
+	setup() {
+		// Add aria attributes to submenus and unique ID's
+		this.setupSubmenus();
+
+		// optionally add a button to open/close menu.
+		// creates a menu button with aria attributes and click event for open/close
+		if (this.options.navButtonElement) {
+			this.setupMenuToggle();
+		}
+
+		this.setupEvents();
+		this.resize();
+
+		if (this.options.onInit && typeof this.options.onInit === 'function') {
+			this.options.onInit.call();
+		}
+	}
+
+	setupEvents() {
+		// Hover events for desktop top level menu items only
+		if (this.menuItems.length !== 0 && this.options.desktopHover) {
+			this.navElement.addEventListener('mouseenter', this.hoverOnEvent, true);
+			this.navElement.addEventListener('mouseleave', this.hoverOffEvent, true);
+		}
+
+		document.body.addEventListener('click', this.clickEvents);
+		this.navElement.addEventListener('focusout', this.focusOutEvent);
+		this.navElement.addEventListener('focusin', this.focusInEvent);
+
+		// resize event check for submenus off screen and fix, changes menu to vertical if necessary
+		window.addEventListener('resize', this.throttleResize);
+	}
+
+	/**
 	 * Destroy instance
 	 *
 	 * @param {object} options for how to destroy
@@ -96,7 +135,6 @@ export default class CreateNavigation {
 				menuItem.classList.remove('active');
 				subMenu.removeAttribute('aria-label');
 				subMenu.removeAttribute('aria-hidden');
-
 				anchor.removeAttribute('aria-controls');
 				anchor.removeAttribute('aria-haspopup');
 			});
@@ -107,48 +145,12 @@ export default class CreateNavigation {
 	 * Removes all event listeners
 	 */
 	removeAllEventListeners() {
-		document.body.removeEventListener('mouseenter', this.hoverOnEvent, true);
-		document.body.removeEventListener('mouseleave', this.hoverOffEvent, true);
+		this.navElement.removeEventListener('mouseenter', this.hoverOnEvent, true);
+		this.navElement.removeEventListener('mouseleave', this.hoverOffEvent, true);
 		document.body.removeEventListener('click', this.clickEvents);
-		document.querySelector(`${this.navSelector}`).removeEventListener('focusout', this.focusOutEvent); // eslint-disable-line
+		this.navElement.removeEventListener('focusout', this.focusOutEvent); // eslint-disable-line
+
 		window.removeEventListener('resize', this.throttleResize);
-	}
-
-	/**
-	 * Sets up the menu system and calls various functions
-	 */
-	setup() {
-		// Add aria attributes to submenus
-		this.setupSubmenus();
-
-		// optionally add a button to open/close menu.
-		// creates a menu button with aria attributes and click event for open/close
-		if (this.options.navButtonElement) {
-			this.setupMenuToggle();
-		}
-
-		// Hover events for desktop top level menu items only
-		if (this.menuItems.length !== 0 && this.options.desktopHover) {
-			document.body.addEventListener('mouseenter', this.hoverOnEvent, true);
-			document.body.addEventListener('mouseleave', this.hoverOffEvent, true);
-		}
-
-		document.body.addEventListener('click', this.clickEvents);
-		document
-			.querySelector(`${this.navSelector}`)
-			.addEventListener('focusout', this.focusOutEvent);
-
-		document
-			.querySelector(`${this.navSelector}`)
-			.addEventListener('focusin', this.focusInEvent);
-
-		// resize event check for submenus off screen and fix, changes menu to vertical if necessary
-		window.addEventListener('resize', this.throttleResize);
-		this.resize();
-
-		if (this.options.onInit && typeof this.options.onInit === 'function') {
-			this.options.onInit.call();
-		}
 	}
 
 	/**
@@ -168,7 +170,7 @@ export default class CreateNavigation {
 	/**
 	 * Gets all submenus in this nav
 	 *
-	 * @return {boolean|Element} of all submenus
+	 * @returns {boolean|Element} of all submenus
 	 */
 	getSubMenus() {
 		if (this.navElement !== null) {
@@ -180,7 +182,7 @@ export default class CreateNavigation {
 	/**
 	 * Returns top level items in an array
 	 *
-	 * @return {Element[]} top level elements
+	 * @returns {Element[]} top level elements
 	 */
 	getTopLevelItems() {
 		const firstLiFound = this.navElement.querySelector('li');
@@ -205,7 +207,7 @@ export default class CreateNavigation {
 				menuItem.classList.add('js-has-submenu'); // add class to let us know this has a submenu
 
 				if (!subMenu.hasAttribute('id')) {
-					subMenu.setAttribute('id', `submenu-${index}`);
+					subMenu.setAttribute('id', `submenu-${this.instance}-${index}`);
 				}
 				subMenu.setAttribute('aria-label', 'Submenu');
 				subMenu.setAttribute('aria-hidden', 'true');
@@ -294,7 +296,7 @@ export default class CreateNavigation {
 	/**
 	 * Based on the breakpoint provided we return whether we are on mobile or not
 	 *
-	 * @return {boolean} if this menu is considered mobile based on breakpoint
+	 * @returns {boolean} if this menu is considered mobile based on breakpoint
 	 */
 	isMobile() {
 		let { breakpoint } = this; // assuming we have a pixel or rem size
@@ -329,7 +331,7 @@ export default class CreateNavigation {
 	 * Checks if the menu is horizontal by testing flex direction
 	 * Helpful
 	 *
-	 * @return {boolean} if menu is using flex and direction is row returns true
+	 * @returns {boolean} if menu is using flex and direction is row returns true
 	 */
 	isMenuHorizontal() {
 		const firstLiFound = this.navElement.querySelector('li').parentElement;
@@ -343,6 +345,7 @@ export default class CreateNavigation {
 	 * Opens another item from this elements aria-controls attribute
 	 *
 	 * @param controlElement element with an aria-controls attribute. Will set that element to open (false)
+	 *
 	 */
 	openItem(controlElement) {
 		document
@@ -480,7 +483,7 @@ export default class CreateNavigation {
 		const menuItem = e.target.closest(
 			`${this.navSelector} li.js-has-submenu.js-top-level-item`,
 		);
-		if (menuItem === null) {
+		if (menuItem === null || this.isMobile()) {
 			return;
 		}
 
@@ -503,7 +506,7 @@ export default class CreateNavigation {
 			`${this.navSelector} li.js-has-submenu.js-top-level-item`,
 		);
 
-		if (menuItem === null || menuItem !== e.target) {
+		if (menuItem === null || menuItem !== e.target || this.isMobile()) {
 			return;
 		}
 
@@ -522,8 +525,8 @@ export default class CreateNavigation {
 			return;
 		}
 
-		// if clicking off the entire menu, close submenus
-		if (!e.target.closest(`${this.navSelector}`)) {
+		// if clicking off the entire menu, close submenus on desktop
+		if (!e.target.closest(`${this.navSelector}`) && !this.isMobile()) {
 			this.closeAllMenuItems();
 		}
 
@@ -572,7 +575,7 @@ export default class CreateNavigation {
 	 */
 	focusOutEvent() {
 		setTimeout(() => {
-			if (!this.navElement.contains(document.activeElement)) {
+			if (!this.navElement.contains(document.activeElement) && !this.isMobile()) {
 				this.closeAllMenuItems();
 			}
 		}, 100);
@@ -622,3 +625,5 @@ export default class CreateNavigation {
 		}
 	}
 }
+
+CreateNavigation.instances = 0;
