@@ -1,8 +1,7 @@
 /*--------------------------------------------------------------
 # Basic Menu Layout
 --------------------------------------------------------------*/
-ul.menu,
-.menu > ul {
+.js-menu > ul {
 	display: block;
 	list-style: none;
 	margin: 0;
@@ -13,12 +12,12 @@ ul.menu,
 	}
 
 	& > li a {
-		color: inherit;
 		cursor: pointer;
 		display: block;
 	}
 
-	& .sub-menu, & .children {
+	& .sub-menu,
+	& .children {
 		display: none;
 		list-style: none;
 		margin: 0;
@@ -29,54 +28,56 @@ ul.menu,
 	}
 
 	& li.active > .sub-menu,
-	& li.active > .children {
+	& li.active > .children,
+	& li.current-menu-item > .sub-menu {
 		display: block;
 	}
+}
 
-	& .current-menu-item > .sub-menu {
-		display: block;
-	}
+/*--------------------------------------------------------------
+# Horizontal overrides
+--------------------------------------------------------------*/
+.js-menu.horizontal-menu > ul {
+	align-items: center;
+	display: flex;
+	height: 100%;
 
-	@nest .horizontal-menu & {
+	& > li {
 		align-items: center;
 		display: flex;
 		height: 100%;
-
-		& > li {
-			align-items: center;
-			display: flex;
-		}
-
-		& > li > .sub-menu {
-			display: block;
-			left: 50%;
-			opacity: 0;
-			position: absolute;
-			top: 100%;
-			transform: translate(-50%, 0);
-			visibility: hidden;
-			z-index: 10;
-		}
-
-		& > li.active > .sub-menu {
-			opacity: 1;
-			transform: translate3d(-50%, -5px, 0) rotateX(0);
-			visibility: visible;
-		}
 	}
 
+	& > li > .sub-menu {
+		display: block;
+		left: 50%;
+		opacity: 0;
+		position: absolute;
+		top: 100%;
+		transform: translate(-50%, 0);
+		visibility: hidden;
+		z-index: 10;
+	}
+
+	& > li.active > .sub-menu {
+		opacity: 1;
+		transform: translate3d(-50%, -5px, 0) rotateX(0);
+		visibility: visible;
+	}
 }
 
 /*--------------------------------------------------------------
 # No JS default layout  for horizontal menus on small screens
 # Vertical menus will open with focus-within
 --------------------------------------------------------------*/
-.no-js .horizontal-menu ul.menu,
-.no-js .horizontal-menu .menu > ul {
+
+.no-js .js-menu.horizontal-menu > ul {
 
 	& > li:hover,
 	& > li:focus-within {
+
 		@media (hover: hover), (-ms-high-contrast: none) {
+
 			& > .sub-menu {
 				opacity: 1;
 				transform: translate3d(-50%, -5px, 0) rotateX(0);
@@ -111,6 +112,4 @@ ul.menu,
 		}
 	}
 }
-
-
 
