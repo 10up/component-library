@@ -1,7 +1,8 @@
 /*--------------------------------------------------------------
 # Basic Menu Layout
 --------------------------------------------------------------*/
-.js-menu > ul {
+.js-menu > ul,
+.js-menu nav > ul{
 	display: block;
 	list-style: none;
 	margin: 0;
@@ -71,7 +72,8 @@
 # Vertical menus will open with focus-within
 --------------------------------------------------------------*/
 
-.no-js .js-menu.horizontal-menu > ul {
+.no-js .js-menu.horizontal-menu > ul,
+.no-js .js-menu .horizontal-menu > ul {
 
 	& > li:hover,
 	& > li:focus-within {
