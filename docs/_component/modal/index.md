@@ -1,7 +1,7 @@
 ---
-title: modal
+title: modal / dialog
 layout: default
-seo-title: Modal
+seo-title: Modal / Dialog
 description: A third party plugin we use to produce an accessible modal dialog component.
 keywords: modal, html, css, javascript
 path_slug: modal

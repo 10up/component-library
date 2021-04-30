@@ -14,7 +14,7 @@ category: components
 	<li><a href="{{ site.baseurl }}/component/accordion">Accordion</a></li>
 	<li>Audio Player <sup aria-label="Planned component."><a href="https://github.com/10up/wp-component-library/issues/202">Planned</a></sup></li>
 	<li><a href="{{ site.baseurl }}/component/datepicker/">Date Picker</a> <sup>Third Party</sup></li>
-	<li><a href="{{ site.baseurl }}/component/modal/">Modal</a> <sup>Third Party</sup></li>
+	<li><a href="{{ site.baseurl }}/component/modal/">Modal / Dialog</a> <sup>Third Party</sup></li>
 	<li><a href="{{ site.baseurl }}/component/tabs/">Tabs</a></li>
 	<li><a href="{{ site.baseurl }}/component/tooltips/">Tooltips</a></li>
 </ul>
