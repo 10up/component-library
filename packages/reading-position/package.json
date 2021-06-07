@@ -1,8 +1,8 @@
 {
-  "name": "@10up/countdown-timer",
-  "version": "2.0.0",
+  "name": "@10up/reading-position",
+  "version": "1.0.0",
   "author": "10up",
-  "description": "A countdown timer component.",
+  "description": "A component that reports reading position/progress on a page while scrolling.",
   "main": "dist/index.js",
   "exports": "./dist/index.modern.js",
   "umd:main": "dist/index.umd.js",
@@ -16,18 +16,18 @@
     "watch": "concurrently \"npm run build:modern -- --watch\" \"npm run build:umd -- --watch\"",
     "build": "npm run build:modern && npm run build:umd",
     "build:modern": "microbundle build -f modern,es,cjs",
-    "build:umd": "microbundle build -i src/index.umd.js  --name TenUpCountdownTimer -f umd --external none",
+    "build:umd": "microbundle build -i src/index.umd.js  --name TenUpTabs -f umd --external none",
     "prepare": "npm run build"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/10up/countdown-timer.git"
+    "url": "git+https://github.com/10up/component-library.git"
   },
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/10up/countdown-timer/issues"
+    "url": "https://github.com/10up/component-library/issues"
   },
-  "homepage": "https://github.com/10up/countdown-timer#readme",
+  "homepage": "https://github.com/10up/component-library/packages/reading-position",
   "devDependencies": {
     "@testing-library/dom": "^7.29.4",
     "@testing-library/jest-dom": "^5.11.9",
@@ -37,8 +37,5 @@
     "postcss-import": "^14.0.0",
     "postcss-preset-env": "^6.7.0",
     "jest": "^26.6.3"
-  },
-  "dependencies": {
-    "core-js": "^3.8.3"
   }
 }

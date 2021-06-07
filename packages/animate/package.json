@@ -26,7 +26,8 @@
     "@testing-library/user-event": "^12.6.3",
     "microbundle": "^0.13.0",
     "postcss-import": "^14.0.0",
-    "postcss-preset-env": "^6.7.0"
+    "postcss-preset-env": "^6.7.0",
+    "jest": "^26.6.3"
   },
   "browserslist": [
     "> 0.5%",

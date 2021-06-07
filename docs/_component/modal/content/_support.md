@@ -18,6 +18,6 @@
 	</tr>
 	<tr>
 		<th>IE</th>
-		<td>IE 9+</td>
+		<td>IE 11+</td>
 	</tr>
 </table>
