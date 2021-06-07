@@ -14,6 +14,9 @@ import { Navigation } from '@10up/component-navigation';
 // eslint-disable-next-line
 import { Tooltip } from '@10up/component-tooltip';
 
+// eslint-disable-next-line
+import { ReadingPosition } from '@10up/reading-position';
+
 document.addEventListener('DOMContentLoaded', () => {
 	if (document.querySelector('#primary-nav')) {
 		new Navigation('#primary-nav', {
@@ -35,6 +38,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	if (document.querySelectorAll('.a11y-tip')) {
 		new Tooltip('.a11y-tip');
+	}
+
+	if (document.querySelectorAll('.reading-position')) {
+		new ReadingPosition('.reading-position');
 	}
 
 	const oneYearFromNow = new Date(new Date().setFullYear(new Date().getFullYear() + 1));

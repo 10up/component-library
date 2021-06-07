@@ -14,7 +14,7 @@ Each component in this library is built with simplicity and accessibility in min
 
 All components are tested to be WCAG 2.1 Compliant.
 
-**[Start browsing ☞](https://10up.github.io/wp-component-library/)**
+**[Start browsing ☞](https://baseline.10up.com)**
 
 ## How to Use
 
