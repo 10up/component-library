@@ -43,7 +43,7 @@ _NOTE: Release is this instance is referring to the repository version history -
 1. Create a new issue in github to track the release. Name the release version in the github issue. Refer to [releases](https://github.com/10up/component-library/releases) for the latest release.
 2. Create a branch from `develop` named `release/[github-issue-number]-[release-number]`.
 3. With the release branch checked out locally, in the `/docs` directory run `bundle install` and `bundle exec jekyll serve`. Verify everything is working correctly.
-4. Create a pull request in github to merge the `release/[github-issue-number]-[release-number]` branch into `trunk`. Assign one reviewer to the PR. Add "Component Libarary Release [release number]" to the description.
+4. Create a pull request in github to merge the `release/[github-issue-number]-[release-number]` branch into `trunk`. Assign one reviewer to the PR. Add "Component Libarary Release [release number]" and "CHANGELOG" updates to the description.
 5. Once branch is approved, all tests pass, and merged on github, switch to the `trunk` branch locally and pull the changes you just merged.
 6. Verify changes are working correctly locally and, once the deploy is complete, on [Baseline](https://baseline.10up.com/components).
 7. If any updated components (`/packages`) that will need to be relased to npm exist, be sure to update package version numbers in their respective `package.json` files (this should have been completed in the branch workflow - see above).
