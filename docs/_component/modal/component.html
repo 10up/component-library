@@ -1,11 +1,20 @@
-<div id="my-accessible-dialog">
-  <div tabindex="-1" data-a11y-dialog-hide></div>
-	<!-- Using <div role="dialog"> instead of <dialog> due to chrome a bug. -->
-	<!-- https://github.com/edenspiekermann/a11y-dialog/issues/89#issuecomment-426983208 -->
-  <div role="dialog" aria-labelledby="dialog-title">
-    <button type="button" data-a11y-dialog-hide aria-label="Close this dialog window">
+<!-- 1. The dialog container -->
+<div
+  id="your-dialog-id"
+  aria-labelledby="your-dialog-title-id"
+  aria-hidden="true"
+>
+  <!-- 2. The dialog overlay -->
+  <div data-a11y-dialog-hide></div>
+  <!-- 3. The actual dialog -->
+  <div role="document">
+    <!-- 4. The close button -->
+    <button type="button" data-a11y-dialog-hide aria-label="Close dialog">
       &times;
     </button>
-    <h1 id="dialog-title">Dialog Title</h1>
+    <!-- 5. The dialog title -->
+    <h2 id="your-dialog-title-id">Your dialog title</h2>
+    <!-- 6. Dialog content -->
+    <p>Dialog content here</p>
   </div>
 </div>
