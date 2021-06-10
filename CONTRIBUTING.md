@@ -42,7 +42,6 @@ The `develop` branch is the development branch which means it contains the next 
 5. Merge the PR into `trunk`.
 6. Merge `trunk` back into `develop` to complete the package update.
 
-
 ### Release instructions
 _NOTE: Release is this instance is referring to the repository version history - not the npm package(s)_
 
