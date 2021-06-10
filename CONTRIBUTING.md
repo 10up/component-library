@@ -21,7 +21,6 @@ New features and enhancements are also managed via [issues](https://github.com/1
 Pull requests represent a proposed solution to a specified problem.  They should always reference an issue that describes the problem and contains discussion about the problem itself.  Discussion on pull requests should be limited to the pull request itself, i.e. code review.
 
 For more on how 10up writes and manages code, check out our [10up Engineering Best Practices](https://10up.github.io/Engineering-Best-Practices/).
-
 ## Workflow
 
 The `develop` branch is the development branch which means it contains the next version to be released. `trunk` contains the latest released version.
