@@ -38,7 +38,7 @@ The `develop` branch is the development branch which means it contains the next 
 1. Once a package is ready to publish to npm, a `maintainer/owner` creates a PR against `trunk` from `develop` or a `release` branch.
 2. Manually update the package version in their respective `package.json` file to the next desired version and upate the `CHANGELOG.md` within the package directory.
 3. Within the package, run `npm publish --access public` to release the package to npm.
-4. Verify npm packages have been updated (i.e. 10up Accordion Component on NPM).
+4. Verify npm packages have been updated (i.e. [10up Accordion Component](https://www.npmjs.com/package/@10up/component-accordion) on NPM).
 5. Merge the PR into `trunk`.
 6. Merge `trunk` back into `develop` to complete the package update.
 
