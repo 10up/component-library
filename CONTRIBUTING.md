@@ -38,7 +38,7 @@ The `develop` branch is the development branch which means it contains the next 
 1. Once a package is ready to publish to npm, a `maintainer/owner` creates a PR against `trunk` from `develop` or a `release` branch.
 2. Manually update the package version in their respective `package.json` file to the next desired version and upate the `CHANGELOG.md` within the package directory.
 3. Within the package, run `npm publish --access public` to release the package to npm.
-4. Verify package is updated on npm.
+4. Verify npm packages have been updated (i.e. 10up Accordion Component on NPM).
 5. Merge the PR into `trunk`.
 6. Merge `trunk` back into `develop` to complete the package update.
 
@@ -52,8 +52,7 @@ _NOTE: Release is this instance is referring to the repository version history -
 4. Create a pull request in github to merge the `release/[github-issue-number]-[release-number]` branch into `trunk`. Assign one reviewer to the PR. Add "Component Libarary Release [release number]" and "CHANGELOG" updates to the description.
 5. Once branch is approved, all tests pass, and merged on github, switch to the `trunk` branch locally and pull the changes you just merged.
 6. Verify changes are working correctly locally and, once the deploy is complete, on [Baseline](https://baseline.10up.com/components).
-7. Verify npm packages have been updated (i.e. [10up Accordion Component on NPM](https://www.npmjs.com/package/@10up/component-accordion)).
-8. Create a new tag in the repository matching the release number (i.e. `git tag 0.1.3`).
-9. Run `git push --tags` to push the newly created tag to the git repository.
-10. Merge `trunk` back into `develop` to complete the cycle.
+7. Create a new tag in the repository matching the release number (i.e. `git tag 0.1.3`).
+8. Run `git push --tags` to push the newly created tag to the git repository.
+9. Merge `trunk` back into `develop` to complete the cycle.
 
