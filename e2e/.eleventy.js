@@ -1,8 +1,8 @@
 module.exports = (eleventyConfig) => {
 	return {
 		dir: {
-		input: "src",
-		output: "dist"
+			input: "src",
+			output: "dist"
 		}
-  }
+	}
 };
