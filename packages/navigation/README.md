@@ -34,7 +34,7 @@
  This is the markup template expected by the component.
 
  ```html
-<nav class="site-navigation" role="navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
+<nav class="site-navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 
 	<a href="#primary-nav" aria-controls="primary-nav">
 		<span class="screen-reader-text">Primary Menu</span>
