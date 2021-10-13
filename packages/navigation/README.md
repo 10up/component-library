@@ -36,7 +36,7 @@
  ```html
 <nav class="site-navigation" itemscope="itemscope" itemtype="http://schema.org/SiteNavigationElement">
 
-	<a href="#primary-nav" aria-controls="primary-nav">
+	<a href="#primary-nav" aria-controls="primary-nav" class="site-menu-toggle">
 		<span class="screen-reader-text">Primary Menu</span>
 		<span aria-hidden="true">☰</span>
 	</a>
