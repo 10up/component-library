@@ -13,12 +13,13 @@ export default class Navigation {
 	 * constructor method
 	 *
 	 * @param {string} element Element selector for navigation container.
-	 * @param {object} options Object of optional callbacks.
+	 * @param {Object} options Object of optional callbacks.
 	 */
 	constructor(element, options = {}) {
 		// Defaults
 		const defaults = {
 			action: 'hover',
+			toggleWithArrows: false,
 			breakpoint: '(min-width: 48em)',
 
 			// Event callbacks
@@ -80,6 +81,7 @@ export default class Navigation {
 
 		// Setup tasks
 		this.setupMenu();
+		this.setupDropdownArrows();
 		this.setupSubMenus();
 		this.setupListeners();
 
@@ -118,7 +120,12 @@ export default class Navigation {
 			this.$menuToggle.removeAttribute('aria-hidden');
 
 			this.$submenus.forEach(($submenu) => {
-				const $anchor = $submenu.previousElementSibling;
+				const $anchor = this.getToggleElement($submenu, 'anchor');
+				const $toggleButton = this.getToggleElement($submenu, 'button');
+
+				if ($toggleButton instanceof HTMLElement) {
+					$toggleButton.remove();
+				}
 
 				$submenu.removeAttribute('id');
 				$submenu.removeAttribute('aria-hidden');
@@ -177,6 +184,10 @@ export default class Navigation {
 
 		this.$menu.dataset.action = this.settings.action;
 
+		if (this.settings.toggleWithArrows === true) {
+			this.$menu.dataset.arrows = this.settings.toggleWithArrows;
+		}
+
 		// Check for a valid ID on the menu.
 		if (!id || id === '') {
 			console.error( '10up Navigation: Target (menu) must have a valid ID attribute.' ); // eslint-disable-line
@@ -201,7 +212,7 @@ export default class Navigation {
 	 */
 	setupSubMenus() {
 		this.$submenus.forEach(($submenu, index) => {
-			const $anchor = $submenu.previousElementSibling;
+			const $anchor = this.getToggleElement($submenu, 'anchor');
 			const submenuID = `tenUp-submenu-${index}`;
 
 			$submenu.setAttribute('id', submenuID);
@@ -218,6 +229,29 @@ export default class Navigation {
 	}
 
 	/**
+	 * Create HTML nodes for the dropdown arrows that can be clicked.
+	 * This is only used if toggleWithArrows is true.
+	 */
+	setupDropdownArrows() {
+		if (this.settings.toggleWithArrows === false) {
+			return;
+		}
+
+		this.$submenus.forEach(($submenu) => {
+			// Create the dropdown button element and all it's properties we need:
+			const $toggleButton = document.createElement('button');
+
+			$toggleButton.classList.add('sub-menu-toggle');
+			$toggleButton.setAttribute('type', 'button');
+			$toggleButton.setAttribute('aria-label', 'Toggle sub menu items');
+
+			// We want to add the arrows next to the link.
+			$submenu.parentNode.insertBefore($toggleButton, $submenu);
+			this.addEventListener($toggleButton, 'click', this.listenerSubmenuAnchorClick);
+		});
+	}
+
+	/**
 	 * Binds our various listeners for the plugin.
 	 * Includes specific element listeners as well as media query.
 	 */
@@ -230,15 +264,19 @@ export default class Navigation {
 		this.addEventListener(this.$menuToggle, 'click', this.listenerMenuToggleClick);
 
 		// Submenu listeners.
-		// Mainly applies to the anchors of submenus.
+		// Mainly applies to the anchors or buttons of submenus.
+		// If we have buttons for clickable element, it is still just before the submenu.
 		this.$submenus.forEach(($submenu) => {
-			const $anchor = $submenu.previousElementSibling;
+			const $dropdownTrigger = $submenu.previousElementSibling;
 
 			if (this.settings.action === 'hover') {
-				this.addEventListener($anchor, 'focus', this.listenerSubmenuAnchorFocus);
+				this.addEventListener($dropdownTrigger, 'focus', this.listenerSubmenuAnchorFocus);
 			}
 
-			this.addEventListener($anchor, 'click', this.listenerSubmenuAnchorClick);
+			if (this.settings.action === 'click' && this.settings.toggleWithArrows === false) {
+				// Regular click on top level will open drodpdown when toggleWithArrows === false
+				this.addEventListener($dropdownTrigger, 'click', this.listenerSubmenuAnchorClick);
+			}
 		});
 
 		// Document specific listeners.
@@ -291,6 +329,46 @@ export default class Navigation {
 	}
 
 	/**
+	 * Get
+	 */
+
+	/**
+	 * Simplify targeting action element with the different toggle options.
+	 *
+	 * @param {Object} $submenu HTMLElement selector of the submenu
+	 * @param {string} type anchor|button based on what is needed
+	 * @return {Object} HTMLElement for the desired target.
+	 */
+	getToggleElement($submenu, type = 'anchor') {
+		if ($submenu instanceof HTMLElement === false) {
+			console.error(
+				'10up Navigation: first parameter ($submenu) of getToggleElement() is not an instance of HTMLElement',
+			);
+
+			return null;
+		}
+
+		if (type === 'anchor') {
+			if (this.settings.toggleWithArrows === false) {
+				return $submenu.previousElementSibling;
+			}
+
+			return $submenu.previousElementSibling.previousElementSibling;
+		}
+
+		if (type === 'button') {
+			if (this.settings.toggleWithArrows === false) {
+				return null;
+			}
+
+			return $submenu.previousElementSibling;
+		}
+
+		// Shouldn't get this far, but to remove an ESLint notice:
+		return null;
+	}
+
+	/**
 	 * Opens the passed submenu.
 	 *
 	 * @param   {element} $submenu The submenu to open. Required.
@@ -315,8 +393,13 @@ export default class Navigation {
 	 * @param   {element} $submenu The submenu to close. Required.
 	 */
 	closeSubmenu($submenu) {
-		const $anchor = $submenu.previousElementSibling;
+		const $anchor = this.getToggleElement($submenu, 'anchor');
+		const $toggleButton = this.getToggleElement($submenu, 'button');
 		const $childSubmenus = $submenu.querySelectorAll('li > .sub-menu[aria-hidden="false"]');
+
+		if ($toggleButton instanceof HTMLElement) {
+			$toggleButton.setAttribute('aria-expanded', false);
+		}
 
 		// Close the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', true);
@@ -360,7 +443,7 @@ export default class Navigation {
 	 * Menu toggle handler.
 	 * Opens or closes the menu according to current state.
 	 *
-	 * @param {object} event The event object.
+	 * @param {Object} event The event object.
 	 */
 	listenerMenuToggleClick(event) {
 		const isExpanded = this.$menuToggle.getAttribute('aria-expanded') === 'true';
@@ -426,7 +509,7 @@ export default class Navigation {
 	 * Closes all open menus on a escape key.
 	 * Refocuses after closing submenus.
 	 *
-	 * @param   {object} event The event object.
+	 * @param   {Object} event The event object.
 	 */
 	listenerDocumentKeyup(event) {
 		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
@@ -450,7 +533,7 @@ export default class Navigation {
 	 * Opens or closes the submenu accordingly.
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
-	 * @param   {object} event The event object. Required.
+	 * @param   {Object} event The event object. Required.
 	 */
 	listenerSubmenuAnchorClick(event) {
 		const $anchor = event.target;
@@ -470,7 +553,9 @@ export default class Navigation {
 		}
 
 		// Don't let the link act like a link.
-		event.preventDefault();
+		if (this.settings.toggleWithArrows === false) {
+			event.preventDefault();
+		}
 
 		// Don't bubble.
 		event.stopPropagation();
@@ -492,7 +577,7 @@ export default class Navigation {
 	 * Opens or closes the submenu accordingly.
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
-	 * @param   {object} event The event object.
+	 * @param   {Object} event The event object.
 	 */
 	listenerSubmenuAnchorFocus(event) {
 		const $anchor = event.target;
