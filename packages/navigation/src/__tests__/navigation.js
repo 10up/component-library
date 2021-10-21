@@ -95,6 +95,7 @@ test('callbacks are triggered properly', () => {
 	const onSubmenuClose = jest.fn();
 
 	new Navigation('#primary-nav', {
+		action: 'click',
 		onCreate,
 		onOpen,
 		onClose,
@@ -108,11 +109,12 @@ test('callbacks are triggered properly', () => {
 	expect(onSubmenuOpen).not.toHaveBeenCalled();
 	expect(onSubmenuClose).not.toHaveBeenCalled();
 
-	// open a submenu
+	// open a submenu on click
 	const submenu1 = document.querySelector('#menu-item-1913 > a');
 	userEvent.click(submenu1);
 	expect(onSubmenuOpen).toHaveBeenCalledTimes(1);
-	// close a submenu
+
+	// close a submenu on click
 	userEvent.click(submenu1);
 	expect(onSubmenuClose).toHaveBeenCalled();
 });
@@ -120,9 +122,12 @@ test('callbacks are triggered properly', () => {
 test('submenus expand appropriately', async () => {
 	// TODO: for some reason toBeVisible assertions are not working here
 	// so we are checking for aria-hidden for now.
-	new Navigation('#primary-nav');
+	new Navigation('#primary-nav', {
+		action: 'click',
+	});
 
 	const submenu1 = screen.getByText('Our Work');
+
 	// open
 	userEvent.click(submenu1);
 	expect(submenu1.parentElement.querySelector('ul.sub-menu')).toHaveAttribute(
@@ -162,6 +167,7 @@ test('destroy works', () => {
 	const navigationHTML = globalContainer.innerHTML;
 	const onSubmenuOpen = jest.fn();
 	const tabs = new Navigation('#primary-nav', {
+		action: 'click',
 		onSubmenuOpen,
 	});
 
@@ -169,6 +175,7 @@ test('destroy works', () => {
 	userEvent.click(submenu1);
 	expect(onSubmenuOpen).toHaveBeenCalled();
 	onSubmenuOpen.mockReset();
+
 	tabs.destroy();
 	expect(navigationHTML).toEqual(globalContainer.innerHTML);
 
@@ -177,10 +184,13 @@ test('destroy works', () => {
 });
 
 test('aria-expanded attribute is properly set for submenus', async () => {
-	new Navigation('#primary-nav');
+	new Navigation('#primary-nav', {
+		action: 'click',
+	});
 
 	const submenu1 = screen.getByText('Our Work');
 	expect(submenu1).toHaveAttribute('aria-expanded', 'false');
+
 	// open
 	userEvent.click(submenu1);
 	expect(submenu1).toHaveAttribute('aria-expanded', 'true');

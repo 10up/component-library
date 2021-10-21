@@ -116,6 +116,7 @@ export default class Navigation {
 		if (settings.removeAttributes) {
 			this.$menu.removeAttribute('aria-hidden');
 			this.$menu.removeAttribute('data-action');
+			this.$menu.removeAttribute('data-arrows');
 			this.$menuToggle.removeAttribute('aria-expanded');
 			this.$menuToggle.removeAttribute('aria-hidden');
 
