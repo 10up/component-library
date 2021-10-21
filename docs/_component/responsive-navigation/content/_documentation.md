@@ -15,6 +15,10 @@
 		<td class="td">The action to use to open menu items <em>(default) hover</em></td>
 	</tr>
 	<tr>
+		<th class="th">toggleWithArrows</th>
+		<td class="td">Open dropdown when clicking on arrow instead of the anchor tag.</em></td>
+	</tr>
+	<tr>
  		<th>onCreate</th>
  		<td>Called after the component is initialized on page load</td>
  	</tr>
