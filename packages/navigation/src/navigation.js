@@ -305,7 +305,7 @@ export default class Navigation {
 		 * @callback onSubmenuOpen - optional.
 		 */
 		if (this.settings.onSubmenuOpen && typeof this.settings.onSubmenuOpen === 'function') {
-			this.settings.onSubmenuOpen.call();
+			this.settings.onSubmenuOpen.call(this, $submenu);
 		}
 	}
 
