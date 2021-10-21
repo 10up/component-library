@@ -41,6 +41,7 @@ export default class Navigation {
 		this.setMQ = this.setMQ.bind(this);
 		this.listenerMenuToggleClick = this.listenerMenuToggleClick.bind(this);
 		this.listenerSubmenuAnchorFocus = this.listenerSubmenuAnchorFocus.bind(this);
+		this.listnerSubmenuAnchorBlur = this.listnerSubmenuAnchorBlur.bind(this);
 		this.listenerSubmenuAnchorClick = this.listenerSubmenuAnchorClick.bind(this);
 		this.listenerDocumentClick = this.listenerDocumentClick.bind(this);
 		this.listenerDocumentKeyup = this.listenerDocumentKeyup.bind(this);
@@ -265,15 +266,17 @@ export default class Navigation {
 		// Mainly applies to the anchors or buttons of submenus.
 		// If we have buttons for clickable element, it is still just before the submenu.
 		this.$submenus.forEach(($submenu) => {
-			const $dropdownTrigger = $submenu.previousElementSibling;
+			const $trigger = $submenu.previousElementSibling;
 
 			if (this.settings.action === 'hover') {
-				this.addEventListener($dropdownTrigger, 'focus', this.listenerSubmenuAnchorFocus);
+				this.addEventListener($trigger, 'focus', this.listenerSubmenuAnchorFocus);
+				this.addEventListener($trigger, 'mouseout', this.listnerSubmenuAnchorBlur);
+				this.addEventListener($trigger, 'mouseover', this.listenerSubmenuAnchorFocus);
 			}
 
 			if (this.settings.action === 'click' && this.settings.toggleWithArrows === false) {
 				// Regular click on top level will open drodpdown when toggleWithArrows === false
-				this.addEventListener($dropdownTrigger, 'click', this.listenerSubmenuAnchorClick);
+				this.addEventListener($trigger, 'click', this.listenerSubmenuAnchorClick);
 			}
 		});
 
@@ -593,5 +596,25 @@ export default class Navigation {
 
 		// Open this menu
 		this.openSubmenu($submenu);
+	}
+
+	/**
+	 * Closes all sub menus.
+	 *
+	 * @param   {object} event The event object.
+	 */
+	listnerSubmenuAnchorBlur(event) {
+		const $anchor = event.target;
+		const $menuItem = $anchor.parentNode;
+		const $submenu = $anchor.nextElementSibling;
+		const $childSubmenus = $menuItem.parentNode.querySelectorAll('.sub-menu');
+
+		// Bail early if no submenu is found or if we're on a small screen.
+		if (!$submenu || !this.mq.matches) {
+			return;
+		}
+
+		// Close all sibling menus
+		this.closeSubmenus($childSubmenus);
 	}
 }

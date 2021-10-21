@@ -87,7 +87,7 @@ afterEach(() => {
 	document.body.removeChild(style);
 });
 
-test('callbacks are triggered properly', () => {
+test('callbacks are triggered properly on click', () => {
 	const onCreate = jest.fn();
 	const onOpen = jest.fn();
 	const onClose = jest.fn();
