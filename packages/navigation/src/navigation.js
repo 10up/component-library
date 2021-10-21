@@ -13,7 +13,7 @@ export default class Navigation {
 	 * constructor method
 	 *
 	 * @param {string} element Element selector for navigation container.
-	 * @param {Object} options Object of optional callbacks.
+	 * @param {object} options Object of optional callbacks.
 	 */
 	constructor(element, options = {}) {
 		// Defaults
@@ -183,10 +183,7 @@ export default class Navigation {
 		const hrefTarget = href.replace('#', '');
 
 		this.$menu.dataset.action = this.settings.action;
-
-		if (this.settings.toggleWithArrows === true) {
-			this.$menu.dataset.arrows = this.settings.toggleWithArrows;
-		}
+		this.$menu.dataset.arrows = this.settings.toggleWithArrows;
 
 		// Check for a valid ID on the menu.
 		if (!id || id === '') {
@@ -335,9 +332,9 @@ export default class Navigation {
 	/**
 	 * Simplify targeting action element with the different toggle options.
 	 *
-	 * @param {Object} $submenu HTMLElement selector of the submenu
+	 * @param {object} $submenu HTMLElement selector of the submenu
 	 * @param {string} type anchor|button based on what is needed
-	 * @return {Object} HTMLElement for the desired target.
+	 * @returns {object} HTMLElement for the desired target.
 	 */
 	getToggleElement($submenu, type = 'anchor') {
 		if ($submenu instanceof HTMLElement === false) {
@@ -443,7 +440,7 @@ export default class Navigation {
 	 * Menu toggle handler.
 	 * Opens or closes the menu according to current state.
 	 *
-	 * @param {Object} event The event object.
+	 * @param {object} event The event object.
 	 */
 	listenerMenuToggleClick(event) {
 		const isExpanded = this.$menuToggle.getAttribute('aria-expanded') === 'true';
@@ -509,7 +506,7 @@ export default class Navigation {
 	 * Closes all open menus on a escape key.
 	 * Refocuses after closing submenus.
 	 *
-	 * @param   {Object} event The event object.
+	 * @param   {object} event The event object.
 	 */
 	listenerDocumentKeyup(event) {
 		const $openSubmenus = this.$menu.querySelectorAll('.sub-menu[aria-hidden="false"]');
@@ -533,7 +530,7 @@ export default class Navigation {
 	 * Opens or closes the submenu accordingly.
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
-	 * @param   {Object} event The event object. Required.
+	 * @param   {object} event The event object. Required.
 	 */
 	listenerSubmenuAnchorClick(event) {
 		const $anchor = event.target;
@@ -577,7 +574,7 @@ export default class Navigation {
 	 * Opens or closes the submenu accordingly.
 	 * Only fires based on settings and if the media query is appropriate.
 	 *
-	 * @param   {Object} event The event object.
+	 * @param   {object} event The event object.
 	 */
 	listenerSubmenuAnchorFocus(event) {
 		const $anchor = event.target;
