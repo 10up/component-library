@@ -192,9 +192,6 @@ export default class Tabs {
 			tabContent.setAttribute('aria-labelledby', tabLinkId);
 			tabContent.setAttribute('aria-hidden', true);
 
-			// Sets the first tab as active.
-			this.goToTab(0, tabArea);
-
 			// Activate the tab on [click]
 			this.addEventListener(tabLink, 'click', (event) => {
 				event.preventDefault();
@@ -258,6 +255,9 @@ export default class Tabs {
 				}
 			});
 		});
+
+		// Sets the first tab as active after all events are set.
+		this.goToTab(0, tabArea);
 	}
 
 	/**
@@ -314,7 +314,7 @@ export default class Tabs {
 			oldTab.setAttribute('tabindex', -1);
 			oldTab.parentNode.classList.remove('is-active');
 
-			oldTabContent.setAttribute('aria-hidden', 'true');
+			oldTabContent.setAttribute('aria-hidden', true);
 			oldTabContent.classList.remove('is-active');
 			oldTabContent.removeAttribute('tabindex');
 		}
@@ -336,8 +336,9 @@ export default class Tabs {
 			}
 
 			// Show newly selected content.
-			newTabContent.setAttribute('aria-hidden', 'false');
+			newTabContent.setAttribute('aria-hidden', false);
 			newTabContent.classList.add('is-active');
+
 			// Make tab focusable
 			newTabContent.setAttribute('tabindex', 0);
 
