@@ -161,8 +161,9 @@ export default class Tabs {
 	 * @returns {Array}
 	 */
 	getTabLinksAndList(tabArea) {
-		const tabLinks = tabArea.querySelectorAll('.tab-list [role="tab"]');
-		const tabList = tabArea.querySelector('.tab-list');
+		const tabParent = tabArea.querySelector('.tab-control');
+		const tabLinks = tabParent.querySelectorAll('.tab-list [role="tab"]');
+		const tabList = tabParent.querySelector('.tab-list');
 
 		return [tabLinks, tabList];
 	}
