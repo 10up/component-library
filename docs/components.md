@@ -19,7 +19,7 @@ category: components
 	<li><a href="{{ site.baseurl }}/component/tooltips/">Tooltips</a></li>
 </ul>
 
-<h2 class="txt-h4 u-spacing__none" id="navigtion">Navigation</h2>
+<h2 class="txt-h4 u-spacing__none" id="navigation">Navigation</h2>
 <p class="u-lighten">Components for site level or page level navigation.</p>
 <ul class="c-component-group u-spacing__bottom--large">
 	<li><a href="{{ site.baseurl }}/component/breadcrumbs/">Breadcrumbs</a></li>
