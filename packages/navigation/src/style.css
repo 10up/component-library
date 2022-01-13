@@ -64,7 +64,7 @@
 }
 
 .primary-menu[data-arrows="false"] {
-	.menu-item-has-children > a:after {
+	& .menu-item-has-children > a:after {
 		content: "+";
 		display: inline-block;
 		margin-left: 0.25em;
@@ -73,7 +73,7 @@
 }
 
 .primary-menu[data-arrows="true"] {
-	.sub-menu-toggle {
+	& .sub-menu-toggle {
 		appearance: none;
 		border: none;
 		height: 1em;
