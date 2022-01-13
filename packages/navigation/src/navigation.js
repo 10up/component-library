@@ -337,7 +337,7 @@ export default class Navigation {
 		 * @callback onSubmenuClose - optional.
 		 */
 		if (this.settings.onSubmenuClose && typeof this.settings.onSubmenuClose === 'function') {
-			this.settings.onSubmenuClose.call();
+			this.settings.onSubmenuClose.call(this, $submenu);
 		}
 	}
 
