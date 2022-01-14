@@ -1,0 +1,37 @@
+{
+  "name": "@maggieserino/accordion-react",
+  "version": "1.0.1",
+  "author": "maggieserino",
+  "description": "Accessible Accordion for React",
+  "main": "dist/index.js",
+  "keywords": [
+    "react",
+    "components",
+    "ui"
+  ],
+  "license": "ISC",
+  "scripts": {
+    "start": "webpack --watch",
+    "build": "webpack",
+    "prepublish": "npm run build"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.16.0",
+    "@babel/core": "^7.16.0",
+    "@babel/plugin-proposal-class-properties": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "@babel/preset-react": "^7.16.0",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.5.1",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.2",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.64.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-node-externals": "^3.0.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.12.1"
+  }
+}

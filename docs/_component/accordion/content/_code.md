@@ -18,6 +18,11 @@
 					Standalone JS <span aria-describedby="standalone-desc">*</span>
 				</a>
 			</li>
+			<li class="code-tab-item tab-item">
+				<a href="#react" id="js-react-link" role="tab" aria-controls="react">
+					React JS
+				</a>
+			</li>
 		</ul>
 	</div><!-- //.tab-control -->
 
@@ -93,6 +98,21 @@
 			</div><!--/.tab__body-->
 			<ul class="button-group">
 				<li><button data-clipboard-action="copy" data-clipboard-target=".copy-standalone-snippet" class="copy-clipboard button button--tertiary">Copy Standalone JavaScript to clipboard</button></li>
+			</ul>
+		</div><!--/.code-tab-->
+
+		<div id="react" class="code-tab tab-content" role="tabpanel">
+			<div class="tab__body">
+				<div class="code-block">
+					<div class="copy-react-snippet">
+						{% highlight javascript %}
+{% include_relative component-react.jsx %}
+						{% endhighlight %}
+					</div><!--/.copy-standalone-snippet-->
+				</div><!--/.code-block-->
+			</div><!--/.tab__body-->
+			<ul class="button-group">
+				<li><button data-clipboard-action="copy" data-clipboard-target=".copy-react-snippet" class="copy-clipboard button button--tertiary">Copy React to clipboard</button></li>
 			</ul>
 		</div><!--/.code-tab-->
 	</div>
