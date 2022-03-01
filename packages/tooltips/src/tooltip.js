@@ -27,6 +27,9 @@ export default class Tooltip {
 
 		this.evtCallbacks = {};
 
+		// This will be needed for any components that don't have an ID set
+		this.count = 1;
+
 		// Tooltip Containers
 		this.$tooltips = document.querySelectorAll(element);
 
@@ -114,8 +117,6 @@ export default class Tooltip {
 		let getTipId;
 		const focusableElements = ['a', 'button', 'input', 'textarea', 'select'];
 
-		// This will be needed for any components that don't have an ID set
-		const count = 1;
 		const self = ttContainer;
 		const trigger = self.querySelector(ttTrigger);
 		const tip = self.querySelector(ttTheTip);
@@ -128,7 +129,8 @@ export default class Tooltip {
 
 		// If a tip doesn't have an ID, then we need to generate one.
 		if (!tip.getAttribute('id')) {
-			tip.setAttribute('id', `tool_tip_${count}`);
+			tip.setAttribute('id', `tool_tip_${this.count}`);
+			this.count += 1;
 		}
 
 		// If a trigger doesn't have an aria-described by, then we need
