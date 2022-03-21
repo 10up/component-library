@@ -296,8 +296,10 @@ export default class Navigation {
 	 * @param   {element} $submenu The submenu to open. Required.
 	 */
 	openSubmenu($submenu) {
+		const $anchor = $submenu.previousElementSibling;
 		// Open the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', false);
+		$anchor.setAttribute('aria-expanded', true);
 
 		/**
 		 * Called when a submenu item is opened.
@@ -305,7 +307,7 @@ export default class Navigation {
 		 * @callback onSubmenuOpen - optional.
 		 */
 		if (this.settings.onSubmenuOpen && typeof this.settings.onSubmenuOpen === 'function') {
-			this.settings.onSubmenuOpen.call();
+			this.settings.onSubmenuOpen.call(this, $submenu);
 		}
 	}
 
@@ -320,6 +322,7 @@ export default class Navigation {
 
 		// Close the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', true);
+		$anchor.setAttribute('aria-expanded', false);
 
 		if ($childSubmenus) {
 			// Close any children as well.
@@ -337,7 +340,7 @@ export default class Navigation {
 		 * @callback onSubmenuClose - optional.
 		 */
 		if (this.settings.onSubmenuClose && typeof this.settings.onSubmenuClose === 'function') {
-			this.settings.onSubmenuClose.call();
+			this.settings.onSubmenuClose.call(this, $submenu);
 		}
 	}
 
