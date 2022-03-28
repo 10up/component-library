@@ -51,8 +51,8 @@ title: Component Library Playground - Tabs
 </div><!-- //.tabs -->
 
 <div class="tabs-vertical">
-	<div class="tab-control" role="tablist">
-		<ul class="tab-list">
+	<div class="tab-control">
+		<ul class="tab-list" role="tablist">
 			<li class="tab-item"><button role="tab" aria-controls="js-tab1-alt">View Vertical Tab 1</button></li>
 			<li class="tab-item"><button role="tab" aria-controls="js-tab2-alt">View Vertical Tab 2</button></li>
 			<li class="tab-item"><button role="tab" aria-controls="js-tab3-alt">View Vertical Tab 3</button></li>
@@ -86,6 +86,97 @@ title: Component Library Playground - Tabs
 		<div class="tab-content" id="js-tab5-alt" role="tabpanel">
 			<h2>Vertical Tab 5 Content</h2>
 			<p>Duis sollicitudin consequat lorem eu sagittis.</p>
+		</div><!-- //.tab-content -->
+
+	</div><!-- //.tab-group -->
+
+</div><!-- //.tabs -->
+
+<div class="tabs-vertical">
+	<div class="tab-control" role="tablist">
+		<ul class="tab-list">
+			<li class="tab-item"><button role="tab" aria-controls="js-tab1-nested">View Nested Parent Tab 1</button></li>
+			<li class="tab-item"><button role="tab" aria-controls="js-tab2-nested">View Nested Parent Tab 2</button></li>
+			<li class="tab-item"><button role="tab" aria-controls="js-tab3-nested">View Nested Parent Tab 3</button></li>
+			<li class="tab-item"><button role="tab" aria-controls="js-tab4-nested">View Nested Parent Tab 4</button></li>
+			<li class="tab-item"><button role="tab" aria-controls="js-tab5-nested">View Nested Parent Tab 5</button></li>
+		</ul>
+	</div><!-- //.tab-control -->
+
+	<div class="tab-group">
+
+		<div class="tab-content" id="js-tab1-nested" role="tabpanel">
+			<h2>Tab 1 Content (nested tab inside)</h2>
+			<div class="tabs-vertical">
+				<div class="tab-control" role="tablist">
+					<ul class="tab-list">
+						<li class="tab-item"><button role="tab" aria-controls="js-tab1-nested2">View Nested Tab 1</button></li>
+						<li class="tab-item"><button role="tab" aria-controls="js-tab2-nested2">View Nested Tab 2</button></li>
+						<li class="tab-item"><button role="tab" aria-controls="js-tab3-nested2">View Nested Tab 3</button></li>
+						<li class="tab-item"><button role="tab" aria-controls="js-tab4-nested2">View Nested Tab 4</button></li>
+						<li class="tab-item"><button role="tab" aria-controls="js-tab5-nested2">View Nested Tab 5</button></li>
+					</ul>
+				</div><!-- //.tab-control -->
+
+				<div class="tab-group">
+
+					<div class="tab-content" id="js-tab1-nested2" role="tabpanel">
+						<h2>Nested Tab 1 Content</h2>
+						<p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+						<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+					</div><!-- //.tab-content -->
+
+					<div class="tab-content" id="js-tab2-nested2" role="tabpanel">
+						<h2>Nested Tab 2 Content</h2>
+						<p>In tincidunt tempor risus gravida tincidunt.</p>
+						<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+					</div><!-- //.tab-content -->
+
+					<div class="tab-content" id="js-tab3-nested2" role="tabpanel">
+						<h2>Nested Tab 3 Content</h2>
+						<p>Suspendisse eget commodo erat. Donec a metus fringilla, pharetra ipsum nec, aliquet felis. </p>
+						<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+					</div><!-- //.tab-content -->
+
+					<div class="tab-content" id="js-tab4-nested2" role="tabpanel">
+						<h2>Nested Tab 4 Content</h2>
+						<p>Aenean eu nibh nisl. Nulla ornare condimentum erat, et rhoncus urna euismod a.</p>
+						<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+					</div><!-- //.tab-content -->
+
+					<div class="tab-content" id="js-tab5-nested2" role="tabpanel">
+						<h2>Nested Tab 5 Content</h2>
+						<p>Duis sollicitudin consequat lorem eu sagittis.</p>
+						<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+					</div><!-- //.tab-content -->
+
+				</div><!-- //.tab-group -->
+
+			</div><!-- //.tabs -->
+		</div><!-- //.tab-content -->
+
+		<div class="tab-content" id="js-tab2-nested" role="tabpanel">
+			<h2>Tab Nested Parent 2 Content</h2>
+			<p>In tincidunt tempor risus gravida tincidunt.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+		</div><!-- //.tab-content -->
+
+		<div class="tab-content" id="js-tab3-nested" role="tabpanel">
+			<h2>Tab Nested Parent 3 Content</h2>
+			<p>Suspendisse eget commodo erat. Donec a metus fringilla, pharetra ipsum nec, aliquet felis. </p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+		</div><!-- //.tab-content -->
+
+		<div class="tab-content" id="js-tab4-nested" role="tabpanel">
+			<h2>Tab Nested Parent 4 Content</h2>
+			<p>Aenean eu nibh nisl. Nulla ornare condimentum erat, et rhoncus urna euismod a.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
+		</div><!-- //.tab-content -->
+
+		<div class="tab-content" id="js-tab5-nested" role="tabpanel">
+			<h2>Tab Nested Parent 5 Content</h2>
+			<p>Duis sollicitudin consequat lorem eu sagittis.</p>
+			<p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. <a href="#">Sit beatae asperiores commodi</a>. Tempora nobis sunt eos nihil qui corporis totam ipsam, molestias in porro, voluptas nisi voluptatum iure nostrum quam.</p>
 		</div><!-- //.tab-content -->
 
 	</div><!-- //.tab-group -->

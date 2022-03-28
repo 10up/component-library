@@ -4,7 +4,7 @@
 		<title>10up Component Library | Accordion</title>
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
-		<link href="../dist/css/style.css" rel="stylesheet">
+		<link href="../dist/index.css" rel="stylesheet">
 		<style>
 			.accordion {margin-bottom: 1em;}
 			.accordion .accordion {padding: 1em;}
@@ -78,7 +78,7 @@
 
 		<script src="../dist/index.umd.js"></script>
 		<script type="text/javascript">
-			var myAccordion = new window.TenUp.Accordion( '.accordion', {
+			let myAccordion = new TenUp.accordion( '.accordion', {
 				onCreate: function() {
 					console.log( 'onCreated' )
 				},
