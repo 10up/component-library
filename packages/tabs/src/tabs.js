@@ -321,7 +321,7 @@ export default class Tabs {
 		}
 
 		// Change state of newly selected tab.
-		const newTab = isEvent ? tab.target : tabItems[tab];
+		const newTab = isEvent ? tab.currentTarget : tabItems[tab];
 
 		if (newTab) {
 			const newTabId = newTab.getAttribute('aria-controls');
