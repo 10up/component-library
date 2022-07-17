@@ -197,7 +197,7 @@ export default class Tabs {
 			this.addEventListener(tabLink, 'click', (event) => {
 				event.preventDefault();
 
-				if (!event.target.parentNode.classList.contains('is-active')) {
+				if (!event.currentTarget.parentNode.classList.contains('is-active')) {
 					this.goToTab(event, tabArea);
 				}
 			});
