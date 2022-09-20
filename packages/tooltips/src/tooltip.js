@@ -27,9 +27,6 @@ export default class Tooltip {
 
 		this.evtCallbacks = {};
 
-		// This will be needed for any components that don't have an ID set
-		this.count = 1;
-
 		// Tooltip Containers
 		this.$tooltips = document.querySelectorAll(element);
 
@@ -48,8 +45,8 @@ export default class Tooltip {
 		this.boundManageTT = (evt) => this.manageTT(evt);
 		this.boundManageEsc = (evt) => this.manageEsc(evt);
 
-		this.$tooltips.forEach((ttContainer) => {
-			this.setupTooltip(ttContainer);
+		this.$tooltips.forEach((ttContainer, index) => {
+			this.setupTooltip(ttContainer, index);
 		});
 
 		this.settings = { ...defaults, ...options };
@@ -106,7 +103,7 @@ export default class Tooltip {
 	 * @param   {element} ttContainer The tooltip containing element.
 	 * @returns {void}
 	 */
-	setupTooltip(ttContainer) {
+	setupTooltip(ttContainer, index) {
 		const ttToggleClass = 'a11y-tip--toggle';
 		const ttTriggerClass = 'a11y-tip__trigger';
 		const ttTriggerToggleClass = 'a11y-tip__trigger--toggle';
@@ -129,8 +126,7 @@ export default class Tooltip {
 
 		// If a tip doesn't have an ID, then we need to generate one.
 		if (!tip.getAttribute('id')) {
-			tip.setAttribute('id', `tool_tip_${this.count}`);
-			this.count += 1;
+			tip.setAttribute('id', `tool_tip_${index}`);
 		}
 
 		// If a trigger doesn't have an aria-described by, then we need
