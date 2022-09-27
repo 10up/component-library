@@ -10,7 +10,7 @@
   "source": "src/index.js",
   "style": "./dist/index.css",
   "types": "./index.d.ts",
-    "scripts": {
+  "scripts": {
     "test": "jest --coverage",
     "test:watch": "jest --watch",
     "watch": "concurrently \"npm run build:modern -- --watch\" \"npm run build:umd -- --watch\"",
