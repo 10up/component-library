@@ -200,9 +200,9 @@ export default class Navigation {
 	 * Adds JS classes and initial AIRA attributes.
 	 */
 	setupSubMenus() {
-		this.$submenus.forEach(($submenu, index) => {
+		this.$submenus.forEach(($submenu) => {
 			const $anchor = $submenu.previousElementSibling;
-			const submenuID = `tenUp-submenu-${index}`;
+			const submenuID = `tenUp-submenu-${crypto.randomUUID()}`;
 
 			$submenu.setAttribute('id', submenuID);
 
