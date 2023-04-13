@@ -297,8 +297,10 @@ export default class Navigation {
 	 * @param   {element} $submenu The submenu to open. Required.
 	 */
 	openSubmenu($submenu) {
+		const $anchor = $submenu.previousElementSibling;
 		// Open the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', false);
+		$anchor.setAttribute('aria-expanded', true);
 
 		/**
 		 * Called when a submenu item is opened.
@@ -321,6 +323,7 @@ export default class Navigation {
 
 		// Close the submenu by updating ARIA and class.
 		$submenu.setAttribute('aria-hidden', true);
+		$anchor.setAttribute('aria-expanded', false);
 
 		if ($childSubmenus) {
 			// Close any children as well.
