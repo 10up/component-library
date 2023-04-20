@@ -15,6 +15,10 @@ export default class Accordion {
 			onOpen: null,
 			onClose: null,
 			onToggle: null,
+			// Classes
+			headerClass: 'accordion-header',
+			contentClass: 'accordion-content',
+			labelClass: 'accordion-label',
 		};
 
 		// forEach Polyfill
@@ -93,8 +97,10 @@ export default class Accordion {
 	 * @returns {Array}
 	 */
 	getAccordionLinksAndContent(accordionArea) {
-		const allAccordionLinks = accordionArea.querySelectorAll('.accordion-header');
-		const allAccordionContent = accordionArea.querySelectorAll('.accordion-content');
+		const allAccordionLinks = accordionArea.querySelectorAll(`.${this.settings.headerClass}`);
+		const allAccordionContent = accordionArea.querySelectorAll(
+			`.${this.settings.contentClass}`,
+		);
 
 		// Make sure accordionLinks and accordionContent are direct descendants of accordionArea
 		const accordionLinks = Array.prototype.slice
@@ -156,7 +162,7 @@ export default class Accordion {
 
 			// Make sure the selected element is a header and a direct descendant of the current accordionArea
 			if (
-				selectedElement.classList.contains('accordion-header') &&
+				selectedElement.classList.contains(this.settings.headerClass) &&
 				selectedElement.parentNode === accordionArea
 			) {
 				this.accessKeyBindings(accordionLinks, selectedElement, key, event);
@@ -235,7 +241,7 @@ export default class Accordion {
 	toggleAccordionItem(event) {
 		const accordionLink = event.target;
 		const accordionContent = accordionLink.nextElementSibling;
-		const accordionHeading = accordionContent.querySelector('.accordion-label');
+		const accordionHeading = accordionContent.querySelector(`.${this.settings.labelClass}`);
 
 		const accordionElements = {
 			link: accordionLink,
