@@ -152,7 +152,7 @@ export default class Accordion {
 		// Handle keydown event to move between accordion items
 		this.addEventListener(accordionArea, 'keydown', (event) => {
 			const selectedElement = event.target;
-			const key = event.which;
+			const { key } = event;
 
 			// Make sure the selected element is a header and a direct descendant of the current accordionArea
 			if (
@@ -288,17 +288,17 @@ export default class Accordion {
 
 		switch (key) {
 			// End key
-			case 35:
+			case 'End':
 				linkIndex = accordionLinks.length - 1;
 				event.preventDefault();
 				break;
 			// Home key
-			case 36:
+			case 'Home':
 				linkIndex = 0;
 				event.preventDefault();
 				break;
 			// Up arrow
-			case 38:
+			case 'ArrowUp':
 				linkIndex--;
 				if (linkIndex < 0) {
 					linkIndex = accordionLinks.length - 1;
@@ -306,7 +306,7 @@ export default class Accordion {
 				event.preventDefault();
 				break;
 			// Down arrow
-			case 40:
+			case 'ArrowDown':
 				linkIndex++;
 				if (linkIndex > accordionLinks.length - 1) {
 					linkIndex = 0;
