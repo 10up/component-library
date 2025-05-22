@@ -18,13 +18,13 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "@11ty/eleventy": "^0.11.1",
+    "@11ty/eleventy": "^3.1.0",
     "@testing-library/cypress": "^7.0.3",
     "concurrently": "^5.3.0",
     "microbundle": "^0.13.0",
     "postcss-import": "^14.0.0",
-    "postcss-preset-env": "^6.7.0",
-    "start-server-and-test": "^1.12.0",
+    "postcss-preset-env": "^10.1.6",
+    "start-server-and-test": "^2.0.12",
     "cypress": "^7.1.0"
   },
   "dependencies": {
