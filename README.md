@@ -2,7 +2,7 @@
 
 > A library of barebones front-end components built with WordPress and accessibility in mind.
 
-[![Support Level](https://img.shields.io/badge/support-active-green.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Support Level](https://img.shields.io/badge/support-archived-red.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/10up/component-library/branch/develop/graph/badge.svg?token=rm4ggtw19O)](https://codecov.io/gh/10up/component-library)
 
 
@@ -31,7 +31,7 @@ To use a component, navigate to the component’s detail page to see demos, usag
 
 ## Support Level
 
-**Active:** 10up is actively working on this, and we expect to continue work for the foreseeable future including keeping tested up to the most recent version of WordPress.  Bug reports, feature requests, questions, and pull requests are welcome.
+**Archived:** This project is no longer maintained by 10up. We are no longer responding to Issues or Pull Requests unless they relate to security concerns. We encourage interested developers to fork this project and make it their own!
 
 ## Repository Structure and Engineering Guidelines
 Visit the [CONTRIBUTING](/CONTRIBUTING.md) page for initial contribution and engineering guidance.
