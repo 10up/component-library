@@ -1,0 +1,42 @@
+.c-maintenance-banner {
+	background: #fef3cd;
+	border-bottom: 1px solid #fdc935;
+	color: #856404;
+	padding: $spacing-small $spacing-medium;
+	text-align: center;
+	position: relative;
+	z-index: $elevation-mid;
+
+	@media (min-width: $breakpoint-small) {
+		margin-left: 260px;
+	}
+
+	@media (min-width: $breakpoint-medium) {
+		margin-left: 310px;
+	}
+
+	p {
+		margin: 0;
+		font-size: $font-size-tiny;
+		max-width: none;
+
+		@media (min-width: $breakpoint-small) {
+			font-size: $font-size-xsmall;
+		}
+	}
+
+	a {
+		color: #495057;
+		text-decoration: underline;
+		font-weight: $font-weight-medium;
+
+		&:hover,
+		&:focus {
+			color: #212529;
+		}
+	}
+
+	strong {
+		font-weight: $font-weight-medium;
+	}
+}
