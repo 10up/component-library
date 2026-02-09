@@ -5,6 +5,8 @@
 [![Support Level](https://img.shields.io/badge/support-archived-red.svg)](#support-level) [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![codecov](https://codecov.io/gh/10up/component-library/branch/develop/graph/badge.svg?token=rm4ggtw19O)](https://codecov.io/gh/10up/component-library)
 
+> [!CAUTION]
+> As of 17 September 2025, this project is archived and no longer being actively maintained.
 
 ## Overview
 
