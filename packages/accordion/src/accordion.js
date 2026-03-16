@@ -6,6 +6,7 @@ export default class Accordion {
 	 * @param options The acccordion options.
 	 */
 	constructor(element, options = {}) {
+		this.element = element;
 		this.evtCallbacks = {};
 
 		// Defaults
@@ -149,19 +150,26 @@ export default class Accordion {
 	setupAccordion(accordionArea, accordionAreaIndex) {
 		const [accordionLinks, accordionContent] = this.getAccordionLinksAndContent(accordionArea);
 
-		// Handle keydown event to move between accordion items
-		this.addEventListener(accordionArea, 'keydown', (event) => {
-			const selectedElement = event.target;
-			const key = event.which;
+		// Add keydown event only to top level content areas.
+		if (!this.isNestedAccordionArea(accordionArea)) {
+			// Handle keydown event to move between accordion items
+			this.addEventListener(accordionArea, 'keydown', (event) => {
+				const selectedElement = event.target;
+				const { key } = event;
 
-			// Make sure the selected element is a header and a direct descendant of the current accordionArea
-			if (
-				selectedElement.classList.contains('accordion-header') &&
-				selectedElement.parentNode === accordionArea
-			) {
-				this.accessKeyBindings(accordionLinks, selectedElement, key, event);
-			}
-		});
+				// Make sure the selected element is a header and is child of an accordionArea
+				if (
+					selectedElement.classList.contains('accordion-header') &&
+					selectedElement.parentNode === selectedElement.closest(this.element)
+				) {
+					const allFocusableAccordionLinks = this.getAllFocusableAccordionLinks(
+						accordionArea,
+					);
+
+					this.accessKeyBindings(allFocusableAccordionLinks, selectedElement, key, event);
+				}
+			});
+		}
 
 		// Set ARIA attributes for accordion links
 		accordionLinks.forEach((accordionLink, index) => {
@@ -288,17 +296,17 @@ export default class Accordion {
 
 		switch (key) {
 			// End key
-			case 35:
+			case 'End':
 				linkIndex = accordionLinks.length - 1;
 				event.preventDefault();
 				break;
 			// Home key
-			case 36:
+			case 'Home':
 				linkIndex = 0;
 				event.preventDefault();
 				break;
 			// Up arrow
-			case 38:
+			case 'ArrowUp':
 				linkIndex--;
 				if (linkIndex < 0) {
 					linkIndex = accordionLinks.length - 1;
@@ -306,7 +314,7 @@ export default class Accordion {
 				event.preventDefault();
 				break;
 			// Down arrow
-			case 40:
+			case 'ArrowDown':
 				linkIndex++;
 				if (linkIndex > accordionLinks.length - 1) {
 					linkIndex = 0;
@@ -319,5 +327,43 @@ export default class Accordion {
 
 		const newLinkIndex = linkIndex;
 		accordionLinks[newLinkIndex].focus();
+	}
+
+	/**
+	 * Check if accordionArea is nested.
+	 *
+	 * @param		{element} accordionArea		The accordionArea to be checked.
+	 *
+	 * @returns	{boolean}
+	 */
+	isNestedAccordionArea(accordionArea) {
+		return !!accordionArea.parentElement.closest(this.element);
+	}
+
+	/**
+	 * Return all accordion links that can receive focus.
+	 *
+	 * @param {element} accordionArea The accordionArea to scope changes.
+	 *
+	 * @returns {Array}
+	 */
+	getAllFocusableAccordionLinks(accordionArea) {
+		const allAccordionLinks = accordionArea.querySelectorAll('.accordion-header');
+		const focusableAccordionLinks = Array.prototype.slice
+			.call(allAccordionLinks)
+			.filter((link) => {
+				const parentAccordionContent = link.closest('.accordion-content');
+
+				if (
+					!parentAccordionContent ||
+					parentAccordionContent.classList.contains('is-active')
+				) {
+					return link;
+				}
+
+				return null;
+			});
+
+		return focusableAccordionLinks;
 	}
 }

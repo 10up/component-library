@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/dom';
+import { screen, fireEvent } from '@testing-library/dom';
 import userEvent from '@testing-library/user-event';
 import { render, injectCSS } from 'test-utils/dom';
 import { axe } from 'jest-axe';
@@ -39,7 +39,7 @@ beforeEach(() => {
 				</div> <!-- //.accordion -->
 			</div> <!-- //.accordion-content -->
 
-			<button class="accordion-header" type="button">Accordion Header</button>
+			<button class="accordion-header" type="button">Accordion Header 4</button>
 			<div class="accordion-content">
 				<h2 class="accordion-label">Accordion Heading</h2>
 				<p>here the content of 4th tab <a href="#">link</a></p>
@@ -179,6 +179,39 @@ test('nested accordion works', async () => {
 
 	userEvent.click(nestedAccordionHeader);
 	expect(nestedAccordionContent).not.toBeVisible();
+});
+
+test('keyboard navigation works', async () => {
+	new Accordion('.accordion');
+
+	const header1 = screen.getByText('Accordion Header 1');
+	const header2 = screen.getByText('Accordion Header 2');
+	const nestedAccordionHeader = screen.getByText('Accordion Header with Nested Accordion');
+	const nestedAccordionContent = screen.getByTestId('accordion-content-nested');
+	const subAccordionHeader = screen.getAllByText('Nested Accordion Header');
+	const header4 = screen.getByText('Accordion Header 4');
+
+	fireEvent.keyDown(header1, { key: 'ArrowDown' });
+	expect(header2).toHaveFocus();
+
+	fireEvent.keyDown(header2, { key: 'ArrowUp' });
+	expect(header1).toHaveFocus();
+
+	fireEvent.click(nestedAccordionHeader);
+	expect(nestedAccordionContent).toBeVisible();
+	expect(await axe(document.querySelector('.accordion'))).toHaveNoViolations();
+
+	fireEvent.keyDown(nestedAccordionHeader, { key: 'ArrowDown' });
+	expect(subAccordionHeader[0]).toHaveFocus();
+
+	fireEvent.keyDown(subAccordionHeader[0], { key: 'ArrowDown' });
+	expect(subAccordionHeader[1]).toHaveFocus();
+
+	fireEvent.keyDown(subAccordionHeader[1], { key: 'Home' });
+	expect(header1).toHaveFocus();
+
+	fireEvent.keyDown(header1, { key: 'End' });
+	expect(header4).toHaveFocus();
 });
 
 test('destroying accordion works', async () => {
