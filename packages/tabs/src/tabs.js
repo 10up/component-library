@@ -197,7 +197,7 @@ export default class Tabs {
 			this.addEventListener(tabLink, 'click', (event) => {
 				event.preventDefault();
 
-				if (!event.target.parentNode.classList.contains('is-active')) {
+				if (!event.currentTarget.parentNode.classList.contains('is-active')) {
 					this.goToTab(event, tabArea);
 				}
 			});
@@ -321,7 +321,7 @@ export default class Tabs {
 		}
 
 		// Change state of newly selected tab.
-		const newTab = isEvent ? tab.target : tabItems[tab];
+		const newTab = isEvent ? tab.currentTarget : tabItems[tab];
 
 		if (newTab) {
 			const newTabId = newTab.getAttribute('aria-controls');
